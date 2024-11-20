@@ -10,7 +10,7 @@ import CoreLocation
 
 class CurrentLocation: NSObject, ObservableObject, CLLocationManagerDelegate {
     
-    @Published var location: CLLocation?
+    @Published var location: CLLocationCoordinate2D?
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     
     private let locationManager: CLLocationManager
@@ -24,16 +24,19 @@ class CurrentLocation: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     /// Request location authorization from the user
     func requestAuthorization() {
+        print("Requesting location authorization...")
         locationManager.requestWhenInUseAuthorization()
     }
     
     /// Starts updating location
     func startUpdatingLocation() {
+        print("Starting location updates...")
         locationManager.startUpdatingLocation()
     }
     
     /// Stops updationg location
     func stopUpdatingLocation() {
+        print("Stopping location updates...")
         locationManager.stopUpdatingLocation()
     }
     
@@ -42,9 +45,14 @@ class CurrentLocation: NSObject, ObservableObject, CLLocationManagerDelegate {
     /// Called when the location manager updates the location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let newLocation = locations.last else { return } // Get the most recent location
+        
+        print("Updated location: \(newLocation.coordinate.latitude), \(newLocation.coordinate.longitude)")
+
         DispatchQueue.main.async {
-            self.location = newLocation // Update the observable property
+            self.location = newLocation.coordinate // Update the observable property
         }
+        
+        if (!locations.isEmpty) {stopUpdatingLocation()}
     }
     
     /// Called when the authorization status changes
@@ -53,8 +61,10 @@ class CurrentLocation: NSObject, ObservableObject, CLLocationManagerDelegate {
             self.authorizationStatus = manager.authorizationStatus
         }
         
-        if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
+        if manager.authorizationStatus == .authorizedWhenInUse || manager.authorizationStatus == .authorizedAlways {
             startUpdatingLocation()
+        } else {
+            print("Authorization denied or not determined.")
         }
     }
     
