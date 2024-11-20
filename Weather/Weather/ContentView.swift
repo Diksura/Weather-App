@@ -9,8 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var weatherData: WeatherDTO?
     @StateObject private var locationService = CurrentLocation()
+
+    @State var weatherData: WeatherDTO?
+    @State var locationAvailable: Bool = false
+    
 
     var body: some View {
         VStack {
@@ -29,7 +32,7 @@ struct ContentView: View {
         .padding()
         .onAppear {
             locationService.requestAuthorization()
-
+            
             Task {
                 await fetchWeatherData()
             }
@@ -38,9 +41,16 @@ struct ContentView: View {
 
     
     func fetchWeatherData() async {
+        
+        guard let _ = locationService.location?.latitude,
+              let _ = locationService.location?.longitude else {
+            print("Location not available yet.")
+            return
+        }
+        
                 
         // Creating URL
-        let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=838714aecdf04acaad8173636241811&q=6.927079,79.861244&aqi=no")
+        let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)&aqi=no")
         guard let unwrappedURL = url else {
             return
         }
