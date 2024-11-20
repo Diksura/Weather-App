@@ -12,6 +12,7 @@ class CurrentLocation: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var location: CLLocationCoordinate2D?
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    @Published var isLocationUpdated: Bool = false
     
     private let locationManager: CLLocationManager
     
@@ -53,6 +54,7 @@ class CurrentLocation: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         if (!locations.isEmpty) {stopUpdatingLocation()}
+        isLocationUpdated.toggle()
     }
     
     /// Called when the authorization status changes
