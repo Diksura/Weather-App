@@ -44,12 +44,20 @@
 			);
 			target = B917B9882CEBB66B006AC650 /* Weather AppUITests */;
 		};
+		B9D2C9112CEE2961006D8B8E /* Exceptions for "Weather App" folder in "Weather App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Weather-App-Info.plist",
+			);
+			target = B917B96E2CEBB66B006AC650 /* Weather App */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		B917B9712CEBB66B006AC650 /* Weather App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				B9D2C9112CEE2961006D8B8E /* Exceptions for "Weather App" folder in "Weather App" target */,
 				B917B9C02CEBB75D006AC650 /* Exceptions for "Weather App" folder in "Weather AppTests" target */,
 				B917B9C12CEBB75D006AC650 /* Exceptions for "Weather App" folder in "Weather AppUITests" target */,
 			);
@@ -419,6 +427,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Weather App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Weather-App-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -447,6 +456,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Weather App/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Weather-App-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
