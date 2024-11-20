@@ -8,19 +8,19 @@
 import Foundation
 
 struct WeatherDTO: Decodable, Hashable{
-    let location: LocationDTO?
-    let current: CurrentDTO?
+    let location: LocationDTO
+    let current: CurrentDTO
 }
 
 struct LocationDTO: Decodable, Hashable {
-    let name: String?
-    let region: String?
-    let country: String?
-    let lat: Double?
-    let lon: Double?
-    let tzID: String?
-    let localtimeEpoch: Double?
-    let localtime: String?
+    let name: String
+    let region: String
+    let country: String
+    let lat: Double
+    let lon: Double
+    let tzID: String
+    let localtimeEpoch: Int
+    let localtime: String
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -35,35 +35,35 @@ struct LocationDTO: Decodable, Hashable {
 }
 
 struct CurrentDTO: Decodable, Hashable {
-    let lastUpdatedEpoch: Double?
-    let lastUpdated: String?
-    let tempC: Double?
-    let tempF: Double?
-    let isDay: Bool?
-    let condition: ConditionDTO?
-    let windMph: Double?
-    let windKph: Double?
-    let windDegree: Double?
-    let windDir: String?
-    let pressureMb: Double?
-    let pressureIn: Double?
-    let precipMM: Double?
-    let precipIn: Double?
-    let humidity: Double?
-    let cloud: Double?
-    let feelslikeC: Double?
-    let feelslikeF: Double?
-    let windchillC: Double?
-    let windchillF: Double?
-    let heatindexC: Double?
-    let heatindexF: Double?
-    let dewpointC: Double?
-    let dewpointF: Double?
-    let visKm: Double?
-    let visMi: Double?
-    let uv: Double?
-    let gustMph: Double?
-    let gustKph: Double?
+    let lastUpdatedEpoch: Int
+    let lastUpdated: String
+    let tempC: Double
+    let tempF: Double
+    let isDay: Int
+    let condition: ConditionDTO
+    let windMph: Double
+    let windKph: Double
+    let windDegree: Int
+    let windDir: String
+    let pressureMb: Int
+    let pressureIn: Double
+    let precipMM: Double
+    let precipIn: Double
+    let humidity: Int
+    let cloud: Int
+    let feelslikeC: Double
+    let feelslikeF: Double
+    let windchillC: Double
+    let windchillF: Double
+    let heatindexC: Double
+    let heatindexF: Double
+    let dewpointC: Double
+    let dewpointF: Double
+    let visKm: Int
+    let visMi: Double
+    let uv: Int
+    let gustMph: Double
+    let gustKph: Double
     
     enum CodingKeys: String, CodingKey {
         case lastUpdatedEpoch = "last_updated_epoch"
@@ -80,7 +80,7 @@ struct CurrentDTO: Decodable, Hashable {
         case pressureIn = "pressure_in"
         case precipMM = "precip_mm"
         case precipIn = "precip_in"
-        case humidity = "humidity"
+        case humidity
         case cloud
         case feelslikeC = "feelslike_c"
         case feelslikeF = "feelslike_f"
@@ -91,7 +91,7 @@ struct CurrentDTO: Decodable, Hashable {
         case dewpointC = "dewpoint_c"
         case dewpointF = "dewpoint_f"
         case visKm = "vis_km"
-        case visMi = "vis_mi"
+        case visMi = "vis_miles"
         case uv
         case gustMph = "gust_mph"
         case gustKph = "gust_kph"
@@ -100,7 +100,7 @@ struct CurrentDTO: Decodable, Hashable {
 
 
 struct ConditionDTO: Decodable, Hashable {
-    let text: String?
-    let icon: String?
-    let code: Int?
+    let text: String
+    let icon: String
+    let code: Int
 }
