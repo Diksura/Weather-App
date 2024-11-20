@@ -17,13 +17,16 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("\(weatherData?.location.name ?? "Unknown")")
-            
             if let location = locationService.location {
+                
+                Image(systemName: "cloud")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                
+                Text("\(weatherData?.location.name ?? "Unknown")")
+                
                 Text("Latitude: \(location.latitude), Longitude: \(location.longitude)")
+            
             } else {
                 Text("Fetching location...")
             }
