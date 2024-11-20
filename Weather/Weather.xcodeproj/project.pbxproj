@@ -33,18 +33,20 @@
 		B9D2C95F2CEE2AF1006D8B8E /* Exceptions for "Weather" folder in "WeatherTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Constants.swift,
+				Constants/Constants.swift,
 				CurrentLocation.swift,
-				Weather.swift,
+				"Data Models/Weather.swift",
+				ViewModels/CLWeatherViewModel.swift,
 			);
 			target = B9D2C92A2CEE2AC1006D8B8E /* WeatherTests */;
 		};
 		B9D2C9602CEE2AF1006D8B8E /* Exceptions for "Weather" folder in "WeatherUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Constants.swift,
+				Constants/Constants.swift,
 				CurrentLocation.swift,
-				Weather.swift,
+				"Data Models/Weather.swift",
+				ViewModels/CLWeatherViewModel.swift,
 			);
 			target = B9D2C9342CEE2AC1006D8B8E /* WeatherUITests */;
 		};
