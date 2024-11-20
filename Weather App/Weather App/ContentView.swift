@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     @State var weatherData: WeatherDTO?
     
     var body: some View {
@@ -15,7 +16,7 @@ struct ContentView: View {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("\(weatherData?.location?.country ?? "Unknown")")
+            Text("\(weatherData?.location.name ?? "Unknown")")
         }
         .padding()
         .onAppear {
@@ -24,6 +25,7 @@ struct ContentView: View {
             }
         }
     }
+    
     
     func fetchWeatherData() async {
         
@@ -42,6 +44,8 @@ struct ContentView: View {
                 print("invalid response")
                 return
             }
+            
+            print("Response Code: \(httpResponse.statusCode)")
             
             switch httpResponse.statusCode {
             case 200..<300:
