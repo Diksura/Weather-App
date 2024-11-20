@@ -10,16 +10,25 @@ import SwiftUI
 struct ContentView: View {
     
     @State var weatherData: WeatherDTO?
-    
+    @StateObject private var currentLocation = CurrentLocation()
+
     var body: some View {
         VStack {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             Text("\(weatherData?.location.name ?? "Unknown")")
+            
+            if let location = currentLocation.location {
+                Text("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
+            } else {
+                Text("Fetching location...")
+            }
         }
         .padding()
         .onAppear {
+            currentLocation.requestAuthorization()
+            
             Task {
                 await fetchWeatherData()
             }
