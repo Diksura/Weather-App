@@ -10,7 +10,3 @@ import Foundation
 class Constants {
     static let apiKey = "838714aecdf04acaad8173636241811"
 }
-
-protocol testProtocol {
-    func test(available: Bool)
-}
