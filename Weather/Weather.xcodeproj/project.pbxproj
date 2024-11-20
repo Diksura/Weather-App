@@ -34,9 +34,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Constants/Constants.swift,
-				CurrentLocation.swift,
 				"Data Models/Weather.swift",
 				ViewModels/CLWeatherViewModel.swift,
+				ViewModels/CurrentLocation.swift,
 			);
 			target = B9D2C92A2CEE2AC1006D8B8E /* WeatherTests */;
 		};
@@ -44,9 +44,9 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Constants/Constants.swift,
-				CurrentLocation.swift,
 				"Data Models/Weather.swift",
 				ViewModels/CLWeatherViewModel.swift,
+				ViewModels/CurrentLocation.swift,
 			);
 			target = B9D2C9342CEE2AC1006D8B8E /* WeatherUITests */;
 		};
