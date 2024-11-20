@@ -33,6 +33,7 @@
 		B9D2C95F2CEE2AF1006D8B8E /* Exceptions for "Weather" folder in "WeatherTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Constants.swift,
 				CurrentLocation.swift,
 				Weather.swift,
 			);
@@ -41,6 +42,7 @@
 		B9D2C9602CEE2AF1006D8B8E /* Exceptions for "Weather" folder in "WeatherUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Constants.swift,
 				CurrentLocation.swift,
 				Weather.swift,
 			);
