@@ -33,6 +33,7 @@
 		B9D2C95F2CEE2AF1006D8B8E /* Exceptions for "Weather" folder in "WeatherTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CurrentLocation.swift,
 				Weather.swift,
 			);
 			target = B9D2C92A2CEE2AC1006D8B8E /* WeatherTests */;
@@ -40,9 +41,17 @@
 		B9D2C9602CEE2AF1006D8B8E /* Exceptions for "Weather" folder in "WeatherUITests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CurrentLocation.swift,
 				Weather.swift,
 			);
 			target = B9D2C9342CEE2AC1006D8B8E /* WeatherUITests */;
+		};
+		B9D2C9752CEE2E3A006D8B8E /* Exceptions for "Weather" folder in "Weather" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = B9D2C91A2CEE2AC0006D8B8E /* Weather */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -50,6 +59,7 @@
 		B9D2C91D2CEE2AC0006D8B8E /* Weather */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				B9D2C9752CEE2E3A006D8B8E /* Exceptions for "Weather" folder in "Weather" target */,
 				B9D2C95F2CEE2AF1006D8B8E /* Exceptions for "Weather" folder in "WeatherTests" target */,
 				B9D2C9602CEE2AF1006D8B8E /* Exceptions for "Weather" folder in "WeatherUITests" target */,
 			);
@@ -419,6 +429,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Weather/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Weather/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Current Locaion is required to view weather Details.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -447,6 +459,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Weather/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Weather/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Current Locaion is required to view weather Details.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
