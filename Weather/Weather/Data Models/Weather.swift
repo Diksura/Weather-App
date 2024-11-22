@@ -43,14 +43,14 @@ struct CurrentDTO: Decodable, Hashable {
     let condition: ConditionDTO
     let windMph: Double
     let windKph: Double
-    let windDegree: Int
+    let windDegree: Double
     let windDir: String
-    let pressureMb: Int
+    let pressureMb: Double
     let pressureIn: Double
     let precipMM: Double
     let precipIn: Double
-    let humidity: Int
-    let cloud: Int
+    let humidity: Double
+    let cloud: Double
     let feelslikeC: Double
     let feelslikeF: Double
     let windchillC: Double
@@ -59,9 +59,9 @@ struct CurrentDTO: Decodable, Hashable {
     let heatindexF: Double
     let dewpointC: Double
     let dewpointF: Double
-    let visKm: Int
+    let visKm: Double
     let visMi: Double
-    let uv: Int
+    let uv: Double
     let gustMph: Double
     let gustKph: Double
     
