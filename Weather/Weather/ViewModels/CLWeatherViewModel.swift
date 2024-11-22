@@ -29,6 +29,8 @@ struct CLWeatherViewModel {
             return
         }
         
+        print("URL: \(unwrappedURL.absoluteString)")
+        
         do {
             // initialize URL session
             let (data, response) = try await URLSession.shared.data(from: unwrappedURL)
