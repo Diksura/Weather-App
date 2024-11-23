@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct WeatherAlertsDTO {
+struct WeatherAlertsDTO: Decodable, Hashable {
     let location: LocationDTO
     let alerts: AlertsDTO
 }
