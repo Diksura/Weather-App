@@ -12,7 +12,10 @@ struct ContentView: View {
     @StateObject private var locationService = CurrentLocation()
 
     @State var weatherData: WeatherDTO?
-    @State var locationAvailable: Bool = false
+//    @State var locationAvailable: Bool = false
+    
+    // Settings
+    @State var isCelecious: Bool = true
     
 
     var body: some View {
@@ -32,7 +35,7 @@ struct ContentView: View {
                                     .frame(width: 300, height: 300)
                             
 
-                                Text("\(weatherData?.current.tempC ?? 0, specifier: "%.0f")ºC")
+                                Text("\((isCelecious) ? weatherData?.current.tempC ?? 0 : weatherData?.current.tempF ?? 0, specifier: "%.0f")\((isCelecious) ? "°C" : "°F")")
                                     .font(.system(size: 102.0))
                 //                    .fontWeight(.bold)
                                     .fontDesign(.rounded)
@@ -55,7 +58,7 @@ struct ContentView: View {
                             .font(.caption2)
                             .foregroundStyle(.gray)
                     }
-                    .frame(width: .infinity, height: UIScreen.main.bounds.height - 125)
+                    .frame(height: UIScreen.main.bounds.height - safeAreaInsetsTotal())
                     
                     
                     VStack {
@@ -72,7 +75,6 @@ struct ContentView: View {
             }
             
         }
-        .padding()
         .onAppear {
             locationService.requestAuthorization()
         }
@@ -80,9 +82,22 @@ struct ContentView: View {
             if (locationService.isLocationUpdated) {
                 Task {
                     await CLWeatherViewModel(locationService: locationService, weatherData: $weatherData).fetchWeatherData()
+                    locationService.isLocationUpdated = false
                 }
             }
         }
+    }
+    
+    
+    private func safeAreaInsetsTotal() -> CGFloat {
+        let keyWindow = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+            .first { $0.isKeyWindow }
+        
+        let topInset = keyWindow?.safeAreaInsets.top ?? 0
+        let bottomInset = keyWindow?.safeAreaInsets.bottom ?? 0
+        return topInset + bottomInset
     }
 
     
