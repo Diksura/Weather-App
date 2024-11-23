@@ -9,14 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     
+    /// System
     @StateObject private var locationService = CurrentLocation()
 
     @State var weatherData: WeatherDTO?
-//    @State var locationAvailable: Bool = false
+    @State var weatherForecastData: WeatherForecastDTO?
     
-    // Settings
+    //    @State var locationAvailable: Bool = false
+    @State var isAlertActive: Bool = false
+    
+    /// Settings
     @State var isCelecious: Bool = true
     
+    
+    /// View Constrains
+    let uiSquareSize: CGFloat = (CGFloat(UIScreen.main.bounds.width) - 60) / 2
+    let uiRectangleWidth: CGFloat = (CGFloat(UIScreen.main.bounds.width) - 40)
+
 
     var body: some View {
         
@@ -25,6 +34,14 @@ struct ContentView: View {
             if let _ = locationService.location {
                 ScrollView {
                     VStack {
+                        (isAlertActive) ?
+                        Image(systemName: "exclamationmark.triangle")
+                            .foregroundStyle(Color.red)
+                            .font(.system(size: 30))
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding()
+                        : nil
+
                         
                         Spacer()
                         
@@ -58,13 +75,149 @@ struct ContentView: View {
                             .font(.caption2)
                             .foregroundStyle(.gray)
                     }
-                    .frame(height: UIScreen.main.bounds.height - safeAreaInsetsTotal())
+                    .frame(height: UIScreen.main.bounds.height - safeAreaInsetsTotal(requestValue: 1))
                     
                     
                     VStack {
-                        Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+                        
+                        ScrollView(.horizontal, showsIndicators: false){
+                            HStack {
+                                Text("Upcumming Hourly Weather")
+                                    .frame(width: uiRectangleWidth, height: uiSquareSize/2)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(15)
+                                
+                                Text("Upcumming Hourly Weather")
+                                    .frame(width: uiSquareSize/2, height: uiSquareSize/2)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(15)
+                                
+                                Text("Upcumming Hourly Weather")
+                                    .frame(width: uiSquareSize/2, height: uiSquareSize/2)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(15)
+
+                            }
+                            .padding(.leading, 10)
+                        }
+                        .padding(.bottom, 20)
+                        
+                        VStack {
+                            Text("Upcomming Days Details")
+                        }
+                        .frame(width: uiRectangleWidth, height: uiRectangleWidth)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(15)
+                        .padding(.bottom, 20)
+                        
+
+                        
+                        HStack(spacing: 20) {
+                            VStack{
+                                Text("Wind Details")
+                            }
+                            .frame(width: uiSquareSize, height: uiSquareSize)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                            
+                            VStack{
+                                Text("Humity Details")
+                            }
+                            .frame(width: uiSquareSize, height: uiSquareSize)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                        }
+                        .padding(.bottom, 20)
+                        
+                        HStack(spacing: 20) {
+                            VStack{
+                                Text("Pressure Details")
+                            }
+                            .frame(width: uiSquareSize, height: uiSquareSize)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                            
+                            VStack{
+                                Text("Precipitation Details")
+                            }
+                            .frame(width: uiSquareSize, height: uiSquareSize)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                        }
+                        .padding(.bottom, 20)
+                        
+                        
+                        HStack(spacing: 20) {
+                            VStack{
+                                Text("UV Details")
+                            }
+                            .frame(width: uiSquareSize, height: uiSquareSize)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                            
+                            VStack{
+                                Text("Feels like, wind chill Details")
+                            }
+                            .frame(width: uiSquareSize, height: uiSquareSize)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                        }
+                        .padding(.bottom, 20)
+                        
+                        
+                        HStack(spacing: 20) {
+                            VStack{
+                                Text("cloud Details")
+                            }
+                            .frame(width: uiSquareSize, height: uiSquareSize)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                            
+                            VStack{
+                                Text("Air Quality Details")
+                            }
+                            .frame(width: uiSquareSize, height: uiSquareSize)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                        }
+                        .padding(.bottom, 20)
+                        
+                        VStack {
+                            Text("Moon Details")
+                        }
+                        .frame(width: uiRectangleWidth, height: uiSquareSize)
+                        .background(Color.gray.opacity(0.1))
+                        .padding(.bottom, 20)
+                        .cornerRadius(15)
+
+
+                        VStack {
+                            Text("Air Details")
+                        }
+                        .frame(width: uiRectangleWidth, height: uiSquareSize)
+                        .background(Color.gray.opacity(0.1))
+                        .padding(.bottom, 20)
+                        .cornerRadius(15)
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        Text("History Data > ")
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.trailing, 20)
+
+                        
+                        
                     }
-                    .padding(.vertical, 40)
+                    .padding(.top, safeAreaInsetsTotal(requestValue: 2) + 20)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 10)
+                    
                     
                 }
                 .scrollIndicators(.hidden)
@@ -82,6 +235,9 @@ struct ContentView: View {
             if (locationService.isLocationUpdated) {
                 Task {
                     await CLWeatherViewModel(locationService: locationService, weatherData: $weatherData).fetchWeatherData()
+                    
+                    await CLWeatherForecastViewModel(locationService: locationService, weatherForecastData: $weatherForecastData).fetchWeatherForecastData()
+                    
                     locationService.isLocationUpdated = false
                 }
             }
@@ -89,15 +245,26 @@ struct ContentView: View {
     }
     
     
-    private func safeAreaInsetsTotal() -> CGFloat {
+    private func safeAreaInsetsTotal(requestValue: Int) -> CGFloat {
+        /// Request a value to return requred value
+        ///     1 --> return the screen hight after reducing the area taken by safearea
+        ///     2 --> return the hight taken for bottom of the screen by safearea
+        
         let keyWindow = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .flatMap { $0.windows }
             .first { $0.isKeyWindow }
         
-        let topInset = keyWindow?.safeAreaInsets.top ?? 0
-        let bottomInset = keyWindow?.safeAreaInsets.bottom ?? 0
-        return topInset + bottomInset
+        switch requestValue {
+        case 1:
+            let topInset = keyWindow?.safeAreaInsets.top ?? 0
+            let bottomInset = keyWindow?.safeAreaInsets.bottom ?? 0
+            return topInset + bottomInset
+        case 2:
+            return keyWindow?.safeAreaInsets.bottom ?? 0
+        default:
+            return 0
+        }
     }
 
     
