@@ -24,7 +24,7 @@ struct CLWeatherViewModel {
         
                 
         // Creating URL
-        let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)&aqi=no")
+        let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)&aqi=yes")
         guard let unwrappedURL = url else {
             return
         }
