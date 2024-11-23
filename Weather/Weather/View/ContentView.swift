@@ -14,6 +14,8 @@ struct ContentView: View {
 
     @State var weatherData: WeatherDTO?
     @State var weatherForecastData: WeatherForecastDTO?
+    @State var weatherAlertsData: WeatherAlertsDTO?
+    @State var weatherAstronomyData: WeatherAstroDTO?
     
     //    @State var locationAvailable: Bool = false
     @State var isAlertActive: Bool = false
@@ -237,6 +239,10 @@ struct ContentView: View {
                     await CLWeatherViewModel(locationService: locationService, weatherData: $weatherData).fetchWeatherData()
                     
                     await CLWeatherForecastViewModel(locationService: locationService, weatherForecastData: $weatherForecastData).fetchWeatherForecastData()
+                    
+                    await CLWeatherAlertsViewModel(locationService: locationService, weatherAlertsData: $weatherAlertsData).fetchWeatherAlerts()
+                    
+                    await CLWeatherAstronomyViewModel(locationService: locationService, weatherAstronomy: $weatherAstronomyData).fetchWeatherAstronomy()
                     
                     locationService.isLocationUpdated = false
                 }
