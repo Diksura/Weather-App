@@ -38,6 +38,18 @@ class Utilities {
         return dateFormatter.string(from: currentDate)
     }
     
+    func getNextDateString() -> String {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        if let nextDate = calendar.date(byAdding: .day, value: 1, to: currentDate) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            return dateFormatter.string(from: nextDate)
+        }
+        return "Error calculating next date"
+    }
+
+    
     func getCurrentHourString() -> String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
