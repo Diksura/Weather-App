@@ -21,7 +21,7 @@ struct CLWeatherAstronomyViewModel {
         }
         
         // Creating URL
-        let url = URL(string: "https://api.weatherapi.com/v1/astronomy.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)&dt=\(getCurrentDateString())")
+        let url = URL(string: "https://api.weatherapi.com/v1/astronomy.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)&dt=\(Utilities().getCurrentDateString())")
         guard let unwrappedURL = url else { return }
         
         print("Weather Astronomy - URL: \(unwrappedURL.absoluteString)")
@@ -58,12 +58,6 @@ struct CLWeatherAstronomyViewModel {
         
     }
     
-    func getCurrentDateString() -> String {
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.string(from: currentDate)
-    }
     
     
     
