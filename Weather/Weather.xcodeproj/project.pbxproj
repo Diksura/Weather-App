@@ -52,6 +52,7 @@
 				ViewModels/CLWeatherForecastViewModel.swift,
 				ViewModels/CLWeatherViewModel.swift,
 				ViewModels/CurrentLocation.swift,
+				ViewModels/Utilities.swift,
 			);
 			target = B9D2C92A2CEE2AC1006D8B8E /* WeatherTests */;
 		};
@@ -77,6 +78,7 @@
 				ViewModels/CLWeatherForecastViewModel.swift,
 				ViewModels/CLWeatherViewModel.swift,
 				ViewModels/CurrentLocation.swift,
+				ViewModels/Utilities.swift,
 			);
 			target = B9D2C9342CEE2AC1006D8B8E /* WeatherUITests */;
 		};
