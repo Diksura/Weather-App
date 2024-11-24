@@ -15,3 +15,8 @@ struct WeatherApp: App {
         }
     }
 }
+
+
+/// TODO:
+///     CustomHourWeatherUI --> Add Snow Details too (snow and rain)
+///
