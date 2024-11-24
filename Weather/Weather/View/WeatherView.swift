@@ -17,6 +17,9 @@ struct WeatherView: View {
     @State var weatherAlertsData: WeatherAlertsDTO?
     @State var weatherAstronomyData: WeatherAstroDTO?
     
+    @State var hourWeather: [ForecastHourDTO]?
+
+    
     //    @State var locationAvailable: Bool = false
     @State var isAlertActive: Bool = false
     
@@ -82,18 +85,8 @@ struct WeatherView: View {
                     
                     VStack {
                         
-                        ScrollView(.horizontal, showsIndicators: false){
-                            
-
-                            HStack {
-                                
-                                ForEach(0..<12) { index in
-                                    CustomHourWeatherUI(hour: .constant("5AM"), image: .constant("Cloudy"), precipitation: .constant("50%"), temperature: .constant("23*"))
-                                }
-
-                            }
-                        }
-                        .padding(10)
+                        
+                        CustomHourlyForecast(hourWeather: $hourWeather)
                         
                         
                         CustomUIRectangleTile(tileTitle: .constant("Forcasting Days"), height: Constants().uiRectangleWidth) {
@@ -193,6 +186,8 @@ struct WeatherView: View {
                     await CLWeatherAlertsViewModel(locationService: locationService, weatherAlertsData: $weatherAlertsData).fetchWeatherAlerts()
                     
                     await CLWeatherAstronomyViewModel(locationService: locationService, weatherAstronomy: $weatherAstronomyData).fetchWeatherAstronomy()
+                    
+                    hourWeather = HourlyWeatherManager().getHourlyWeather(weatherForecastData: weatherForecastData)
                     
                     locationService.isLocationUpdated = false
                 }
