@@ -88,7 +88,7 @@ struct WeatherView: View {
                             HStack {
                                 
                                 ForEach(0..<12) { index in
-                                    uiHourWeather(hour: "5AM", image: "Cloudy", precipitation: "50%", temperature: "23*")
+                                    CustomHourWeatherUI(hour: .constant("5AM"), image: .constant("Cloudy"), precipitation: .constant("50%"), temperature: .constant("23*"))
                                 }
 
                             }
@@ -96,59 +96,60 @@ struct WeatherView: View {
                         .padding(10)
                         
                         
-                        uiRectangleTile(tileTitle: "Forcasting Days", height: uiRectangleWidth) {
+                        CustomUIRectangleTile(tileTitle: .constant("Forcasting Days"), height: Constants().uiRectangleWidth) {
                             // TODO
+                            Text("")
                         }
 
                         
                         HStack(spacing: 10) {
-                            uiSquarTile(tileTitle: "Wind Details") {
+                            CustomUISquarTile(tileTitle: .constant("Wind Details")) {
                                 Text("")
                             }
                             
-                            uiSquarTile(tileTitle: "Humidity Details") {
+                            CustomUISquarTile(tileTitle: .constant("Humidity Details")) {
                                 Text("")
                             }
                             
                         }
                         
                         
-                        uiRectangleTile(tileTitle: "Feels like, wind chill Details", height: nil) {
+                        CustomUIRectangleTile(tileTitle: .constant("Feels like, wind chill Details"), height: nil) {
                             // TODO
                         }
                         
-                        uiRectangleTile(tileTitle: "Precipitation Details", height: nil) {
+                        CustomUIRectangleTile(tileTitle: .constant("Precipitation Details"), height: nil) {
                             // TODO
                         }
                     
                         
                         
                         HStack(spacing: 10) {
-                            uiSquarTile(tileTitle: "UV Details") {
+                            CustomUISquarTile(tileTitle: .constant("UV Details")) {
                                 Text("")
                             }
                             
-                            uiSquarTile(tileTitle: "Pressure Details") {
+                            CustomUISquarTile(tileTitle: .constant("Pressure Details")) {
                                 Text("")
                             }
                         }
                         
                         
                         HStack(spacing: 10) {
-                            uiSquarTile(tileTitle: "Cloud Details") {
+                            CustomUISquarTile(tileTitle: .constant("Cloud Details")) {
                                 Text("")
                             }
 
-                            uiSquarTile(tileTitle: "Air Quality Details") {
+                            CustomUISquarTile(tileTitle: .constant("Air Quality Details")) {
                                 Text("")
                             }
                         }
                         
-                        uiRectangleTile(tileTitle: "Moon Details", height: nil) {
+                        CustomUIRectangleTile(tileTitle: .constant("Moon Details"), height: nil) {
                             // TODO
                         }
                         
-                        uiRectangleTile(tileTitle: "Air Details", height: nil) {
+                        CustomUIRectangleTile(tileTitle: .constant("Air Details"), height: nil) {
                             // TODO
                         }
 
@@ -199,115 +200,7 @@ struct WeatherView: View {
         }
     }
     
-    
-    func getHourlyWeather(weatherForecastData: WeatherForecastDTO?) -> [ForecastHourDTO] {
-        var hourlyWeather: [ForecastHourDTO] = []
-        
-        let currentDate = Utilities().getCurrentDateString()
-        let currentHour = Int(Utilities().getCurrentHourString()) ?? 0
-        
-        guard let forecast = weatherForecastData else {
-            print("getHourlyWeather() --> No forecast data available")
-            return hourlyWeather
-        }
-        
-        if let currentDay: ForecastDayDTO = forecast.forecast.forecastday.first(where: { $0.date == currentDate }) {
-            
-            if currentHour < currentDay.hourly.count {
-                hourlyWeather.append(contentsOf: currentDay.hourly[(currentHour + 1)...])
-            } else {
-                print("getHourlyWeather() --> Current hour exceeds available hourly data")
-            }
-            
-        } else {
-            print("getHourlyWeather() --> No matching day found for the current date")
-        }
-        
-        
-        for hour in hourlyWeather {
-            print("Hour: \(hour.time) --> \(hour.tempC)")
-        }
 
-        return hourlyWeather
-    }
-
-    
-    
-    
-    func uiHourWeather(hour: String, image: String, precipitation: String, temperature: String) -> some View {
-        
-        return VStack(spacing: 0) {
-            Text(hour)
-                .font(.caption)
-                .foregroundStyle(.primary.opacity(0.7))
-            
-            Image(image)
-                .resizable()
-                .frame(width: uiSquareSize/5, height: uiSquareSize/5)
-            
-            Text(precipitation)
-                .font(.system(size: 9))
-                .fontWeight(.bold)
-                .foregroundStyle(.primary.opacity(0.7))
-            
-            Text(temperature)
-                .font(.subheadline)
-                .foregroundStyle(.primary.opacity(0.7))
-            
-        }
-        .frame(height: uiSquareSize/1.8)
-        .padding(.horizontal, 20)
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(15)
-        
-    }
-    
-    
-    func uiSquarTile<TileContent: View>(tileTitle: String, @ViewBuilder tileContent: () -> TileContent) -> some View {
-        
-        return VStack {
-            Text("\(tileTitle)")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 15)
-                .padding(.bottom, 15)
-                .padding(.horizontal, 15)
-
-            
-            Spacer()
-            
-            tileContent()
-        }
-        .frame(width: uiSquareSize, height: uiSquareSize)
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(15)
-    }
-
-    func uiRectangleTile<TileContent: View>(tileTitle: String, height: CGFloat?, @ViewBuilder tileContent: () -> TileContent) -> some View {
-        
-        return VStack(alignment: .leading) {
-            Text("\(tileTitle)")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, 15)
-//                .padding(.bottom, 5)
-                .padding(.horizontal, 15)
-            
-            Divider()
-                .padding(.horizontal, 10)
-            
-            Spacer()
-            
-            tileContent()
-        }
-        .frame(width: uiRectangleWidth, height: height)
-        .frame(minHeight: uiSquareSize)
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(15)
-        
-    }
 
     
 }
