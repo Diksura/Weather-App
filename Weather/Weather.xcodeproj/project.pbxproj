@@ -47,11 +47,16 @@
 				"Data Models/WeatherAlerts.swift",
 				"Data Models/WeatherAstro.swift",
 				"Data Models/WeatherForecast.swift",
+				View/CustomHourlyForecast.swift,
+				View/CustomHourWeatherUI.swift,
+				View/CustomUIRectangleTile.swift,
+				View/CustomUISquarTile.swift,
 				ViewModels/CLWeatherAlertsViewModel.swift,
 				ViewModels/CLWeatherAstronomyViewModel.swift,
 				ViewModels/CLWeatherForecastViewModel.swift,
 				ViewModels/CLWeatherViewModel.swift,
 				ViewModels/CurrentLocation.swift,
+				ViewModels/HourlyWeatherManager.swift,
 				ViewModels/Utilities.swift,
 			);
 			target = B9D2C92A2CEE2AC1006D8B8E /* WeatherTests */;
@@ -73,11 +78,16 @@
 				"Data Models/WeatherAlerts.swift",
 				"Data Models/WeatherAstro.swift",
 				"Data Models/WeatherForecast.swift",
+				View/CustomHourlyForecast.swift,
+				View/CustomHourWeatherUI.swift,
+				View/CustomUIRectangleTile.swift,
+				View/CustomUISquarTile.swift,
 				ViewModels/CLWeatherAlertsViewModel.swift,
 				ViewModels/CLWeatherAstronomyViewModel.swift,
 				ViewModels/CLWeatherForecastViewModel.swift,
 				ViewModels/CLWeatherViewModel.swift,
 				ViewModels/CurrentLocation.swift,
+				ViewModels/HourlyWeatherManager.swift,
 				ViewModels/Utilities.swift,
 			);
 			target = B9D2C9342CEE2AC1006D8B8E /* WeatherUITests */;
