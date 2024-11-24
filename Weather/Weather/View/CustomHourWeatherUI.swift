@@ -23,10 +23,12 @@ struct CustomHourWeatherUI: View {
                 .resizable()
                 .frame(width: Constants().uiSquareSize/5, height: Constants().uiSquareSize/5)
             
-            Text(precipitation)
-                .font(.system(size: 9))
-                .fontWeight(.bold)
-                .foregroundStyle(.primary.opacity(0.7))
+            if (precipitation != "0%") {
+                Text(precipitation)
+                    .font(.system(size: 9))
+                    .fontWeight(.bold)
+                    .foregroundStyle(.primary.opacity(0.7))
+            }
             
             Text(temperature)
                 .font(.subheadline)
