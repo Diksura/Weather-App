@@ -38,4 +38,12 @@ class Utilities {
         return dateFormatter.string(from: currentDate)
     }
     
+    func getCurrentHourString() -> String {
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "HH"
+        return dateFormatter.string(from: currentDate)
+    }
+    
 }
