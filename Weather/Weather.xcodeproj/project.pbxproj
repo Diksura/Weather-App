@@ -34,9 +34,25 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Constants/Constants.swift,
+				"Data Models/AirQuality.swift",
+				"Data Models/Alert.swift",
+				"Data Models/Astro.swift",
+				"Data Models/Condition.swift",
+				"Data Models/Current.swift",
+				"Data Models/ForecastDay.swift",
+				"Data Models/ForecastFullDay.swift",
+				"Data Models/ForecastHour.swift",
+				"Data Models/Location.swift",
 				"Data Models/Weather.swift",
+				"Data Models/WeatherAlerts.swift",
+				"Data Models/WeatherAstro.swift",
+				"Data Models/WeatherForecast.swift",
+				ViewModels/CLWeatherAlertsViewModel.swift,
+				ViewModels/CLWeatherAstronomyViewModel.swift,
+				ViewModels/CLWeatherForecastViewModel.swift,
 				ViewModels/CLWeatherViewModel.swift,
 				ViewModels/CurrentLocation.swift,
+				ViewModels/Utilities.swift,
 			);
 			target = B9D2C92A2CEE2AC1006D8B8E /* WeatherTests */;
 		};
@@ -44,9 +60,25 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Constants/Constants.swift,
+				"Data Models/AirQuality.swift",
+				"Data Models/Alert.swift",
+				"Data Models/Astro.swift",
+				"Data Models/Condition.swift",
+				"Data Models/Current.swift",
+				"Data Models/ForecastDay.swift",
+				"Data Models/ForecastFullDay.swift",
+				"Data Models/ForecastHour.swift",
+				"Data Models/Location.swift",
 				"Data Models/Weather.swift",
+				"Data Models/WeatherAlerts.swift",
+				"Data Models/WeatherAstro.swift",
+				"Data Models/WeatherForecast.swift",
+				ViewModels/CLWeatherAlertsViewModel.swift,
+				ViewModels/CLWeatherAstronomyViewModel.swift,
+				ViewModels/CLWeatherForecastViewModel.swift,
 				ViewModels/CLWeatherViewModel.swift,
 				ViewModels/CurrentLocation.swift,
+				ViewModels/Utilities.swift,
 			);
 			target = B9D2C9342CEE2AC1006D8B8E /* WeatherUITests */;
 		};
