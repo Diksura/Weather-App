@@ -83,142 +83,84 @@ struct WeatherView: View {
                     VStack {
                         
                         ScrollView(.horizontal, showsIndicators: false){
+                            
+
                             HStack {
-                                Text("Upcumming Hourly Weather")
-                                    .frame(width: uiRectangleWidth, height: uiSquareSize/2)
-                                    .background(Color.gray.opacity(0.1))
-                                    .cornerRadius(15)
                                 
-                                Text("Upcumming Hourly Weather")
-                                    .frame(width: uiSquareSize/2, height: uiSquareSize/2)
-                                    .background(Color.gray.opacity(0.1))
-                                    .cornerRadius(15)
-                                
-                                Text("Upcumming Hourly Weather")
-                                    .frame(width: uiSquareSize/2, height: uiSquareSize/2)
-                                    .background(Color.gray.opacity(0.1))
-                                    .cornerRadius(15)
+                                ForEach(0..<12) { index in
+                                    uiHourWeather(hour: "5AM", image: "Cloudy", precipitation: "50%", temperature: "23*")
+                                }
 
                             }
-                            .padding(.leading, 10)
                         }
+                        .padding(10)
                         
-                        VStack(alignment: .leading) {
-                            Text("Forcasting Days")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.top, 15)
-//                                .padding(.bottom, 5)
-                                .padding(.horizontal, 15)
-                            
-                            Divider()
-                                .padding(.horizontal, 10)
-                            
-                            Spacer()
+                        
+                        uiRectangleTile(tileTitle: "Forcasting Days", height: uiRectangleWidth) {
+                            // TODO
                         }
-                        .frame(width: uiRectangleWidth, height: uiRectangleWidth)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
-
-                        
 
                         
                         HStack(spacing: 10) {
-                            VStack{
-                                Text("Wind Details")
+                            uiSquarTile(tileTitle: "Wind Details") {
+                                Text("")
                             }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
                             
-                            VStack{
-                                Text("Humity Details")
+                            uiSquarTile(tileTitle: "Humidity Details") {
+                                Text("")
                             }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
+                            
                         }
                         
-                        VStack{
-                            Text("Feels like, wind chill Details")
-                        }
-                        .frame(width: uiRectangleWidth)
-                        .frame(minHeight: uiSquareSize)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
                         
-                        VStack{
-                            Text("Precipitation Details")
+                        uiRectangleTile(tileTitle: "Feels like, wind chill Details", height: nil) {
+                            // TODO
                         }
-                        .frame(width: uiRectangleWidth)
-                        .frame(minHeight: uiSquareSize)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
+                        
+                        uiRectangleTile(tileTitle: "Precipitation Details", height: nil) {
+                            // TODO
+                        }
+                    
                         
                         
                         HStack(spacing: 10) {
-                            VStack{
-                                Text("UV Details")
+                            uiSquarTile(tileTitle: "UV Details") {
+                                Text("")
                             }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
                             
-                            VStack{
-                                Text("Pressure Details")
+                            uiSquarTile(tileTitle: "Pressure Details") {
+                                Text("")
                             }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                        
                         }
                         
                         
                         HStack(spacing: 10) {
-                            VStack{
-                                Text("cloud Details")
+                            uiSquarTile(tileTitle: "Cloud Details") {
+                                Text("")
                             }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                            
-                            VStack{
-                                Text("Air Quality Details")
+
+                            uiSquarTile(tileTitle: "Air Quality Details") {
+                                Text("")
                             }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
                         }
                         
-                        VStack {
-                            Text("Moon Details")
+                        uiRectangleTile(tileTitle: "Moon Details", height: nil) {
+                            // TODO
                         }
-                        .frame(width: uiRectangleWidth)
-                        .frame(minHeight: uiSquareSize)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
+                        
+                        uiRectangleTile(tileTitle: "Air Details", height: nil) {
+                            // TODO
+                        }
 
-
-                        VStack {
-                            Text("Air Details")
-                        }
-                        .frame(width: uiRectangleWidth)
-                        .frame(minHeight: uiSquareSize)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
                         
                         
-                        
-                        
-                        
-                        
-                        
-                        
-                        Text("History Data > ")
+                        Text("History Data")
                             .foregroundStyle(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.trailing, 20)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 20)
+                            .background(Color.gray.opacity(0.1))
+                            .cornerRadius(15)
+                            .padding(.horizontal, 10)
 
                         
                         
@@ -256,7 +198,83 @@ struct WeatherView: View {
             }
         }
     }
+    
+    
+    
+    func uiHourWeather(hour: String, image: String, precipitation: String, temperature: String) -> some View {
+        
+        return VStack(spacing: 0) {
+            Text(hour)
+                .font(.caption)
+                .foregroundStyle(.primary.opacity(0.7))
+            
+            Image(image)
+                .resizable()
+                .frame(width: uiSquareSize/5, height: uiSquareSize/5)
+            
+            Text(precipitation)
+                .font(.system(size: 9))
+                .fontWeight(.bold)
+                .foregroundStyle(.primary.opacity(0.7))
+            
+            Text(temperature)
+                .font(.subheadline)
+                .foregroundStyle(.primary.opacity(0.7))
+            
+        }
+        .frame(height: uiSquareSize/1.8)
+        .padding(.horizontal, 20)
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(15)
+        
+    }
+    
+    
+    func uiSquarTile<TileContent: View>(tileTitle: String, @ViewBuilder tileContent: () -> TileContent) -> some View {
+        
+        return VStack {
+            Text("\(tileTitle)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 15)
+                .padding(.bottom, 15)
+                .padding(.horizontal, 15)
 
+            
+            Spacer()
+            
+            tileContent()
+        }
+        .frame(width: uiSquareSize, height: uiSquareSize)
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(15)
+    }
+
+    func uiRectangleTile<TileContent: View>(tileTitle: String, height: CGFloat?, @ViewBuilder tileContent: () -> TileContent) -> some View {
+        
+        return VStack(alignment: .leading) {
+            Text("\(tileTitle)")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 15)
+//                .padding(.bottom, 5)
+                .padding(.horizontal, 15)
+            
+            Divider()
+                .padding(.horizontal, 10)
+            
+            Spacer()
+            
+            tileContent()
+        }
+        .frame(width: uiRectangleWidth, height: height)
+        .frame(minHeight: uiSquareSize)
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(15)
+        
+    }
 
     
 }
