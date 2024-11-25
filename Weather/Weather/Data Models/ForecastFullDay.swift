@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct ForecastFullDayDTO: Decodable, Hashable {
+struct ForecastFullDayDTO: Decodable, Hashable, Identifiable {
+    var id: String = UUID().uuidString
+    var date: String = ""
     let maxtempC: Double
     let maxtempF: Double
     let mintempC: Double
