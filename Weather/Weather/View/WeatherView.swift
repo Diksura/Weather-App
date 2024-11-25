@@ -17,14 +17,15 @@ struct WeatherView: View {
     @State var weatherAlertsData: WeatherAlertsDTO?
     @State var weatherAstronomyData: WeatherAstroDTO?
     
+    /// Make these variables mutable so if the valu 'nil' it'll show loading view while loading
     @State var hourWeather: [ForecastHourDTO]?
+    @State var forecastDaysList: [ForecastFullDayDTO]?
 
     
     //    @State var locationAvailable: Bool = false
     @State var isAlertActive: Bool = false
     
-    /// Settings
-    @State var isCelecious: Bool = true
+
     
     
     /// View Constrains
@@ -57,7 +58,7 @@ struct WeatherView: View {
                                     .frame(width: 300, height: 300)
                             
 
-                                Text("\((isCelecious) ? weatherData?.current.tempC ?? 0 : weatherData?.current.tempF ?? 0, specifier: "%.0f")\((isCelecious) ? "°C" : "°F")")
+                                Text("\((Constants().isCelecious) ? weatherData?.current.tempC ?? 0 : weatherData?.current.tempF ?? 0, specifier: "%.0f")\((Constants().isCelecious) ? "°C" : "°F")")
                                     .font(.system(size: 102.0))
                 //                    .fontWeight(.bold)
                                     .fontDesign(.rounded)
@@ -89,9 +90,13 @@ struct WeatherView: View {
                         CustomHourlyForecast(hourWeather: $hourWeather)
                         
                         
-                        CustomUIRectangleTile(tileTitle: .constant("Forcasting Days"), height: Constants().uiRectangleWidth) {
-                            // TODO
-                            Text("")
+                        CustomUIRectangleTile(tileTitle: .constant("Forcasting Days"), height: nil) {
+
+                            ScrollView {
+                                    CustomDaysForecast(forecastDaysList: $forecastDaysList)
+                            }
+                            .frame(height: Constants().uiRectangleWidth * 1.25)
+                            .scrollIndicators(.hidden)
                         }
 
                         
@@ -179,15 +184,21 @@ struct WeatherView: View {
         .onChange(of: locationService.isLocationUpdated) {
             if (locationService.isLocationUpdated) {
                 Task {
+                    
+                    let forecastViewModel = CLWeatherForecastViewModel(locationService: locationService, weatherForecastData: $weatherForecastData)
+                    
+                    
                     await CLWeatherViewModel(locationService: locationService, weatherData: $weatherData).fetchWeatherData()
                     
-                    await CLWeatherForecastViewModel(locationService: locationService, weatherForecastData: $weatherForecastData).fetchWeatherForecastData()
+                    await forecastViewModel.fetchWeatherForecastData()
                     
                     await CLWeatherAlertsViewModel(locationService: locationService, weatherAlertsData: $weatherAlertsData).fetchWeatherAlerts()
                     
                     await CLWeatherAstronomyViewModel(locationService: locationService, weatherAstronomy: $weatherAstronomyData).fetchWeatherAstronomy()
                     
-                    hourWeather = HourlyWeatherManager().getHourlyWeather(weatherForecastData: weatherForecastData)
+                    
+                    hourWeather = forecastViewModel.getHourlyWeather(weatherForecastData: weatherForecastData)
+                    forecastDaysList = forecastViewModel.getForecastDaysList(weatherForecastData: weatherForecastData)
                     
                     locationService.isLocationUpdated = false
                 }
@@ -195,6 +206,22 @@ struct WeatherView: View {
         }
     }
     
+    func getForecastDaysList(weatherForecastData: WeatherForecastDTO?) -> [ForecastFullDayDTO] {
+        
+        var forecastDaysList: [ForecastFullDayDTO] = []
+        
+        guard let verifiedWeatherForecastData = weatherForecastData?.forecast else {
+            print("getForecastDaysList() - No weather forecast data")
+            return []
+        }
+        
+        for forecastday in verifiedWeatherForecastData.forecastday {
+            forecastDaysList.append(forecastday.fullDay)
+        }
+        
+        return forecastDaysList
+        
+    }
 
 
     
