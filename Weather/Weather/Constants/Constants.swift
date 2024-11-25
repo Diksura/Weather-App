@@ -11,6 +11,11 @@ class Constants {
     /// API Key
     static let apiKey = "838714aecdf04acaad8173636241811"
     
+    /// Settings
+    @State var isCelecious: Bool = true
+    @State var isSpeedKPH: Bool = true
+    @State var isDistanceKm: Bool = true
+    
     /// View Constrains
     let uiSquareSize: CGFloat = (CGFloat(UIScreen.main.bounds.width) - 60) / 2
     let uiRectangleWidth: CGFloat = (CGFloat(UIScreen.main.bounds.width) - 40)
