@@ -58,4 +58,20 @@ class Utilities {
         return dateFormatter.string(from: currentDate)
     }
     
+    
+    func formatDateString(inputDateString: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd"
+        
+        guard let date = inputFormatter.date(from: inputDateString) else {
+            print("Invalid date string")
+            return inputDateString
+        }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd EEEE" // Format: "26 Tuesday"
+        return outputFormatter.string(from: date)
+    }
+
+    
 }
