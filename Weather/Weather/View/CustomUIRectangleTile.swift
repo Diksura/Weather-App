@@ -26,10 +26,9 @@ struct CustomUIRectangleTile<TileContent: View>: View {
             
             Divider()
                 .padding(.horizontal, 10)
-            
-            Spacer()
-            
+                        
             tileContent()
+                .padding(.bottom, 10)
         }
         .frame(width: Constants().uiRectangleWidth, height: height)
         .frame(minHeight: Constants().uiSquareSize)
