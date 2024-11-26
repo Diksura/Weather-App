@@ -42,7 +42,7 @@ struct ForecastDayRow: View {
                         .font(.subheadline)
 
                     HStack {
-                        Text("Max: \(temperatureText(for: verfiesForecastDay.maxtempC, verfiesForecastDay.maxtempF))")
+                        Text("Max: \(temperatureText(for: verfiesForecastDay.maxtempC, verfiesForecastDay.maxtempF))º")
                             .foregroundStyle(.primary.opacity(0.5))
                             .font(.system(size: 14))
                         Spacer()
