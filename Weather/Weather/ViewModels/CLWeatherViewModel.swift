@@ -13,6 +13,7 @@ struct CLWeatherViewModel {
     @ObservedObject var locationService: CurrentLocation
     @Binding var weatherData: WeatherDTO?
     
+    var language: String = ""
     
     
     func fetchWeatherData() async {
@@ -24,7 +25,7 @@ struct CLWeatherViewModel {
         
                 
         // Creating URL
-        let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)&aqi=yes")
+        let url = URL(string: "https://api.weatherapi.com/v1/current.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)&aqi=yes\((!Constants().isLanguageEng) ? "&lang=\(language)" : "")")
         guard let unwrappedURL = url else {
             return
         }
