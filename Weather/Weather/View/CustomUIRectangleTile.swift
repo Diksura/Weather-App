@@ -11,6 +11,7 @@ struct CustomUIRectangleTile<TileContent: View>: View {
     
     @Binding var tileTitle: String
     var height: CGFloat?
+    var color: Color = .gray.opacity(0.1)
     
     @ViewBuilder var tileContent: () -> TileContent
     
@@ -32,7 +33,7 @@ struct CustomUIRectangleTile<TileContent: View>: View {
         }
         .frame(width: Constants().uiRectangleWidth, height: height)
         .frame(minHeight: Constants().uiSquareSize)
-        .background(Color.gray.opacity(0.1))
+        .background(color)
         .cornerRadius(15)
     }
     
