@@ -24,6 +24,7 @@ struct WeatherView: View {
     
     //    @State var locationAvailable: Bool = false
     @State var isAlertActive: Bool = false
+    @State var isContainCritical: Bool = false
     
 
     
@@ -89,6 +90,12 @@ struct WeatherView: View {
                         
                         CustomHourlyForecast(hourWeather: $hourWeather)
                         
+                        if(true) {
+//                        if(weatherAlertsData?.alerts.alert.count ?? 0 > 0) {
+                            CustomUIRectangleTile(tileTitle: .constant("Alerts"), height: nil, color: (isContainCritical) ?.red.opacity(0.5) : .orange.opacity(0.3)) {
+                                // TODO
+                            }
+                        }
                         
                         CustomUIRectangleTile(tileTitle: .constant("Forcasting Days"), height: nil) {
 
