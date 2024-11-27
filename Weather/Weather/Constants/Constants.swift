@@ -18,6 +18,8 @@ class Constants {
     @State var isLanguageEng: Bool = true
     @State var isPrecipitationMM: Bool = true
     
+    @State var pressureUnitType: PressureUnits = PressureUnits.kPa
+    
     var language: [Language] = [
         Language(language: "Arabic", languageCode: "ar"),
         Language(language: "Bengali", languageCode: "bn"),
