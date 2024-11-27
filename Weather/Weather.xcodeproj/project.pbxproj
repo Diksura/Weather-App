@@ -34,6 +34,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Constants/Constants.swift,
+				Constants/PreviewConstants.swift,
 				"Data Models/AirQuality.swift",
 				"Data Models/Alert.swift",
 				"Data Models/Astro.swift",
@@ -51,6 +52,10 @@
 				View/CustomDaysForecast.swift,
 				View/CustomHourlyForecast.swift,
 				View/CustomHourWeatherUI.swift,
+				View/CustomTileFeelsLike.swift,
+				View/CustomTileHumidity.swift,
+				View/CustomTilePrecipitation.swift,
+				View/CustomTileWind.swift,
 				View/CustomUIRectangleTile.swift,
 				View/CustomUISquarTile.swift,
 				ViewModels/CLWeatherAlertsViewModel.swift,
@@ -66,6 +71,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Constants/Constants.swift,
+				Constants/PreviewConstants.swift,
 				"Data Models/AirQuality.swift",
 				"Data Models/Alert.swift",
 				"Data Models/Astro.swift",
@@ -83,6 +89,10 @@
 				View/CustomDaysForecast.swift,
 				View/CustomHourlyForecast.swift,
 				View/CustomHourWeatherUI.swift,
+				View/CustomTileFeelsLike.swift,
+				View/CustomTileHumidity.swift,
+				View/CustomTilePrecipitation.swift,
+				View/CustomTileWind.swift,
 				View/CustomUIRectangleTile.swift,
 				View/CustomUISquarTile.swift,
 				ViewModels/CLWeatherAlertsViewModel.swift,
