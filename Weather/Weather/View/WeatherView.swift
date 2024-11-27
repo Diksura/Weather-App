@@ -55,7 +55,7 @@ struct WeatherView: View {
                         
                         VStack{
                             VStack(spacing: 0) {
-                                Image("Cloudy-Sunny")
+                                Image("\(utilities.getWeatherImage(code: weatherData?.current.condition.code ?? 1003))")
                                     .resizable()
                                     .frame(width: 300, height: 300)
                             
@@ -110,7 +110,7 @@ struct WeatherView: View {
                         
                         HStack(spacing: 10) {
                             CustomUISquarTile(tileTitle: .constant("Wind Details")) {
-                                Text("")
+                                CustomTileWind(direction: .constant(weatherData?.current.windDir ?? "N/A"), speed: .constant(((constants.isSpeedKPH) ? weatherData?.current.windKph : weatherData?.current.windMph) ?? 0), windDegree: .constant(weatherData?.current.windDegree ?? 0))
                             }
                             
                             CustomUISquarTile(tileTitle: .constant("Humidity Details")) {
@@ -135,7 +135,7 @@ struct WeatherView: View {
                             }
                             
                             CustomUISquarTile(tileTitle: .constant("Pressure Details")) {
-                                Text("")
+                                CustomTilePressure(pressureMb: .constant(weatherData?.current.pressureMb ?? 0), pressureIn: .constant(weatherData?.current.pressureIn ?? 0))
                             }
                         }
                         
@@ -225,22 +225,6 @@ struct WeatherView: View {
         }
     }
     
-    func getForecastDaysList(weatherForecastData: WeatherForecastDTO?) -> [ForecastFullDayDTO] {
-        
-        var forecastDaysList: [ForecastFullDayDTO] = []
-        
-        guard let verifiedWeatherForecastData = weatherForecastData?.forecast else {
-            print("getForecastDaysList() - No weather forecast data")
-            return []
-        }
-        
-        for forecastday in verifiedWeatherForecastData.forecastday {
-            forecastDaysList.append(forecastday.fullDay)
-        }
-        
-        return forecastDaysList
-        
-    }
 
 
     
