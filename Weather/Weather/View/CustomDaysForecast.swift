@@ -69,7 +69,7 @@ struct ForecastDayRow: View {
                 Spacer()
 
                 VStack(spacing: 0) {
-                    Image("Cloudy")
+                    Image("\(Utilities().getWeatherImage(code: verfiesForecastDay.condition.code))")
                         .resizable()
                         .frame(width: 80, height: 80)
 
