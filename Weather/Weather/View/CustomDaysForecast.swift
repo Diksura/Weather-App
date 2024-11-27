@@ -74,7 +74,7 @@ struct ForecastDayRow: View {
                         .frame(width: 80, height: 80)
 
                     HStack {
-                        Text("\(Int(verfiesForecastDay.dailyWillItRain))%")
+                        Text("\(Int(verfiesForecastDay.dailyChanceOfRain))%")
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundStyle(.blue)
@@ -84,7 +84,7 @@ struct ForecastDayRow: View {
                             .fontWeight(.bold)
                             .foregroundStyle(.primary.opacity(0.1))
 
-                        Text("\(Int(verfiesForecastDay.dailyChanceOfRain))%")
+                        Text("\(Int(verfiesForecastDay.dailyChanceOfSnow))%")
                             .font(.caption)
                             .fontWeight(.bold)
                             .foregroundStyle(.gray)
