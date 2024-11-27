@@ -19,11 +19,11 @@ struct CustomUISquarTile<TileContent: View>: View {
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 15)
-                .padding(.bottom, 15)
+//                .padding(.bottom, 15)
                 .padding(.horizontal, 15)
 
             
-            Spacer()
+//            Spacer()
             
             tileContent()
         }
