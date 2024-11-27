@@ -20,7 +20,7 @@ struct CustomHourlyForecast: View {
                     ForEach(hourWeather, id: \.id) { weather in
                         CustomHourWeatherUI(
                             hour: .constant(formatTime(time: weather.time)),
-                            image: .constant("Cloudy"),
+                            image: .constant("\(Utilities().getWeatherImage(code: weather.condition.code))"),
                             precipitation: .constant("\(Int(round(weather.chanceOfRain)))%"),
                             temperature: .constant("\(Int(round(weather.tempC)))º")
                         )
