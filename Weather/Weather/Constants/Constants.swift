@@ -16,6 +16,7 @@ class Constants {
     @State var isSpeedKPH: Bool = true
     @State var isDistanceKm: Bool = true
     @State var isLanguageEng: Bool = true
+    @State var isPrecipitationMM: Bool = true
     
     var language: [Language] = [
         Language(language: "Arabic", languageCode: "ar"),
