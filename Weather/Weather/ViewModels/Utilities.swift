@@ -31,6 +31,11 @@ class Utilities {
         }
     }
     
+    func roundDouble(value: Double, decimalPoint: Int) -> Double {
+        let multiplier = pow(10.0, Double(decimalPoint))
+        return round(value * multiplier) / multiplier
+    }
+    
     func getCurrentDateString() -> String {
         let currentDate = Date()
         let dateFormatter = DateFormatter()
