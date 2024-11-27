@@ -27,7 +27,8 @@ struct WeatherView: View {
     @State var isContainCritical: Bool = false
     
 
-    
+    let utilities: Utilities = Utilities()
+    let constants: Constants = Constants()
     
     /// View Constrains
     let uiSquareSize: CGFloat = (CGFloat(UIScreen.main.bounds.width) - 60) / 2
@@ -59,7 +60,7 @@ struct WeatherView: View {
                                     .frame(width: 300, height: 300)
                             
 
-                                Text("\((Constants().isCelecious) ? weatherData?.current.tempC ?? 0 : weatherData?.current.tempF ?? 0, specifier: "%.0f")\((Constants().isCelecious) ? "°C" : "°F")")
+                                Text("\((constants.isCelecious) ? round(weatherData?.current.tempC ?? 0) : round(weatherData?.current.tempF ?? 0), specifier: "%.0f")\((constants.isCelecious) ? "°C" : "°F")")
                                     .font(.system(size: 102.0))
                 //                    .fontWeight(.bold)
                                     .fontDesign(.rounded)
@@ -82,7 +83,7 @@ struct WeatherView: View {
                             .font(.caption2)
                             .foregroundStyle(.gray)
                     }
-                    .frame(height: UIScreen.main.bounds.height - Utilities().safeAreaInsetsTotal(requestValue: 1))
+                    .frame(height: UIScreen.main.bounds.height - utilities.safeAreaInsetsTotal(requestValue: 1))
                     
                     
                     VStack {
@@ -102,7 +103,7 @@ struct WeatherView: View {
                             ScrollView {
                                     CustomDaysForecast(forecastDaysList: $forecastDaysList)
                             }
-                            .frame(height: Constants().uiRectangleWidth * 1.25)
+                            .frame(height: constants.uiRectangleWidth * 1.25)
                             .scrollIndicators(.hidden)
                         }
 
@@ -113,20 +114,30 @@ struct WeatherView: View {
                             }
                             
                             CustomUISquarTile(tileTitle: .constant("Humidity Details")) {
-                                Text("")
+                                CustomTileHumidity(humidityLevel: .constant(weatherData?.current.humidity))
                             }
                             
                         }
                         
                         
                         CustomUIRectangleTile(tileTitle: .constant("Feels like, wind chill Details"), height: nil) {
-                            // TODO
-                        }
-                        
-                        CustomUIRectangleTile(tileTitle: .constant("Precipitation Details"), height: nil) {
-                            // TODO
+                            CustomTileFeelsLike(
+                                feelslike: .constant((constants.isCelecious) ? weatherData?.current.feelslikeC ?? 0 : weatherData?.current.feelslikeF ?? 0),
+                                windchill: .constant((constants.isCelecious) ? weatherData?.current.windchillC ?? 0 : weatherData?.current.windchillF ?? 0),
+                                heatindex: .constant((constants.isCelecious) ? weatherData?.current.heatindexC ?? 0 : weatherData?.current.heatindexF ?? 0))
                         }
                     
+                        
+                        
+                        HStack(spacing: 10) {
+                            CustomUISquarTile(tileTitle: .constant("Precipitation")) {
+                                CustomTilePrecipitation(precipitation: .constant((constants.isPrecipitationMM) ? weatherData?.current.precipMM : weatherData?.current.precipIn))
+                            }
+                            
+                            CustomUISquarTile(tileTitle: .constant("Pressure Details")) {
+                                Text("")
+                            }
+                        }
                         
                         
                         HStack(spacing: 10) {
@@ -134,9 +145,13 @@ struct WeatherView: View {
                                 Text("")
                             }
                             
-                            CustomUISquarTile(tileTitle: .constant("Pressure Details")) {
+                            CustomUISquarTile(tileTitle: .constant("Visibility")) {
                                 Text("")
                             }
+                        }
+                        
+                        CustomUIRectangleTile(tileTitle: .constant("Moon Details"), height: nil) {
+                            // TODO
                         }
                         
                         
@@ -150,9 +165,6 @@ struct WeatherView: View {
                             }
                         }
                         
-                        CustomUIRectangleTile(tileTitle: .constant("Moon Details"), height: nil) {
-                            // TODO
-                        }
                         
                         CustomUIRectangleTile(tileTitle: .constant("Air Details"), height: nil) {
                             // TODO
@@ -171,7 +183,7 @@ struct WeatherView: View {
                         
                         
                     }
-                    .padding(.top, Utilities().safeAreaInsetsTotal(requestValue: 2) + 20)
+                    .padding(.top, utilities.safeAreaInsetsTotal(requestValue: 2) + 20)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 10)
                     
