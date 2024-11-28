@@ -14,7 +14,7 @@ struct CustomTileVisibility: View {
     
     var body: some View {
         
-//        CustomUISquarTile(tileTitle: .constant("Visibility")) {
+        CustomUISquarTile(tileTitle: .constant("Visibility")) {
             
             VStack {
                 
@@ -65,7 +65,8 @@ struct CustomTileVisibility: View {
             
         }
 
-//    }
+    }
+    
 }
 
 #Preview {
