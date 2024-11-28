@@ -142,11 +142,11 @@ struct WeatherView: View {
                         
                         HStack(spacing: 10) {
                             CustomUISquarTile(tileTitle: .constant("UV Details")) {
-                                Text("")
+                                CustomTileUV(uvIndex: .constant(weatherData?.current.uv ?? 0))
                             }
                             
                             CustomUISquarTile(tileTitle: .constant("Visibility")) {
-                                Text("")
+                                CustomTileVisibility(visibilityKm: .constant(weatherData?.current.visKm ?? 0), visibilityMi: .constant(weatherData?.current.visMi ?? 0))
                             }
                         }
                         
