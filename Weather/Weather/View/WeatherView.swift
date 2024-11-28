@@ -17,12 +17,18 @@ struct WeatherView: View {
     @State var weatherAlertsData: WeatherAlertsDTO?
     @State var weatherAstronomyData: WeatherAstroDTO?
     
+    /// Make these variables mutable so if the valu 'nil' it'll show loading view while loading
+    @State var hourWeather: [ForecastHourDTO]?
+    @State var forecastDaysList: [ForecastFullDayDTO]?
+
+    
     //    @State var locationAvailable: Bool = false
     @State var isAlertActive: Bool = false
+    @State var isContainCritical: Bool = false
     
-    /// Settings
-    @State var isCelecious: Bool = true
-    
+
+    let utilities: Utilities = Utilities()
+    let constants: Constants = Constants()
     
     /// View Constrains
     let uiSquareSize: CGFloat = (CGFloat(UIScreen.main.bounds.width) - 60) / 2
@@ -49,12 +55,12 @@ struct WeatherView: View {
                         
                         VStack{
                             VStack(spacing: 0) {
-                                Image("Cloudy-Sunny")
+                                Image("\(utilities.getWeatherImage(code: weatherData?.current.condition.code ?? 1003))")
                                     .resizable()
                                     .frame(width: 300, height: 300)
                             
 
-                                Text("\((isCelecious) ? weatherData?.current.tempC ?? 0 : weatherData?.current.tempF ?? 0, specifier: "%.0f")\((isCelecious) ? "°C" : "°F")")
+                                Text("\((constants.isCelecious) ? round(weatherData?.current.tempC ?? 0) : round(weatherData?.current.tempF ?? 0), specifier: "%.0f")\((constants.isCelecious) ? "°C" : "°F")")
                                     .font(.system(size: 102.0))
                 //                    .fontWeight(.bold)
                                     .fontDesign(.rounded)
@@ -77,153 +83,106 @@ struct WeatherView: View {
                             .font(.caption2)
                             .foregroundStyle(.gray)
                     }
-                    .frame(height: UIScreen.main.bounds.height - Utilities().safeAreaInsetsTotal(requestValue: 1))
+                    .frame(height: UIScreen.main.bounds.height - utilities.safeAreaInsetsTotal(requestValue: 1))
                     
                     
                     VStack {
                         
-                        ScrollView(.horizontal, showsIndicators: false){
-                            HStack {
-                                Text("Upcumming Hourly Weather")
-                                    .frame(width: uiRectangleWidth, height: uiSquareSize/2)
-                                    .background(Color.gray.opacity(0.1))
-                                    .cornerRadius(15)
-                                
-                                Text("Upcumming Hourly Weather")
-                                    .frame(width: uiSquareSize/2, height: uiSquareSize/2)
-                                    .background(Color.gray.opacity(0.1))
-                                    .cornerRadius(15)
-                                
-                                Text("Upcumming Hourly Weather")
-                                    .frame(width: uiSquareSize/2, height: uiSquareSize/2)
-                                    .background(Color.gray.opacity(0.1))
-                                    .cornerRadius(15)
-
+                        
+                        CustomHourlyForecast(hourWeather: $hourWeather)
+                        
+                        if(true) {
+//                        if(weatherAlertsData?.alerts.alert.count ?? 0 > 0) {
+                            CustomUIRectangleTile(tileTitle: .constant("Alerts"), height: nil, color: (isContainCritical) ?.red.opacity(0.5) : .orange.opacity(0.3)) {
+                                // TODO
                             }
-                            .padding(.leading, 10)
                         }
                         
-                        VStack(alignment: .leading) {
-                            Text("Forcasting Days")
-                                .font(.caption)
+                        CustomUIRectangleTile(tileTitle: .constant("Forcasting Days"), height: nil) {
+
+                            ScrollView {
+                                    CustomDaysForecast(forecastDaysList: $forecastDaysList)
+                            }
+                            .frame(height: constants.uiRectangleWidth * 1.25)
+                            .scrollIndicators(.hidden)
+                        }
+
+                        
+                        HStack(spacing: 10) {
+                            CustomUISquarTile(tileTitle: .constant("Wind Details")) {
+                                CustomTileWind(direction: .constant(weatherData?.current.windDir ?? "N/A"), speed: .constant(((constants.isSpeedKPH) ? weatherData?.current.windKph : weatherData?.current.windMph) ?? 0), windDegree: .constant(weatherData?.current.windDegree ?? 0))
+                            }
+                            
+                            CustomUISquarTile(tileTitle: .constant("Humidity Details")) {
+                                CustomTileHumidity(humidityLevel: .constant(weatherData?.current.humidity))
+                            }
+                            
+                        }
+                        
+                        
+                        CustomUIRectangleTile(tileTitle: .constant("Feels like, wind chill Details"), height: nil) {
+                            CustomTileFeelsLike(
+                                feelslike: .constant((constants.isCelecious) ? weatherData?.current.feelslikeC ?? 0 : weatherData?.current.feelslikeF ?? 0),
+                                windchill: .constant((constants.isCelecious) ? weatherData?.current.windchillC ?? 0 : weatherData?.current.windchillF ?? 0),
+                                heatindex: .constant((constants.isCelecious) ? weatherData?.current.heatindexC ?? 0 : weatherData?.current.heatindexF ?? 0))
+                        }
+                    
+                        
+                        
+                        HStack(spacing: 10) {
+                            CustomUISquarTile(tileTitle: .constant("Precipitation")) {
+                                CustomTilePrecipitation(precipitation: .constant((constants.isPrecipitationMM) ? weatherData?.current.precipMM : weatherData?.current.precipIn))
+                            }
+                            
+                            CustomUISquarTile(tileTitle: .constant("Pressure Details")) {
+                                CustomTilePressure(pressureMb: .constant(weatherData?.current.pressureMb ?? 0), pressureIn: .constant(weatherData?.current.pressureIn ?? 0))
+                            }
+                        }
+                        
+                        
+                        HStack(spacing: 10) {
+                            CustomTileUV(uvIndex: .constant(weatherData?.current.uv ?? 0))
+                            
+                            CustomTileVisibility(visibilityKm: .constant(weatherData?.current.visKm ?? 0), visibilityMi: .constant(weatherData?.current.visMi ?? 0))
+                        }
+                        
+                        CustomTileMoon(moonPhase: .constant(weatherAstronomyData?.astronomy.astro.moonPhase ?? "No Data"), moonIllumination: .constant(weatherAstronomyData?.astronomy.astro.moonIllumination ?? 0), moonrise: .constant(weatherAstronomyData?.astronomy.astro.moonrise ?? "No Data"), moonset: .constant(weatherAstronomyData?.astronomy.astro.moonset ?? "No Data"))
+                        
+                        
+                        HStack(spacing: 10) {
+                            CustomTileCloud(cloudCover: .constant(weatherData?.current.cloud ?? 0))
+
+                            CustomTileSunSetRise(sunrise: .constant(weatherAstronomyData?.astronomy.astro.sunrise ?? "No Data"), sunset: .constant(weatherAstronomyData?.astronomy.astro.sunset ?? "No Data"))
+                        }
+                        
+                        
+                        CustomTileAir(airQuality: .constant(weatherData?.current.airQuality))
+
+                        
+                        
+                        HStack(spacing: 10) {
+                            Text("History Data")
                                 .foregroundStyle(.secondary)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.top, 15)
-//                                .padding(.bottom, 5)
-                                .padding(.horizontal, 15)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 20)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(15)
+                                .padding(.leading, 10)
                             
-                            Divider()
-                                .padding(.horizontal, 10)
+                            Image(systemName: "gear")
+                                .font(.title)
+                                .foregroundStyle(.secondary)
+                                .padding(15)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(15)
+                                .padding(.trailing, 10)
                             
-                            Spacer()
                         }
-                        .frame(width: uiRectangleWidth, height: uiRectangleWidth)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
-
-                        
-
-                        
-                        HStack(spacing: 10) {
-                            VStack{
-                                Text("Wind Details")
-                            }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                            
-                            VStack{
-                                Text("Humity Details")
-                            }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                        }
-                        
-                        VStack{
-                            Text("Feels like, wind chill Details")
-                        }
-                        .frame(width: uiRectangleWidth)
-                        .frame(minHeight: uiSquareSize)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
-                        
-                        VStack{
-                            Text("Precipitation Details")
-                        }
-                        .frame(width: uiRectangleWidth)
-                        .frame(minHeight: uiSquareSize)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
-                        
-                        
-                        HStack(spacing: 10) {
-                            VStack{
-                                Text("UV Details")
-                            }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                            
-                            VStack{
-                                Text("Pressure Details")
-                            }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                        
-                        }
-                        
-                        
-                        HStack(spacing: 10) {
-                            VStack{
-                                Text("cloud Details")
-                            }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                            
-                            VStack{
-                                Text("Air Quality Details")
-                            }
-                            .frame(width: uiSquareSize, height: uiSquareSize)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                        }
-                        
-                        VStack {
-                            Text("Moon Details")
-                        }
-                        .frame(width: uiRectangleWidth)
-                        .frame(minHeight: uiSquareSize)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
-
-
-                        VStack {
-                            Text("Air Details")
-                        }
-                        .frame(width: uiRectangleWidth)
-                        .frame(minHeight: uiSquareSize)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(15)
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        Text("History Data > ")
-                            .foregroundStyle(.secondary)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.trailing, 20)
 
                         
                         
                     }
-                    .padding(.top, Utilities().safeAreaInsetsTotal(requestValue: 2) + 20)
+                    .padding(.top, utilities.safeAreaInsetsTotal(requestValue: 2) + 20)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 10)
                     
@@ -243,19 +202,28 @@ struct WeatherView: View {
         .onChange(of: locationService.isLocationUpdated) {
             if (locationService.isLocationUpdated) {
                 Task {
+                    
+                    let forecastViewModel = CLWeatherForecastViewModel(locationService: locationService, weatherForecastData: $weatherForecastData)
+                    
+                    
                     await CLWeatherViewModel(locationService: locationService, weatherData: $weatherData).fetchWeatherData()
                     
-                    await CLWeatherForecastViewModel(locationService: locationService, weatherForecastData: $weatherForecastData).fetchWeatherForecastData()
+                    await forecastViewModel.fetchWeatherForecastData()
                     
                     await CLWeatherAlertsViewModel(locationService: locationService, weatherAlertsData: $weatherAlertsData).fetchWeatherAlerts()
                     
                     await CLWeatherAstronomyViewModel(locationService: locationService, weatherAstronomy: $weatherAstronomyData).fetchWeatherAstronomy()
+                    
+                    
+                    hourWeather = forecastViewModel.getHourlyWeather(weatherForecastData: weatherForecastData)
+                    forecastDaysList = forecastViewModel.getForecastDaysList(weatherForecastData: weatherForecastData)
                     
                     locationService.isLocationUpdated = false
                 }
             }
         }
     }
+    
 
 
     

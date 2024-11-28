@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct ForecastHourDTO: Decodable, Hashable {
+struct ForecastHourDTO: Decodable, Hashable, Identifiable {
+    var id: String = UUID().uuidString
     let timeEpoch: Int
     let time: String
     let tempC: Double
