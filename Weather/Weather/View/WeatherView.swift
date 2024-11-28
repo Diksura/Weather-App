@@ -141,44 +141,43 @@ struct WeatherView: View {
                         
                         
                         HStack(spacing: 10) {
-                            CustomUISquarTile(tileTitle: .constant("UV Details")) {
-                                CustomTileUV(uvIndex: .constant(weatherData?.current.uv ?? 0))
-                            }
+                            CustomTileUV(uvIndex: .constant(weatherData?.current.uv ?? 0))
                             
-                            CustomUISquarTile(tileTitle: .constant("Visibility")) {
-                                CustomTileVisibility(visibilityKm: .constant(weatherData?.current.visKm ?? 0), visibilityMi: .constant(weatherData?.current.visMi ?? 0))
-                            }
+                            CustomTileVisibility(visibilityKm: .constant(weatherData?.current.visKm ?? 0), visibilityMi: .constant(weatherData?.current.visMi ?? 0))
                         }
                         
-                        CustomUIRectangleTile(tileTitle: .constant("Moon Details"), height: nil) {
-                            // TODO
-                        }
+                        CustomTileMoon(moonPhase: .constant(weatherAstronomyData?.astronomy.astro.moonPhase ?? "No Data"), moonIllumination: .constant(weatherAstronomyData?.astronomy.astro.moonIllumination ?? 0), moonrise: .constant(weatherAstronomyData?.astronomy.astro.moonrise ?? "No Data"), moonset: .constant(weatherAstronomyData?.astronomy.astro.moonset ?? "No Data"))
                         
                         
                         HStack(spacing: 10) {
-                            CustomUISquarTile(tileTitle: .constant("Cloud Details")) {
-                                Text("")
-                            }
+                            CustomTileCloud(cloudCover: .constant(weatherData?.current.cloud ?? 0))
 
-                            CustomUISquarTile(tileTitle: .constant("Air Quality Details")) {
-                                Text("")
-                            }
+                            CustomTileSunSetRise(sunrise: .constant(weatherAstronomyData?.astronomy.astro.sunrise ?? "No Data"), sunset: .constant(weatherAstronomyData?.astronomy.astro.sunset ?? "No Data"))
                         }
                         
                         
-                        CustomUIRectangleTile(tileTitle: .constant("Air Details"), height: nil) {
-                            // TODO
-                        }
+                        CustomTileAir(airQuality: .constant(weatherData?.current.airQuality))
 
                         
                         
-                        Text("History Data")
-                            .foregroundStyle(.secondary)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 20)
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(15)
-                            .padding(.horizontal, 10)
+                        HStack(spacing: 10) {
+                            Text("History Data")
+                                .foregroundStyle(.secondary)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 20)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(15)
+                                .padding(.leading, 10)
+                            
+                            Image(systemName: "gear")
+                                .font(.title)
+                                .foregroundStyle(.secondary)
+                                .padding(15)
+                                .background(Color.gray.opacity(0.1))
+                                .cornerRadius(15)
+                                .padding(.trailing, 10)
+                            
+                        }
 
                         
                         
