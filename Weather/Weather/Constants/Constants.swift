@@ -17,6 +17,8 @@ class Constants {
     @State var isDistanceKm: Bool = true
     @State var isLanguageEng: Bool = true
     @State var isPrecipitationMM: Bool = true
+    @State var isAirUKDefra: Bool = false
+    
     
     @State var pressureUnitType: PressureUnits = PressureUnits.kPa
     
