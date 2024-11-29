@@ -11,7 +11,8 @@ struct AlertsDTO: Decodable, Hashable {
     let alert: [AlertDTO]
 }
 
-struct AlertDTO: Decodable, Hashable {
+struct AlertDTO: Decodable, Hashable, Identifiable {
+    let id: UUID = UUID()
     let headline: String
     let msgtype: String
     let severity: String
@@ -24,7 +25,7 @@ struct AlertDTO: Decodable, Hashable {
     let effective: String
     let expires: String
     let description: String
-    let source: String
+    let instruction: String
     
     enum CodingKeys: String, CodingKey {
         case headline
@@ -39,6 +40,6 @@ struct AlertDTO: Decodable, Hashable {
         case effective
         case expires
         case description = "desc"
-        case source
+        case instruction
     }
 }
