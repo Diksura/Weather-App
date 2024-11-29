@@ -76,7 +76,49 @@ class Utilities {
         let outputFormatter = DateFormatter()
         outputFormatter.dateFormat = "dd EEEE" // Format: "26 Tuesday"
         return outputFormatter.string(from: date)
+    }    
+    
+    func formatDateTime(inputDateString: String) -> String {
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd"
+        
+        guard let date = inputFormatter.date(from: inputDateString) else {
+            print("Invalid date string")
+            return inputDateString
+        }
+        
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd EEEE yyyy HH:mm" // Format: "26 Tuesday"
+        return outputFormatter.string(from: date)
     }
+    
+    func formatDateWithDataTimeUTC(inputDateString: String) -> String{
+        
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+        if let date = inputFormatter.date(from: inputDateString) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "yyyy-MM-dd h:mm a"
+            
+//            let timeZone = TimeZone.current
+//            let timeZoneOffset = timeZone.secondsFromGMT(for: date) / 3600
+            
+            let formattedDate = outputFormatter.string(from: date)
+//            let formattedTimeZone = String(format: "%+d UTC", timeZoneOffset)
+//            
+//            let finalFormattedString = "\(formattedDate) : \(formattedTimeZone)"
+                                    
+            let finalFormattedString = "\(formattedDate)"
+                        
+            
+            return finalFormattedString
+        }
+        
+        return inputDateString
+
+    }
+    
 
     func getWeatherImage(code: Int) -> String {
         switch code {
