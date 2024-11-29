@@ -15,7 +15,7 @@ struct CustomTilePressure: View {
     
     var body: some View {
         
-//        CustomUISquarTile(tileTitle: .constant("Pressure Details")) {
+        CustomUISquarTile(tileTitle: .constant("Pressure Details")) {
             
             ZStack {
                 ZStack {
@@ -46,7 +46,7 @@ struct CustomTilePressure: View {
             .padding(3)
             
             
-//        }
+        }
         
     }
     
