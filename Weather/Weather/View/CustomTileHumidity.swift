@@ -12,27 +12,31 @@ struct CustomTileHumidity: View {
     @Binding var humidityLevel: Double?
     
     var body: some View {
-        VStack(spacing: 0) {
+        
+        CustomUISquarTile(tileTitle: .constant("Humidity Details")) {
             
-            Spacer()
-            
-            Image(systemName: "humidity")
-                .resizable()
-                .frame(width: 40, height: 30)
-                .foregroundStyle(.gray.opacity(0.8))
+            VStack(spacing: 0) {
+                
+                Spacer()
+                
+                Image(systemName: "humidity")
+                    .resizable()
+                    .frame(width: 40, height: 30)
+                    .foregroundStyle(.gray.opacity(0.8))
                 
                 
-            
-            HStack(alignment: .firstTextBaseline, spacing: 0) {
-                Text("\(Int(round(humidityLevel ?? 0)))")
-                    .font(.system(size: 54))
                 
-                Text("%")
-                    .font(.title)
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("\(Int(round(humidityLevel ?? 0)))")
+                        .font(.system(size: 54))
+                    
+                    Text("%")
+                        .font(.title)
+                }
+                .foregroundStyle(.black.opacity(0.5))
+                
+                Spacer()
             }
-            .foregroundStyle(.black.opacity(0.5))
-            
-            Spacer()
         }
     }
 }
