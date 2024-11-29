@@ -93,7 +93,11 @@ struct WeatherView: View {
                         
                         if(true) {
 //                        if(weatherAlertsData?.alerts.alert.count ?? 0 > 0) {
-                            CustomUIRectangleTile(tileTitle: .constant("Alerts"), height: nil, color: (isContainCritical) ?.red.opacity(0.5) : .orange.opacity(0.3)) {
+                            CustomUIRectangleTile(
+                                tileTitle: .constant("Alerts"),
+                                height: nil,
+                                color: (isContainCritical) ?.red.opacity(0.5) : .orange.opacity(0.3)
+                            ) {
                                 // TODO
                             }
                         }
@@ -109,50 +113,64 @@ struct WeatherView: View {
 
                         
                         HStack(spacing: 10) {
-                            CustomUISquarTile(tileTitle: .constant("Wind Details")) {
-                                CustomTileWind(direction: .constant(weatherData?.current.windDir ?? "N/A"), speed: .constant(((constants.isSpeedKPH) ? weatherData?.current.windKph : weatherData?.current.windMph) ?? 0), windDegree: .constant(weatherData?.current.windDegree ?? 0))
-                            }
+                                CustomTileWind(
+                                    direction: .constant(weatherData?.current.windDir ?? "N/A"),
+                                    speed: .constant(((constants.isSpeedKPH) ? weatherData?.current.windKph : weatherData?.current.windMph) ?? 0),
+                                    windDegree: .constant(weatherData?.current.windDegree ?? 0))
                             
-                            CustomUISquarTile(tileTitle: .constant("Humidity Details")) {
+                            
                                 CustomTileHumidity(humidityLevel: .constant(weatherData?.current.humidity))
-                            }
                             
                         }
                         
                         
-                        CustomUIRectangleTile(tileTitle: .constant("Feels like, wind chill Details"), height: nil) {
                             CustomTileFeelsLike(
                                 feelslike: .constant((constants.isCelecious) ? weatherData?.current.feelslikeC ?? 0 : weatherData?.current.feelslikeF ?? 0),
                                 windchill: .constant((constants.isCelecious) ? weatherData?.current.windchillC ?? 0 : weatherData?.current.windchillF ?? 0),
                                 heatindex: .constant((constants.isCelecious) ? weatherData?.current.heatindexC ?? 0 : weatherData?.current.heatindexF ?? 0))
-                        }
                     
                         
                         
                         HStack(spacing: 10) {
-                            CustomUISquarTile(tileTitle: .constant("Precipitation")) {
-                                CustomTilePrecipitation(precipitation: .constant((constants.isPrecipitationMM) ? weatherData?.current.precipMM : weatherData?.current.precipIn))
-                            }
+                                CustomTilePrecipitation(
+                                    precipitation: .constant((constants.isPrecipitationMM) ? weatherData?.current.precipMM : weatherData?.current.precipIn)
+                                )
                             
-                            CustomUISquarTile(tileTitle: .constant("Pressure Details")) {
-                                CustomTilePressure(pressureMb: .constant(weatherData?.current.pressureMb ?? 0), pressureIn: .constant(weatherData?.current.pressureIn ?? 0))
-                            }
+                                CustomTilePressure(
+                                    pressureMb: .constant(weatherData?.current.pressureMb ?? 0),
+                                    pressureIn: .constant(weatherData?.current.pressureIn ?? 0)
+                                )
                         }
                         
                         
                         HStack(spacing: 10) {
-                            CustomTileUV(uvIndex: .constant(weatherData?.current.uv ?? 0))
+                            CustomTileUV(
+                                uvIndex: .constant(weatherData?.current.uv ?? 0)
+                            )
                             
-                            CustomTileVisibility(visibilityKm: .constant(weatherData?.current.visKm ?? 0), visibilityMi: .constant(weatherData?.current.visMi ?? 0))
+                            CustomTileVisibility(
+                                visibilityKm: .constant(weatherData?.current.visKm ?? 0),
+                                visibilityMi: .constant(weatherData?.current.visMi ?? 0)
+                            )
                         }
                         
-                        CustomTileMoon(moonPhase: .constant(weatherAstronomyData?.astronomy.astro.moonPhase ?? "No Data"), moonIllumination: .constant(weatherAstronomyData?.astronomy.astro.moonIllumination ?? 0), moonrise: .constant(weatherAstronomyData?.astronomy.astro.moonrise ?? "No Data"), moonset: .constant(weatherAstronomyData?.astronomy.astro.moonset ?? "No Data"))
+                        CustomTileMoon(
+                            moonPhase: .constant(weatherAstronomyData?.astronomy.astro.moonPhase ?? "No Data"),
+                            moonIllumination: .constant(weatherAstronomyData?.astronomy.astro.moonIllumination ?? 0),
+                            moonrise: .constant(weatherAstronomyData?.astronomy.astro.moonrise ?? "No Data"),
+                            moonset: .constant(weatherAstronomyData?.astronomy.astro.moonset ?? "No Data")
+                        )
                         
                         
                         HStack(spacing: 10) {
-                            CustomTileCloud(cloudCover: .constant(weatherData?.current.cloud ?? 0))
+                            CustomTileCloud(
+                                cloudCover: .constant(weatherData?.current.cloud ?? 0)
+                            )
 
-                            CustomTileSunSetRise(sunrise: .constant(weatherAstronomyData?.astronomy.astro.sunrise ?? "No Data"), sunset: .constant(weatherAstronomyData?.astronomy.astro.sunset ?? "No Data"))
+                            CustomTileSunSetRise(
+                                sunrise: .constant(weatherAstronomyData?.astronomy.astro.sunrise ?? "No Data"),
+                                sunset: .constant(weatherAstronomyData?.astronomy.astro.sunset ?? "No Data")
+                            )
                         }
                         
                         
@@ -169,13 +187,19 @@ struct WeatherView: View {
                                 .cornerRadius(15)
                                 .padding(.leading, 10)
                             
-                            Image(systemName: "gear")
-                                .font(.title)
-                                .foregroundStyle(.secondary)
-                                .padding(15)
-                                .background(Color.gray.opacity(0.1))
-                                .cornerRadius(15)
-                                .padding(.trailing, 10)
+                            NavigationLink {
+                                SettingsPage()
+                            } label: {
+                                Image(systemName: "gear")
+                                    .font(.title)
+                                    .foregroundStyle(.secondary)
+                                    .padding(15)
+                                    .background(Color.gray.opacity(0.1))
+                                    .cornerRadius(15)
+                                    .padding(.trailing, 10)
+                            }
+                            .foregroundStyle(.secondary)
+                            
                             
                         }
 
