@@ -19,96 +19,100 @@ struct CustomTileWind: View {
     var minorTickLength: CGFloat = 5
     
     var body: some View {
-        VStack {
+        
+        CustomUISquarTile(tileTitle: .constant("Wind Details")) {
             
-            Spacer()
-            
-            HStack(alignment: VerticalAlignment.center) {
+            VStack {
                 
-                VStack(alignment: HorizontalAlignment.center, spacing: 5) {
+                Spacer()
+                
+                HStack(alignment: VerticalAlignment.center) {
                     
-                    Text(direction)
-                        .font(.headline)
-                    
-                    VStack(spacing: 0) {
+                    VStack(alignment: HorizontalAlignment.center, spacing: 5) {
                         
-                        Text("\(Int(round(speed)))")
-                            .font(.largeTitle)
+                        Text(direction)
+                            .font(.headline)
                         
-                        Text("\( Constants().isSpeedKPH ? "km/h" : "mph")")
-                            .font(.caption)
+                        VStack(spacing: 0) {
+                            
+                            Text("\(Int(round(speed)))")
+                                .font(.largeTitle)
+                            
+                            Text("\( Constants().isSpeedKPH ? "km/h" : "mph")")
+                                .font(.caption)
+                            
+                        }
+                        
                         
                     }
                     
-                    
-                }
-                
-                ZStack {
-                    GeometryReader { geometry in
-                        ZStack {
-
-                            Path { path in
-                                let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
-                                let radius = min(geometry.size.width, geometry.size.height) / 2 - 10
+                    ZStack {
+                        GeometryReader { geometry in
+                            ZStack {
                                 
-                                let majorTickAngle = 2 * CGFloat.pi / CGFloat(majorTickCount)
-                                let minorTickAngle = majorTickAngle / CGFloat(minorTickCount + 1)
-                                
-                                for i in 0..<majorTickCount {
-                                    let angle = CGFloat(i) * majorTickAngle
+                                Path { path in
+                                    let center = CGPoint(x: geometry.size.width / 2, y: geometry.size.height / 2)
+                                    let radius = min(geometry.size.width, geometry.size.height) / 2 - 10
                                     
-                                    // Major ticks
-                                    let start = CGPoint(
-                                        x: center.x + radius * cos(angle),
-                                        y: center.y + radius * sin(angle)
-                                    )
-                                    let end = CGPoint(
-                                        x: center.x + (radius + majorTickLength) * cos(angle),
-                                        y: center.y + (radius + majorTickLength) * sin(angle)
-                                    )
+                                    let majorTickAngle = 2 * CGFloat.pi / CGFloat(majorTickCount)
+                                    let minorTickAngle = majorTickAngle / CGFloat(minorTickCount + 1)
                                     
-                                    path.move(to: start)
-                                    path.addLine(to: end)
-                                    
-                                    // Minor ticks
-                                    for j in 1..<minorTickCount + 1 {
-                                        let minorAngle = angle + CGFloat(j) * minorTickAngle
-                                        let minorStart = CGPoint(
-                                            x: center.x + radius * cos(minorAngle),
-                                            y: center.y + radius * sin(minorAngle)
+                                    for i in 0..<majorTickCount {
+                                        let angle = CGFloat(i) * majorTickAngle
+                                        
+                                        // Major ticks
+                                        let start = CGPoint(
+                                            x: center.x + radius * cos(angle),
+                                            y: center.y + radius * sin(angle)
                                         )
-                                        let minorEnd = CGPoint(
-                                            x: center.x + (radius + minorTickLength) * cos(minorAngle),
-                                            y: center.y + (radius + minorTickLength) * sin(minorAngle)
+                                        let end = CGPoint(
+                                            x: center.x + (radius + majorTickLength) * cos(angle),
+                                            y: center.y + (radius + majorTickLength) * sin(angle)
                                         )
                                         
-                                        path.move(to: minorStart)
-                                        path.addLine(to: minorEnd)
+                                        path.move(to: start)
+                                        path.addLine(to: end)
+                                        
+                                        // Minor ticks
+                                        for j in 1..<minorTickCount + 1 {
+                                            let minorAngle = angle + CGFloat(j) * minorTickAngle
+                                            let minorStart = CGPoint(
+                                                x: center.x + radius * cos(minorAngle),
+                                                y: center.y + radius * sin(minorAngle)
+                                            )
+                                            let minorEnd = CGPoint(
+                                                x: center.x + (radius + minorTickLength) * cos(minorAngle),
+                                                y: center.y + (radius + minorTickLength) * sin(minorAngle)
+                                            )
+                                            
+                                            path.move(to: minorStart)
+                                            path.addLine(to: minorEnd)
+                                        }
                                     }
                                 }
+                                .stroke(Color.black.opacity(0.3), lineWidth: 2)
                             }
-                            .stroke(Color.black.opacity(0.3), lineWidth: 2)
                         }
+                        .aspectRatio(1, contentMode: .fit)
+                        .padding(.vertical, 15)
+                        
+                        
+                        Image(systemName: "arrow.up")
+                            .resizable()
+                            .frame(width: 20, height: 50)
+                            .fontWeight(.light)
+                            .rotationEffect(.degrees(windDegree))
+                            .foregroundStyle(.red)
+                        
                     }
-                    .aspectRatio(1, contentMode: .fit)
-                    .padding(.vertical, 15)
-                    
-                    
-                    Image(systemName: "arrow.up")
-                        .resizable()
-                        .frame(width: 20, height: 50)
-                        .fontWeight(.light)
-                        .rotationEffect(.degrees(windDegree))
-                        .foregroundStyle(.red)
-
                 }
+                
+                Spacer()
+                
             }
-            
-            Spacer()
+            .foregroundStyle(Color.black.opacity(0.6))
             
         }
-        .foregroundStyle(Color.black.opacity(0.6))
-
     }
 }
 
