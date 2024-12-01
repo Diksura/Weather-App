@@ -13,7 +13,7 @@ struct CustomTilePrecipitation: View {
     
     var body: some View {
         
-//        CustomUISquarTile(tileTitle: .constant("Precipitation")) {
+        CustomUISquarTile(tileTitle: .constant("Precipitation")) {
             
             
             Spacer()
@@ -51,7 +51,7 @@ struct CustomTilePrecipitation: View {
             Spacer()
             
             
-//        }
+        }
     }
     
     func precipitationValue(precipitation: Double) -> String {

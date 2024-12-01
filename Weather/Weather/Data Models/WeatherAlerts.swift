@@ -9,5 +9,5 @@ import Foundation
 
 struct WeatherAlertsDTO: Decodable, Hashable {
     let location: LocationDTO
-    let alerts: AlertsDTO
+    var alerts: AlertsDTO
 }

@@ -15,68 +15,71 @@ struct CustomTileFeelsLike: View {
     
     var body: some View {
         
-        VStack(spacing: 0){
-            Spacer()
+        CustomUIRectangleTile(tileTitle: .constant("Feels like, wind chill Details"), height: nil) {
             
-            HStack {
-                VStack {
-                    
-                    HStack(spacing: 0) {
-                        VStack(alignment: HorizontalAlignment.leading) {
-                            Text("Feels like:")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.black.opacity(0.6))
-                            
-                            Divider()
-                            
-                            Text("Wind chill:")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.black.opacity(0.6))
-                            
-                            Divider()
-                            
-                            Text("Heat Index:")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.black.opacity(0.6))
-                        }
-                        
-                        VStack(alignment: HorizontalAlignment.leading) {
-                            Text("\(feelslike ?? 0, specifier: "%.1f")°C")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.black.opacity(0.6))
-                            
-                            Divider()
-                                .padding(.trailing, 40)
-                            
-                            Text("\(windchill ?? 0, specifier: "%.1f")°C")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.black.opacity(0.6))
-                            
-                            Divider()
-                                .padding(.trailing, 40)
-                            
-                            Text("\(heatindex ?? 0, specifier: "%.1f")°C")
-                                .font(.system(size: 16))
-                                .foregroundStyle(.black.opacity(0.6))
-                        }
-                    }
-                    
-                }
-                
+            VStack(spacing: 0){
                 Spacer()
                 
-                Image(systemName: "thermometer.sun")
-                    .font(.system(size: 42))
-                    .padding(.trailing, 30)
-                    .foregroundStyle(.black.opacity(0.4))
+                HStack {
+                    VStack {
+                        
+                        HStack(spacing: 0) {
+                            VStack(alignment: HorizontalAlignment.leading) {
+                                Text("Feels like:")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(.black.opacity(0.6))
+                                
+                                Divider()
+                                
+                                Text("Wind chill:")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(.black.opacity(0.6))
+                                
+                                Divider()
+                                
+                                Text("Heat Index:")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(.black.opacity(0.6))
+                            }
+                            
+                            VStack(alignment: HorizontalAlignment.leading) {
+                                Text("\(feelslike ?? 0, specifier: "%.1f")°C")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(.black.opacity(0.6))
+                                
+                                Divider()
+                                    .padding(.trailing, 40)
+                                
+                                Text("\(windchill ?? 0, specifier: "%.1f")°C")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(.black.opacity(0.6))
+                                
+                                Divider()
+                                    .padding(.trailing, 40)
+                                
+                                Text("\(heatindex ?? 0, specifier: "%.1f")°C")
+                                    .font(.system(size: 16))
+                                    .foregroundStyle(.black.opacity(0.6))
+                            }
+                        }
+                        
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: "thermometer.sun")
+                        .font(.system(size: 42))
+                        .padding(.trailing, 30)
+                        .foregroundStyle(.black.opacity(0.4))
+                    
+                    
+                }
+                .padding(.leading, 15)
                 
-                
+                Spacer()
             }
-            .padding(.leading, 15)
             
-            Spacer()
         }
-        
     }
     
 }
