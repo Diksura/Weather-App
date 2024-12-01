@@ -7,63 +7,21 @@
 
 import SwiftUI
 
-class Constants {
+class Constants: ObservableObject {
     /// API Key
     static let apiKey = "838714aecdf04acaad8173636241811"
     
     /// Settings
-    @State var isCelecious: Bool = true
-    @State var isSpeedKPH: Bool = true
-    @State var isDistanceKm: Bool = true
-    @State var isLanguageEng: Bool = true
-    @State var isPrecipitationMM: Bool = true
-    @State var isAirUKDefra: Bool = true
+    @Published  var isCelecious: Bool = true
+    @Published  var isSpeedKPH: Bool = true
+    @Published var isDistanceKm: Bool = true
+    @Published var isLanguageEng: Bool = true
+    @Published var isPrecipitationMM: Bool = true
+    @Published var isAirUKDefra: Bool = true
     
+    @Published var pressureUnitType: PressureUnits = PressureUnits.kPa
+    @Published var languageType: Language = Language.English
     
-    @State var pressureUnitType: PressureUnits = PressureUnits.kPa
-    
-    var language: [Language] = [
-        Language(language: "Arabic", languageCode: "ar"),
-        Language(language: "Bengali", languageCode: "bn"),
-        Language(language: "Bulgarian", languageCode: "bg"),
-        Language(language: "Chinese Simplified", languageCode: "zh"),
-        Language(language: "Chinese Traditional", languageCode: "zh_tw"),
-        Language(language: "Czech", languageCode: "cs"),
-        Language(language: "Danish", languageCode: "da"),
-        Language(language: "Dutch", languageCode: "nl"),
-        Language(language: "Finnish", languageCode: "fi"),
-        Language(language: "French", languageCode: "fr"),
-        Language(language: "German", languageCode: "de"),
-        Language(language: "Greek", languageCode: "el"),
-        Language(language: "Hindi", languageCode: "hi"),
-        Language(language: "Hungarian", languageCode: "hu"),
-        Language(language: "Italian", languageCode: "it"),
-        Language(language: "Japanese", languageCode: "ja"),
-        Language(language: "Javanese", languageCode: "jv"),
-        Language(language: "Korean", languageCode: "ko"),
-        Language(language: "Mandarin", languageCode: "zh_cmn"),
-        Language(language: "Marathi", languageCode: "mr"),
-        Language(language: "Polish", languageCode: "pl"),
-        Language(language: "Portuguese", languageCode: "pt"),
-        Language(language: "Punjabi", languageCode: "pa"),
-        Language(language: "Romanian", languageCode: "ro"),
-        Language(language: "Russian", languageCode: "ru"),
-        Language(language: "Serbian", languageCode: "sr"),
-        Language(language: "Sinhalese", languageCode: "si"),
-        Language(language: "Slovak", languageCode: "sk"),
-        Language(language: "Spanish", languageCode: "es"),
-        Language(language: "Swedish", languageCode: "sv"),
-        Language(language: "Tamil", languageCode: "ta"),
-        Language(language: "Telugu", languageCode: "te"),
-        Language(language: "Turkish", languageCode: "tr"),
-        Language(language: "Ukrainian", languageCode: "uk"),
-        Language(language: "Urdu", languageCode: "ur"),
-        Language(language: "Vietnamese", languageCode: "vi"),
-        Language(language: "Wu (Shanghainese)", languageCode: "zh_wuu"),
-        Language(language: "Xiang", languageCode: "zh_hsn"),
-        Language(language: "Yue (Cantonese)", languageCode: "zh_yue"),
-        Language(language: "Zulu", languageCode: "zu")
-    ]
 
     
     /// View Constrains
@@ -71,5 +29,50 @@ class Constants {
     let uiRectangleWidth: CGFloat = (CGFloat(UIScreen.main.bounds.width) - 40)
 
     
+}
+
+enum Language: String, CaseIterable {
+    case Arabic = "ar"
+    case Bengali = "bn"
+    case Bulgarian = "bg"
+    case ChineseSimplified = "zh"
+    case ChineseTraditional = "zh_tw"
+    case Czech = "cs"
+    case Danish = "da"
+    case Dutch = "nl"
+    case English = "en"
+    case Finnish = "fi"
+    case French = "fr"
+    case German = "de"
+    case Greek = "el"
+    case Hindi = "hi"
+    case Hungarian = "hu"
+    case Italian = "it"
+    case Japanese = "ja"
+    case Havanese = "jv"
+    case Jorean = "ko"
+    case Mandarin = "zh_cmn"
+    case Marathi = "mr"
+    case Polish = "pl"
+    case Portuguese = "pt"
+    case Punjabi = "pa"
+    case Romanian = "ro"
+    case Russian = "ru"
+    case Serbian = "sr"
+    case Sinhala = "si"
+    case Slovak = "sk"
+    case Spanish = "es"
+    case Swedish = "sv"
+    case Tamil = "ta"
+    case Telugu = "te"
+    case Turkish = "tr"
+    case Ukrainian = "uk"
+    case Urdu = "ur"
+    case Vietnamese = "vi"
+    case WuShanghainese = "zh_wuu"
+    case Xiang = "zh_hsn"
+    case Cantonese = "zh_yue"
+    case Zulu = "zu"
+
 }
 
