@@ -8,7 +8,7 @@
 import Foundation
 
 struct AlertsDTO: Decodable, Hashable {
-    let alert: [AlertDTO]
+    var alert: [AlertDTO]
 }
 
 struct AlertDTO: Decodable, Hashable, Identifiable {
@@ -26,6 +26,7 @@ struct AlertDTO: Decodable, Hashable, Identifiable {
     let expires: String
     let description: String
     let instruction: String
+    var isCritical: AlertSeverity = AlertSeverity.low
     
     enum CodingKeys: String, CodingKey {
         case headline
@@ -42,4 +43,10 @@ struct AlertDTO: Decodable, Hashable, Identifiable {
         case description = "desc"
         case instruction
     }
+}
+
+enum AlertSeverity: String {
+    case low = "Low"
+    case moderate = "Moderate"
+    case extreme = "Extreme"
 }
