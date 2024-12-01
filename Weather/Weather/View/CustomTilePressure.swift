@@ -70,13 +70,13 @@ struct CustomTilePressure: View {
         
         switch pressureType {
         case .hPa:
-            return String(PressureUnits.hPa.rawValue)
+            return "\(PressureUnits.hPa)"
         case .kPa:
-            return String(PressureUnits.kPa.rawValue)
+            return "\(PressureUnits.kPa)"
         case .mbHg:
-            return String(PressureUnits.mbHg.rawValue)
+            return "\(PressureUnits.mbHg)"
         case .inHg:
-            return String(PressureUnits.inHg.rawValue)
+            return "\(PressureUnits.inHg)"
         }
     }
     
@@ -92,11 +92,11 @@ struct CustomTilePressure: View {
     
 }
 
-enum PressureUnits: String {
-    case kPa = "kPa"
-    case hPa = "hPa"
-    case mbHg = "mbHg" // Millibar Mercury
-    case inHg = "inHg" // Inches Mercury
+enum PressureUnits: String, CaseIterable {
+    case kPa = "Kilopascal (kPa)"
+    case hPa = "Hectopascal (hPa)"
+    case mbHg = "Millibar Mercury (mbHg)" // Millibar Mercury
+    case inHg = "Inches Mercury (inHg)" // Inches Mercury
 }
 
 
