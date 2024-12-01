@@ -46,7 +46,7 @@ struct ForecastDayRow: View {
                             .foregroundStyle(.primary.opacity(0.5))
                             .font(.system(size: 14))
                         Spacer()
-                        Text("Min: \(temperatureText(for: verfiesForecastDay.mintempC, verfiesForecastDay.mintempF))")
+                        Text("Min: \(temperatureText(for: verfiesForecastDay.mintempC, verfiesForecastDay.mintempF))º")
                             .foregroundStyle(.primary.opacity(0.5))
                             .font(.system(size: 14))
                     }
