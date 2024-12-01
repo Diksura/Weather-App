@@ -21,6 +21,7 @@ struct WeatherView: View {
     @State var hourWeather: [ForecastHourDTO]?
     @State var forecastDaysList: [ForecastFullDayDTO]?
 
+    @State var blinkingWarning: Color = .red
     
     //    @State var locationAvailable: Bool = false
     @State var isAlertActive: Bool = false
@@ -44,10 +45,13 @@ struct WeatherView: View {
                     VStack {
                         (isAlertActive) ?
                         Image(systemName: "exclamationmark.triangle")
-                            .foregroundStyle(Color.red)
+                            .foregroundStyle(blinkingWarning)
                             .font(.system(size: 30))
                             .frame(maxWidth: .infinity, alignment: .trailing)
                             .padding()
+                            .onAppear() {
+                                startBlinking()
+                            }
                         : nil
 
                         
@@ -91,14 +95,17 @@ struct WeatherView: View {
                         
                         CustomHourlyForecast(hourWeather: $hourWeather)
                         
-                        if(true) {
-//                        if(weatherAlertsData?.alerts.alert.count ?? 0 > 0) {
+                        if(isAlertActive) {
                             CustomUIRectangleTile(
                                 tileTitle: .constant("Alerts"),
                                 height: nil,
-                                color: (isContainCritical) ?.red.opacity(0.5) : .orange.opacity(0.3)
+                                color: .orange.opacity(0.1)
                             ) {
-                                // TODO
+                                
+                                if let verifiedWeatherAlertsData = weatherAlertsData, weatherAlertsData != nil {
+                                    CustomTileAlerts(alertsList: .constant(verifiedWeatherAlertsData.alerts.alert))
+                                }
+                                
                             }
                         }
                         
@@ -234,7 +241,7 @@ struct WeatherView: View {
                     
                     await forecastViewModel.fetchWeatherForecastData()
                     
-                    await CLWeatherAlertsViewModel(locationService: locationService, weatherAlertsData: $weatherAlertsData).fetchWeatherAlerts()
+                    await CLWeatherAlertsViewModel(locationService: locationService, weatherAlertsData: $weatherAlertsData, isContainCritical: $isContainCritical).fetchWeatherAlerts()
                     
                     await CLWeatherAstronomyViewModel(locationService: locationService, weatherAstronomy: $weatherAstronomyData).fetchWeatherAstronomy()
                     
@@ -242,12 +249,30 @@ struct WeatherView: View {
                     hourWeather = forecastViewModel.getHourlyWeather(weatherForecastData: weatherForecastData)
                     forecastDaysList = forecastViewModel.getForecastDaysList(weatherForecastData: weatherForecastData)
                     
+                    if (weatherAlertsData?.alerts.alert.count ?? 0 > 0) {
+                        isAlertActive = true
+                    }
+                    
                     locationService.isLocationUpdated = false
                 }
             }
         }
     }
     
+    
+    func startBlinking() {
+        
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
+            withAnimation {
+                if(isContainCritical) {
+                    blinkingWarning = (blinkingWarning == .red) ? .gray.opacity(0.3) : .red
+                } else {
+                    blinkingWarning = (blinkingWarning == .orange) ? .gray.opacity(0.3) : .orange
+                }
+            }
+        }
+        
+    }
 
 
     
