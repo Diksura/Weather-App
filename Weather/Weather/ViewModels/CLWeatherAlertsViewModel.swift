@@ -11,6 +11,8 @@ struct CLWeatherAlertsViewModel {
     
     @ObservedObject var locationService: CurrentLocation
     @Binding var weatherAlertsData: WeatherAlertsDTO?
+    @Binding var isContainCritical: Bool
+
     
     
     func fetchWeatherAlerts() async {
@@ -21,7 +23,8 @@ struct CLWeatherAlertsViewModel {
         }
         
         // Creating URl
-        let url = URL(string: "https://api.weatherapi.com/v1/alerts.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)")
+        let url = URL(string: "https://api.weatherapi.com/v1/alerts.json?key=838714aecdf04acaad8173636241811&q=Canada")
+//        let url = URL(string: "https://api.weatherapi.com/v1/alerts.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)")
         guard let unwrappedURL = url else { return }
         
         print("Weather Alert - URL: \(unwrappedURL.absoluteString)")
@@ -41,7 +44,7 @@ struct CLWeatherAlertsViewModel {
             switch httpResponse.statusCode {
             case 200..<300:
                 let decodedData = try JSONDecoder().decode(WeatherAlertsDTO.self, from: data)
-                weatherAlertsData = decodedData
+                weatherAlertsData = sortByServerity(decodedData: kWeatherAlertsDTO)
             case 400..<500:
                 print("Weather Alert - Invalid Request")
             default :
@@ -53,6 +56,46 @@ struct CLWeatherAlertsViewModel {
         }
         
         
+    }
+    
+    func sortByServerity(decodedData: WeatherAlertsDTO) -> WeatherAlertsDTO {
+        var newDecodedData = decodedData
+        
+        newDecodedData.alerts.alert = newDecodedData.alerts.alert.map { alert in
+            
+            var newAlert = alert
+         
+            switch alert.severity {
+            case AlertSeverity.extreme.rawValue:
+                newAlert.isCritical = AlertSeverity.extreme
+                isContainCritical = true
+            case AlertSeverity.moderate.rawValue:
+                newAlert.isCritical = AlertSeverity.moderate
+            case AlertSeverity.low.rawValue:
+                newAlert.isCritical = AlertSeverity.low
+            default:
+                newAlert.isCritical = AlertSeverity.low
+            }
+            
+            return newAlert
+            
+        }.sorted { lhs, rhs in
+            
+            let lhsPriority = alertPriority(for: lhs.isCritical)
+            let rhsPriority = alertPriority(for: rhs.isCritical)
+            return lhsPriority > rhsPriority
+            
+        }
+        
+        return newDecodedData
+    }
+    
+    func alertPriority(for severity: AlertSeverity) -> Int {
+        switch severity {
+        case .extreme: return 3
+        case .moderate: return 2
+        case .low: return 1
+        }
     }
     
     
