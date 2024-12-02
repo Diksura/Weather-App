@@ -30,7 +30,7 @@ struct ForecastFullDayDTO: Decodable, Hashable, Identifiable {
     let dailyChanceOfSnow: Double
     let condition: ConditionDTO
     let uv: Double
-    let airQuality: AirQualityDTO
+//    let airQuality: AirQualityDTO
     
     enum CodingKeys: String, CodingKey {
         case maxtempC = "maxtemp_c"
@@ -53,7 +53,7 @@ struct ForecastFullDayDTO: Decodable, Hashable, Identifiable {
         case dailyChanceOfSnow = "daily_chance_of_snow"
         case condition
         case uv
-        case airQuality = "air_quality"
+//        case airQuality = "air_quality"
     }
 }
 
