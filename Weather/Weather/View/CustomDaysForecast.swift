@@ -132,36 +132,11 @@ struct ForecastDayRow: View {
 
 struct CustomDaysForecast_Previews: PreviewProvider {
     static var previews: some View {
-        let sampleForecastData: [ForecastFullDayDTO] = [
-            ForecastFullDayDTO(
-                id: UUID().uuidString,
-                maxtempC: 28.5,
-                maxtempF: 83.3,
-                mintempC: 22.1,
-                mintempF: 71.8,
-                avgtempC: 15.0,
-                avgtempF: 59.0,
-                maxwindMph: 10.0,
-                maxwindKph: 16.1,
-                totalprecipMm: 1.0,
-                totalprecipIn: 0.04,
-                totalsnowCm: 0.0,
-                avgvisKm: 10.0,
-                avgvisMiles: 6.2,
-                avghumidity: 70.0,
-                dailyWillItRain: 1,
-                dailyChanceOfRain: 40.0,
-                dailyWillItSnow: 0,
-                dailyChanceOfSnow: 0.0,
-                condition: ConditionDTO(text: "Partly Cloudy", icon: "//cdn.weatherapi.com/weather/64x64/day/116.png", code: 1000),
-                uv: 5.0,
-                airQuality: AirQualityDTO(co: 2.3, no2: 1.2, o3: 19.0, so2: 0.4, pm2_5: 3.0, pm10: 5.0, usEpaIndex: 23.0, gbDefraIndex: 2.0)
-            )
-        ]
-
-        return CustomDaysForecast(forecastDaysList: .constant(sampleForecastData))
+        
+        return CustomDaysForecast(forecastDaysList: .constant(kForecastFullDayDTO))
             .previewLayout(.sizeThatFits)
             .padding()
+        
     }
 }
 
