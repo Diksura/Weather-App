@@ -101,7 +101,7 @@ struct CustomTileWind: View {
                             .resizable()
                             .frame(width: 20, height: 50)
                             .fontWeight(.light)
-                            .rotationEffect(.degrees(windDegree))
+                            .rotationEffect(.degrees(windDegree - 180))
                             .foregroundStyle(.red)
                         
                     }
