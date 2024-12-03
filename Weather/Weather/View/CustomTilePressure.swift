@@ -11,6 +11,8 @@ struct CustomTilePressure: View {
     
     @Binding var pressureMb: Double
     @Binding var pressureIn: Double
+    @ObservedObject var constants: Constants
+
     var colurs: [Color] = [Color("Color-Begin").opacity(0.7), Color("Color-End").opacity(0.7)]
     
     var body: some View {
@@ -33,11 +35,11 @@ struct CustomTilePressure: View {
                 }
                 
                 VStack(spacing: 0) {
-                    Text(pressureTypeValue(pressureMb: pressureMb, pressureIn: pressureIn, pressureType: Constants().pressureUnitType))
+                    Text(pressureTypeValue(pressureMb: pressureMb, pressureIn: pressureIn, pressureType: constants.pressureUnitType))
                         .font(.largeTitle)
                         .foregroundStyle(.black.opacity(0.6))
                     
-                    Text(pressureUnitValue(pressureType: Constants().pressureUnitType))
+                    Text(pressureUnitValue(pressureType: constants.pressureUnitType))
                         .foregroundStyle(.black.opacity(0.6))
                 }
                 .offset(y: 15)
@@ -101,5 +103,5 @@ enum PressureUnits: String, CaseIterable {
 
 
 #Preview {
-    CustomTilePressure(pressureMb: .constant(1000), pressureIn: .constant(20.2))
+    CustomTilePressure(pressureMb: .constant(1000), pressureIn: .constant(20.2), constants: Constants())
 }
