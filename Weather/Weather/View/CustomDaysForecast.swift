@@ -9,16 +9,18 @@ import SwiftUI
 
 struct CustomDaysForecast: View {
     @Binding var forecastDaysList: [ForecastFullDayDTO]?
+    @ObservedObject var constants: Constants
+
 
     var body: some View {
         Group {
             if let forecastDaysList = forecastDaysList, !forecastDaysList.isEmpty {
                 ForEach(forecastDaysList, id: \.id) { forecastDay in
-                    ForecastDayRow(forecastDay: forecastDay)
+                    ForecastDayRow(forecastDay: .constant(forecastDay), constants: constants)
                 }
             } else {
                 ForEach(0..<3, id: \.self) { _ in
-                    ForecastDayRow(forecastDay: nil)
+                    ForecastDayRow(forecastDay: .constant(nil), constants: constants)
                 }
             }
         }
@@ -26,7 +28,8 @@ struct CustomDaysForecast: View {
 }
 
 struct ForecastDayRow: View {
-    var forecastDay: ForecastFullDayDTO?
+    @Binding var forecastDay: ForecastFullDayDTO?
+    @ObservedObject var constants: Constants
 
     var body: some View {
         if let verfiesForecastDay = forecastDay, forecastDay != nil{
@@ -94,7 +97,7 @@ struct ForecastDayRow: View {
                         Text("\(temperatureText(for: verfiesForecastDay.avgtempC, verfiesForecastDay.avgtempF))")
                             .font(.title)
 
-                        Text(Constants().isCelecious ? "ºC" : "ºF")
+                        Text(constants.isCelecious ? "ºC" : "ºF")
                             .font(.caption)
                     }
                 }
@@ -109,21 +112,21 @@ struct ForecastDayRow: View {
 
     private func temperatureText(for celsius: Double?, _ fahrenheit: Double?) -> String {
         if let celsius = celsius, let fahrenheit = fahrenheit {
-            return String(format: "%.1f", Constants().isCelecious ? celsius : fahrenheit)
+            return String(format: "%.1f", constants.isCelecious ? celsius : fahrenheit)
         }
         return "--"
     }
 
     private func speedText(for kph: Double?, _ mph: Double?) -> String {
         if let kph = kph, let mph = mph {
-            return String(format: "%.1f \(Constants().isSpeedKPH ? "km/h" : "mi/h")", Constants().isSpeedKPH ? kph : mph)
+            return String(format: "%.1f \(constants.isSpeedKPH ? "km/h" : "mi/h")", constants.isSpeedKPH ? kph : mph)
         }
         return "--"
     }
 
     private func distanceText(for km: Double?, _ miles: Double?) -> String {
         if let km = km, let miles = miles {
-            return String(format: "%.1f \(Constants().isDistanceKm ? "km" : "mi")", Constants().isDistanceKm ? km : miles)
+            return String(format: "%.1f \(constants.isDistanceKm ? "km" : "mi")", constants.isDistanceKm ? km : miles)
         }
         return "--"
     }
@@ -133,7 +136,7 @@ struct ForecastDayRow: View {
 struct CustomDaysForecast_Previews: PreviewProvider {
     static var previews: some View {
         
-        return CustomDaysForecast(forecastDaysList: .constant(kForecastFullDayDTO))
+        return CustomDaysForecast(forecastDaysList: .constant(kForecastFullDayDTO), constants: Constants())
             .previewLayout(.sizeThatFits)
             .padding()
         
