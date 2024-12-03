@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsPage: View {
     
-    @ObservedObject var constants: Constants = Constants()
+    @ObservedObject var constants: Constants
     
     let firstSectorWidth: CGFloat = 125
     
@@ -113,8 +113,8 @@ struct SettingsPage: View {
                         .font(.subheadline)
                     
                     Picker("", selection: $constants.isAirUKDefra) {
-                        Text("Celsius").tag(true)
-                        Text("Fahrenheit").tag(false)
+                        Text("UK Defra").tag(true)
+                        Text("US EPA").tag(false)
                     }
                     .pickerStyle(.segmented)
                     
@@ -204,5 +204,5 @@ struct SettingsPage: View {
 }
 
 #Preview {
-    SettingsPage()
+    SettingsPage(constants: Constants())
 }
