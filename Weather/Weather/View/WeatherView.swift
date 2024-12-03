@@ -29,7 +29,7 @@ struct WeatherView: View {
     
 
     let utilities: Utilities = Utilities()
-    let constants: Constants = Constants()
+    @StateObject var constants: Constants = Constants()
     
     /// View Constrains
     let uiSquareSize: CGFloat = (CGFloat(UIScreen.main.bounds.width) - 60) / 2
@@ -93,7 +93,7 @@ struct WeatherView: View {
                     VStack {
                         
                         
-                        CustomHourlyForecast(hourWeather: $hourWeather)
+                        CustomHourlyForecast(hourWeather: $hourWeather, constants: constants)
                         
                         if(isAlertActive) {
                             CustomUIRectangleTile(
@@ -112,7 +112,7 @@ struct WeatherView: View {
                         CustomUIRectangleTile(tileTitle: .constant("Forcasting Days"), height: nil) {
 
                             ScrollView {
-                                    CustomDaysForecast(forecastDaysList: $forecastDaysList)
+                                CustomDaysForecast(forecastDaysList: $forecastDaysList, constants: constants)
                             }
                             .frame(height: constants.uiRectangleWidth * 1.25)
                             .scrollIndicators(.hidden)
@@ -123,7 +123,9 @@ struct WeatherView: View {
                                 CustomTileWind(
                                     direction: .constant(weatherData?.current.windDir ?? "N/A"),
                                     speed: .constant(((constants.isSpeedKPH) ? weatherData?.current.windKph : weatherData?.current.windMph) ?? 0),
-                                    windDegree: .constant(weatherData?.current.windDegree ?? 0))
+                                    windDegree: .constant(weatherData?.current.windDegree ?? 0),
+                                    constants: constants
+                                )
                             
                             
                                 CustomTileHumidity(humidityLevel: .constant(weatherData?.current.humidity))
@@ -135,6 +137,11 @@ struct WeatherView: View {
                                 feelslike: .constant((constants.isCelecious) ? weatherData?.current.feelslikeC ?? 0 : weatherData?.current.feelslikeF ?? 0),
                                 windchill: .constant((constants.isCelecious) ? weatherData?.current.windchillC ?? 0 : weatherData?.current.windchillF ?? 0),
                                 heatindex: .constant((constants.isCelecious) ? weatherData?.current.heatindexC ?? 0 : weatherData?.current.heatindexF ?? 0))
+                        
+//                        
+//                        feelslike: (constants.isCelecious) ? .constant(weatherData?.current.feelslikeC ?? 0) : .constant(weatherData?.current.feelslikeF ?? 0),
+//                        windchill: (constants.isCelecious) ? .constant(weatherData?.current.windchillC ?? 0) : .constant(weatherData?.current.windchillF ?? 0),
+//                        heatindex: (constants.isCelecious) ? .constant(weatherData?.current.heatindexC ?? 0) : .constant(weatherData?.current.heatindexF ?? 0)
                     
                         
                         
@@ -145,7 +152,8 @@ struct WeatherView: View {
                             
                                 CustomTilePressure(
                                     pressureMb: .constant(weatherData?.current.pressureMb ?? 0),
-                                    pressureIn: .constant(weatherData?.current.pressureIn ?? 0)
+                                    pressureIn: .constant(weatherData?.current.pressureIn ?? 0),
+                                    constants: constants
                                 )
                         }
                         
@@ -181,7 +189,7 @@ struct WeatherView: View {
                         }
                         
                         
-                        CustomTileAir(airQuality: .constant(weatherData?.current.airQuality))
+                        CustomTileAir(airQuality: .constant(weatherData?.current.airQuality), constants: constants)
 
                         
                         
@@ -195,7 +203,7 @@ struct WeatherView: View {
                                 .padding(.leading, 10)
                             
                             NavigationLink {
-                                SettingsPage()
+                                SettingsPage(constants: constants)
                             } label: {
                                 Image(systemName: "gear")
                                     .font(.title)
