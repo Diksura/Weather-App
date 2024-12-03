@@ -12,6 +12,7 @@ struct CustomTileWind: View {
     @Binding var direction: String
     @Binding var speed: Double
     @Binding var windDegree: Double
+    @ObservedObject var constants: Constants
     
     var majorTickCount = 12
     var majorTickLength: CGFloat = 10
@@ -38,7 +39,7 @@ struct CustomTileWind: View {
                             Text("\(Int(round(speed)))")
                                 .font(.largeTitle)
                             
-                            Text("\( Constants().isSpeedKPH ? "km/h" : "mph")")
+                            Text("\( constants.isSpeedKPH ? "km/h" : "mph")")
                                 .font(.caption)
                             
                         }
@@ -117,5 +118,5 @@ struct CustomTileWind: View {
 }
 
 #Preview {
-    CustomTileWind(direction: .constant("NW"), speed: .constant(23), windDegree: .constant(315))
+    CustomTileWind(direction: .constant("NW"), speed: .constant(23), windDegree: .constant(315), constants: Constants())
 }
