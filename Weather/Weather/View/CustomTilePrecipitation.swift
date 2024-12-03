@@ -10,6 +10,7 @@ import SwiftUI
 struct CustomTilePrecipitation: View {
     
     @Binding var precipitation: Double?
+    @ObservedObject var constants: Constants
     
     var body: some View {
         
@@ -26,7 +27,7 @@ struct CustomTilePrecipitation: View {
                             .font(.system(size: 48))
                             .foregroundStyle(.black.opacity(0.6))
                         
-                        Text("mm")
+                        Text("\(constants.isPrecipitationMM ? "mm" : "in")")
                             .foregroundStyle(.black.opacity(0.6))
                         
                         
@@ -87,5 +88,5 @@ struct CustomTilePrecipitation: View {
 }
 
 #Preview {
-    CustomTilePrecipitation(precipitation: .constant(100))
+    CustomTilePrecipitation(precipitation: .constant(100), constants: Constants())
 }
