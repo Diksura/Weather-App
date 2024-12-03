@@ -12,8 +12,8 @@ class Constants: ObservableObject {
     static let apiKey = "838714aecdf04acaad8173636241811"
     
     /// Settings
-    @Published  var isCelecious: Bool = true
-    @Published  var isSpeedKPH: Bool = true
+    @Published var isCelecious: Bool = true
+    @Published var isSpeedKPH: Bool = true
     @Published var isDistanceKm: Bool = true
     @Published var isLanguageEng: Bool = true
     @Published var isPrecipitationMM: Bool = true
