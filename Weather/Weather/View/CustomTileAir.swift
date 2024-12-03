@@ -10,12 +10,13 @@ import SwiftUI
 struct CustomTileAir: View {
     
     @Binding var airQuality: AirQualityDTO?
+    @ObservedObject var constants: Constants
     
     var body: some View {
         
         CustomUIRectangleTile(tileTitle: .constant("Air Details"), height: nil) {
             
-            let airUIData = Constants().isAirUKDefra
+            let airUIData = constants.isAirUKDefra
                              ? airQualityBand(index: Int(airQuality?.gbDefraIndex ?? 0))
                              : airQualityBand(index: Int(airQuality?.usEpaIndex ?? 0))
             
@@ -26,11 +27,11 @@ struct CustomTileAir: View {
                     VStack(spacing: 0) {
                         
                         HStack(alignment: .firstTextBaseline) {
-                            Text("\(Int(Constants().isAirUKDefra ? airQuality?.gbDefraIndex ?? 0 : airQuality?.usEpaIndex ?? 0))")
+                            Text("\(Int(constants.isAirUKDefra ? airQuality?.gbDefraIndex ?? 0 : airQuality?.usEpaIndex ?? 0))")
                                 .font(.system(size: 68))
                                 .foregroundStyle(airUIData.color.opacity(0.5))
                             
-                            Text("\(Constants().isAirUKDefra ? "GB\nDEFRA" :"US\nEPA")")
+                            Text("\(constants.isAirUKDefra ? "GB\nDEFRA" :"US\nEPA")")
                                 .font(.system(size: 8))
                                 .offset(x: 0, y: -10)
 
@@ -138,7 +139,7 @@ struct CustomTileAir: View {
     
     func airQualityBand(index: Int) -> (band: String, range: String, color: Color) {
        
-        if(Constants().isAirUKDefra) {
+        if(constants.isAirUKDefra) {
             
             switch index {
             case 1:
@@ -205,7 +206,7 @@ struct PreviewWrapper: View {
     )
 
     var body: some View {
-        CustomTileAir(airQuality: $airQuality)
+        CustomTileAir(airQuality: $airQuality, constants: Constants())
             .previewLayout(.sizeThatFits)
             .padding()
     }
