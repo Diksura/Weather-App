@@ -136,7 +136,9 @@ struct WeatherView: View {
                             CustomTileFeelsLike(
                                 feelslike: .constant((constants.isCelecious) ? weatherData?.current.feelslikeC ?? 0 : weatherData?.current.feelslikeF ?? 0),
                                 windchill: .constant((constants.isCelecious) ? weatherData?.current.windchillC ?? 0 : weatherData?.current.windchillF ?? 0),
-                                heatindex: .constant((constants.isCelecious) ? weatherData?.current.heatindexC ?? 0 : weatherData?.current.heatindexF ?? 0))
+                                heatindex: .constant((constants.isCelecious) ? weatherData?.current.heatindexC ?? 0 : weatherData?.current.heatindexF ?? 0),
+                                constants: constants
+                            )
                         
 //                        
 //                        feelslike: (constants.isCelecious) ? .constant(weatherData?.current.feelslikeC ?? 0) : .constant(weatherData?.current.feelslikeF ?? 0),
@@ -147,7 +149,8 @@ struct WeatherView: View {
                         
                         HStack(spacing: 10) {
                                 CustomTilePrecipitation(
-                                    precipitation: .constant((constants.isPrecipitationMM) ? weatherData?.current.precipMM : weatherData?.current.precipIn)
+                                    precipitation: .constant((constants.isPrecipitationMM) ? weatherData?.current.precipMM : weatherData?.current.precipIn),
+                                    constants: constants
                                 )
                             
                                 CustomTilePressure(
