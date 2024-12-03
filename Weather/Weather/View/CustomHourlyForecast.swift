@@ -10,6 +10,7 @@ import SwiftUI
 struct CustomHourlyForecast: View {
     
     @Binding var hourWeather: [ForecastHourDTO]?
+    @ObservedObject var constants: Constants
     
     var body: some View {
         
@@ -22,7 +23,7 @@ struct CustomHourlyForecast: View {
                             hour: .constant(formatTime(time: weather.time)),
                             image: .constant("\(Utilities().getWeatherImage(code: weather.condition.code))"),
                             precipitation: .constant("\(Int(round(weather.chanceOfRain)))%"),
-                            temperature: .constant("\(Int(round(weather.tempC)))º")
+                            temperature: .constant("\(constants.isCelecious ? Int(round(weather.tempC)) : Int(round(weather.tempF)))º")
                         )
                     }
                 } else {
@@ -56,6 +57,7 @@ struct CustomHourlyForecast: View {
 
 #Preview {
     
-    return CustomHourlyForecast(hourWeather: .constant(kForecastHourDTO))
+    CustomHourlyForecast(hourWeather: .constant(kForecastHourDTO), constants: Constants())
 }
+
 
