@@ -12,6 +12,7 @@ struct CustomTileFeelsLike: View {
     @Binding var feelslike: Double?
     @Binding var windchill: Double?
     @Binding var heatindex: Double?
+    @ObservedObject var constants: Constants
     
     var body: some View {
         
@@ -43,21 +44,21 @@ struct CustomTileFeelsLike: View {
                             }
                             
                             VStack(alignment: HorizontalAlignment.leading) {
-                                Text("\(feelslike ?? 0, specifier: "%.1f")°C")
+                                Text("\(feelslike ?? 0, specifier: "%.1f")°\(constants.isCelecious ? "C" : "F")")
                                     .font(.system(size: 16))
                                     .foregroundStyle(.black.opacity(0.6))
                                 
                                 Divider()
                                     .padding(.trailing, 40)
                                 
-                                Text("\(windchill ?? 0, specifier: "%.1f")°C")
+                                Text("\(windchill ?? 0, specifier: "%.1f")°\(constants.isCelecious ? "C" : "F")")
                                     .font(.system(size: 16))
                                     .foregroundStyle(.black.opacity(0.6))
                                 
                                 Divider()
                                     .padding(.trailing, 40)
                                 
-                                Text("\(heatindex ?? 0, specifier: "%.1f")°C")
+                                Text("\(heatindex ?? 0, specifier: "%.1f")°\(constants.isCelecious ? "C" : "F")")
                                     .font(.system(size: 16))
                                     .foregroundStyle(.black.opacity(0.6))
                             }
@@ -85,5 +86,5 @@ struct CustomTileFeelsLike: View {
 }
 
 #Preview {
-    CustomTileFeelsLike(feelslike: .constant(23.9), windchill: .constant(3.9), heatindex: .constant(13.9))
+    CustomTileFeelsLike(feelslike: .constant(23.9), windchill: .constant(3.9), heatindex: .constant(13.9), constants: Constants())
 }
