@@ -97,7 +97,7 @@ struct ForecastDayRow: View {
                         Text("\(temperatureText(for: verfiesForecastDay.avgtempC, verfiesForecastDay.avgtempF))")
                             .font(.title)
 
-                        Text(constants.isCelecious ? "ºC" : "ºF")
+                        Text(constants.userSettings.isCelecious ? "ºC" : "ºF")
                             .font(.caption)
                     }
                 }
@@ -112,21 +112,21 @@ struct ForecastDayRow: View {
 
     private func temperatureText(for celsius: Double?, _ fahrenheit: Double?) -> String {
         if let celsius = celsius, let fahrenheit = fahrenheit {
-            return String(format: "%.1f", constants.isCelecious ? celsius : fahrenheit)
+            return String(format: "%.1f", constants.userSettings.isCelecious ? celsius : fahrenheit)
         }
         return "--"
     }
 
     private func speedText(for kph: Double?, _ mph: Double?) -> String {
         if let kph = kph, let mph = mph {
-            return String(format: "%.1f \(constants.isSpeedKPH ? "km/h" : "mi/h")", constants.isSpeedKPH ? kph : mph)
+            return String(format: "%.1f \(constants.userSettings.isSpeedKPH ? "km/h" : "mi/h")", constants.userSettings.isSpeedKPH ? kph : mph)
         }
         return "--"
     }
 
     private func distanceText(for km: Double?, _ miles: Double?) -> String {
         if let km = km, let miles = miles {
-            return String(format: "%.1f \(constants.isDistanceKm ? "km" : "mi")", constants.isDistanceKm ? km : miles)
+            return String(format: "%.1f \(constants.userSettings.isDistanceKm ? "km" : "mi")", constants.userSettings.isDistanceKm ? km : miles)
         }
         return "--"
     }
