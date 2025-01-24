@@ -38,7 +38,8 @@ struct CustomHourWeatherUI: View {
         .frame(height: Constants().uiSquareSize/1.8)
         .padding(.horizontal, 20)
         .background(Color.gray.opacity(0.1))
-        .cornerRadius(15)    }
+        .cornerRadius(15)
+    }
 }
 
 #Preview {
