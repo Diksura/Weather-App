@@ -23,7 +23,7 @@ struct CustomHourlyForecast: View {
                             hour: .constant(formatTime(time: weather.time)),
                             image: .constant("\(Utilities().getWeatherImage(code: weather.condition.code))"),
                             precipitation: .constant("\(Int(round(weather.chanceOfRain)))%"),
-                            temperature: .constant("\(constants.isCelecious ? Int(round(weather.tempC)) : Int(round(weather.tempF)))º")
+                            temperature: .constant("\(constants.userSettings.isCelecious ? Int(round(weather.tempC)) : Int(round(weather.tempF)))º")
                         )
                     }
                 } else {
