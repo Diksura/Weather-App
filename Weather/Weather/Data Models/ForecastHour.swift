@@ -43,7 +43,7 @@ struct ForecastHourDTO: Decodable, Hashable, Identifiable {
     let uv: Double
     let gustMph: Double
     let gustKph: Double
-    let airQuality: AirQualityDTO
+//    let airQuality: AirQualityDTO
     
     enum CodingKeys: String, CodingKey {
         case timeEpoch = "time_epoch"
@@ -80,6 +80,9 @@ struct ForecastHourDTO: Decodable, Hashable, Identifiable {
         case uv
         case gustMph = "gust_mph"
         case gustKph = "gust_kph"
-        case airQuality = "air_quality"
+//        case airQuality = "air_quality"
     }
 }
+
+/// COMMENTS
+/// air quality property temporerly removed due to api has no longe supporting (06/03/2026)
