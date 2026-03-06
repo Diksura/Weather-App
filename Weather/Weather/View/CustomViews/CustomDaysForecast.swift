@@ -155,7 +155,7 @@ struct CustomDaysForecast_Previews: PreviewProvider {
                 dailyChanceOfSnow: 0.0,
                 condition: ConditionDTO(text: "Partly Cloudy", icon: "//cdn.weatherapi.com/weather/64x64/day/116.png", code: 1000),
                 uv: 5.0,
-                airQuality: AirQualityDTO(co: 2.3, no2: 1.2, o3: 19.0, so2: 0.4, pm2_5: 3.0, pm10: 5.0, usEpaIndex: 23.0, gbDefraIndex: 2.0)
+//                airQuality: AirQualityDTO(co: 2.3, no2: 1.2, o3: 19.0, so2: 0.4, pm2_5: 3.0, pm10: 5.0, usEpaIndex: 23.0, gbDefraIndex: 2.0)
             )
         ]
 
