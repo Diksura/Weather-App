@@ -23,8 +23,7 @@ struct CLWeatherAlertsViewModel {
         }
         
         // Creating URl
-        let url = URL(string: "https://api.weatherapi.com/v1/alerts.json?key=838714aecdf04acaad8173636241811&q=Canada")
-//        let url = URL(string: "https://api.weatherapi.com/v1/alerts.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)")
+        let url = URL(string: "https://api.weatherapi.com/v1/alerts.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)")
         guard let unwrappedURL = url else { return }
         
         print("Weather Alert - URL: \(unwrappedURL.absoluteString)")
@@ -44,7 +43,7 @@ struct CLWeatherAlertsViewModel {
             switch httpResponse.statusCode {
             case 200..<300:
                 let decodedData = try JSONDecoder().decode(WeatherAlertsDTO.self, from: data)
-                weatherAlertsData = sortByServerity(decodedData: kWeatherAlertsDTO)
+                weatherAlertsData = sortByServerity(decodedData: decodedData)
             case 400..<500:
                 print("Weather Alert - Invalid Request")
             default :
