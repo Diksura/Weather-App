@@ -1,3 +1,5 @@
+using WeatherServer.API.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddHttpClient<CurrentWeatherService>();
+builder.Services.AddHttpClient<ForecastWeatherService>();
+builder.Services.AddHttpClient<AstronomyWeatherService>();
+builder.Services.AddHttpClient<WeatherAlertService>();
 
 var app = builder.Build();
 
