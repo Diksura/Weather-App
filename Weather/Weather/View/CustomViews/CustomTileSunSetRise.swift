@@ -101,6 +101,8 @@ struct CustomTileSunSetRise: View {
     }
     
     func hasTimePassed(givenTime: String) -> Bool {
+        print("CustomTileSunSetRise.hasTimePassed() --> String = \(givenTime)")
+
         // current time
         let currentDate = Date()
         
@@ -108,7 +110,7 @@ struct CustomTileSunSetRise: View {
         dateFormatter.dateFormat = "hh:mm a"  // Format to match "06:05 AM"
         
         guard let givenDate: Date = dateFormatter.date(from: givenTime) else {
-            print("Invalid time format")
+            print("CustomTileSunSetRise.hasTimePassed() --> ERROR: Invalid time format")
             return false
         }
         
