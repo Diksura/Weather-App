@@ -91,7 +91,7 @@ struct CustomHourlyForecast: View {
             uv: 5.0,
             gustMph: 15.0,
             gustKph: 24.1,
-            airQuality: AirQualityDTO(co: 0.0, no2: 0.0, o3: 0.0, so2: 0.0, pm2_5: 0.0, pm10: 0.0, usEpaIndex: 0.0, gbDefraIndex: 0.0)
+//            airQuality: AirQualityDTO(co: 0.0, no2: 0.0, o3: 0.0, so2: 0.0, pm2_5: 0.0, pm10: 0.0, usEpaIndex: 0.0, gbDefraIndex: 0.0)
         ),
         ForecastHourDTO(
             timeEpoch: 2,
@@ -128,7 +128,7 @@ struct CustomHourlyForecast: View {
             uv: 6.0,
             gustMph: 18.0,
             gustKph: 28.9,
-            airQuality: AirQualityDTO(co: 0.0, no2: 0.0, o3: 0.0, so2: 0.0, pm2_5: 0.0, pm10: 0.0, usEpaIndex: 0.0, gbDefraIndex: 0.0)
+//            airQuality: AirQualityDTO(co: 0.0, no2: 0.0, o3: 0.0, so2: 0.0, pm2_5: 0.0, pm10: 0.0, usEpaIndex: 0.0, gbDefraIndex: 0.0)
         )
     ]
     
