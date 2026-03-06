@@ -8,6 +8,10 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddMemoryCache();
+
+builder.Services.AddSingleton<CacheService>();
+
 builder.Services.AddHttpClient<CurrentWeatherService>();
 builder.Services.AddHttpClient<ForecastWeatherService>();
 builder.Services.AddHttpClient<AstronomyWeatherService>();

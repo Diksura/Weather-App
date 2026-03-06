@@ -1,6 +1,6 @@
 @WeatherServer.API_HostAddress = http://localhost:5031
 
-GET {{WeatherServer.API_HostAddress}}/api/weather/current?latitude=37.7858&longitude=-122.4064&language=en
+GET {{WeatherServer.API_HostAddress}}/api/weather/current?latitude=37.7853&longitude=-122.4069&language=en
 Accept: application/json
 
 ###
