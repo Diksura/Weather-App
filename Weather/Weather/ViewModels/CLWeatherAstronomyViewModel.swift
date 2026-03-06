@@ -21,7 +21,7 @@ struct CLWeatherAstronomyViewModel {
         }
         
         // Creating URL
-        let url = URL(string: "https://api.weatherapi.com/v1/astronomy.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)&dt=\(Utilities().getCurrentDateString())")
+        let url = URL(string: "\(Constants.BASE_URL)/astro?latitude=\(locationService.location!.latitude)&longitude=\(locationService.location!.longitude)&date=\(Utilities().getCurrentDateString())")
         guard let unwrappedURL = url else { return }
         
         print("Weather Astronomy - URL: \(unwrappedURL.absoluteString)")

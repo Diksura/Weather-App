@@ -23,7 +23,7 @@ struct CLWeatherAlertsViewModel {
         }
         
         // Creating URl
-        let url = URL(string: "https://api.weatherapi.com/v1/alerts.json?key=\(Constants.apiKey)&q=\(locationService.location!.latitude),\(locationService.location!.longitude)")
+        let url = URL(string: "\(Constants.BASE_URL)/alerts?latitude=\(locationService.location!.latitude)&longitude=\(locationService.location!.longitude)")
         guard let unwrappedURL = url else { return }
         
         print("Weather Alert - URL: \(unwrappedURL.absoluteString)")
