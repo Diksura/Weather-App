@@ -12,14 +12,14 @@ class WeatherForecast {
   final Location location;
 
   final CurrentWeather current;
-  // final ForecastWeather forecast;
-  // final Alerts alerts;
+  final ForecastDayWeather forecast;
+  final Alerts alerts;
 
   const WeatherForecast({
     required this.location,
     required this.current,
-    // required this.forecast,
-    // required this.alerts,
+    required this.forecast,
+    required this.alerts,
   });
 
   factory WeatherForecast.fromJson(Map<String, dynamic> json) => _$WeatherForecastFromJson(json);
