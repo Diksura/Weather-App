@@ -8,8 +8,9 @@ class HttpHelper {
   Future<Response> getRequest({required String path, required Map<String, String>? queryParameters}) async {
     Uri url = Uri(
       scheme: ApiEndpoints.scheme,
-      host: ApiEndpoints.baseURl,
-      path: path,
+      host: ApiEndpoints.host,
+      port: ApiEndpoints.port,
+      path: '${ApiEndpoints.basePath}$path',
       queryParameters: queryParameters,
     );
 
