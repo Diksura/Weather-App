@@ -8,36 +8,40 @@ import 'package:weather_flutter/model/weather_alerts.dart';
 import 'package:weather_flutter/model/weather_astro.dart';
 import 'package:weather_flutter/model/weather_forecast.dart';
 import 'package:weather_flutter/services/http_helper.dart';
+import 'package:weather_flutter/utility/debug_helpers.dart';
 
 class HttpRequests {
   final HttpHelper _httpHelper = HttpHelper();
 
-  Future<Weather> getCurrentWeather(Location location, String language) async {
+  Future<Weather?> getCurrentWeather(Location location, String language) async {
     Weather? weather;
 
     try {
       Response response = await _httpHelper.getRequest(
-        path: "/current?latitude=${location.lat}&longitude=${location.lon}",
+        path: "/current",
         queryParameters: {"latitude": "${location.lat}", "longitude": "${location.lon}", "language": language},
       );
 
       if (response.statusCode == 200) {
+        // debugPrint(response.body);
         Map<String, dynamic> map = jsonDecode(response.body);
         weather = Weather.fromJson(map);
       }
     } catch (e) {
-      debugPrint("ERROR | HttpRequests().getCurrentWeather --> ${e.toString()}");
+      errorPrint("HttpRequests().getCurrentWeather --> ${e.toString()}");
+      return null;
     }
 
-    return weather!;
+    successPrint("HttpRequests().getCurrentWeather");
+    return weather;
   }
 
-  Future<ForecastWeather> getForecastWeather(Location location, String language) async {
-    ForecastWeather? forecastWeather;
+  Future<WeatherForecast?> getForecastWeather(Location location, String language) async {
+    WeatherForecast? forecastWeather;
 
     try {
       Response response = await _httpHelper.getRequest(
-        path: "/forecast?latitude=${location.lat}&longitude=${location.lon}",
+        path: "/forecast",
         queryParameters: {
           "latitude": "${location.lat}",
           "longitude": "${location.lon}",
@@ -49,22 +53,25 @@ class HttpRequests {
       );
 
       if (response.statusCode == 200) {
+        // debugPrint(response.body);
         Map<String, dynamic> map = jsonDecode(response.body);
-        forecastWeather = ForecastWeather.fromJson(map);
+        forecastWeather = WeatherForecast.fromJson(map);
       }
     } catch (e) {
-      debugPrint("ERROR | HttpRequests().getForecastWeather --> ${e.toString()}");
+      errorPrint("HttpRequests().getForecastWeather --> ${e.toString()}");
+      return null;
     }
 
-    return forecastWeather!;
+    successPrint("HttpRequests().getForecastWeather");
+    return forecastWeather;
   }
 
-  Future<WeatherAstro> getAstroWeather(Location location, String language, String date) async {
+  Future<WeatherAstro?> getAstroWeather(Location location, String language, String date) async {
     WeatherAstro? astroWeather;
 
     try {
       Response response = await _httpHelper.getRequest(
-        path: "/astro?latitude=${location.lat}&longitude=${location.lon}",
+        path: "/astro",
         queryParameters: {
           "latitude": "${location.lat}",
           "longitude": "${location.lon}",
@@ -78,18 +85,20 @@ class HttpRequests {
         astroWeather = WeatherAstro.fromJson(map);
       }
     } catch (e) {
-      debugPrint("ERROR | HttpRequests().getAstroWeather --> ${e.toString()}");
+      errorPrint("HttpRequests().getAstroWeather --> ${e.toString()}");
+      return null;
     }
 
-    return astroWeather!;
+    successPrint("HttpRequests().getAstroWeather");
+    return astroWeather;
   }
 
-  Future<WeatherAlerts> getWeatherAlert(Location location, String language) async {
+  Future<WeatherAlerts?> getWeatherAlert(Location location, String language) async {
     WeatherAlerts? weatherAlerts;
 
     try {
       Response response = await _httpHelper.getRequest(
-        path: "/alerts?latitude=${location.lat}&longitude=${location.lon}",
+        path: "/alerts",
         queryParameters: {"latitude": "${location.lat}", "longitude": "${location.lon}", "language": language},
       );
 
@@ -98,9 +107,11 @@ class HttpRequests {
         weatherAlerts = WeatherAlerts.fromJson(map);
       }
     } catch (e) {
-      debugPrint("ERROR | HttpRequests().getWeatherAlerts --> ${e.toString()}");
+      errorPrint("HttpRequests().getWeatherAlerts --> ${e.toString()}");
+      return null;
     }
 
-    return weatherAlerts!;
+    successPrint("HttpRequests().getWeatherAlert");
+    return weatherAlerts;
   }
 }
