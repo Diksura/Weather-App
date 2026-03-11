@@ -1,12 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_flutter/model/current_weather.dart';
+import 'package:weather_flutter/model/forecast_day.dart';
+import 'package:weather_flutter/services/http_requests.dart';
 
+import '../model/weather_alerts.dart';
+import '../model/weather_astro.dart';
+import '../model/weather_forecast.dart';
 import '../utility/custom_ui_core.dart';
 import '../widgets/weather_main_tile.dart';
 import '../widgets/weather_tile_grid.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({
+    super.key,
+    required this.currentWeather,
+    required this.forecastWeather,
+    required this.weatherAstro,
+    required this.weatherAlerts,
+  });
+
+  final CurrentWeather currentWeather;
+  final WeatherForecast forecastWeather;
+  final WeatherAstro weatherAstro;
+  final WeatherAlerts weatherAlerts;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -122,9 +139,10 @@ class _HomePageState extends State<HomePage> {
 
                         Divider(),
 
-                        ForecastDayWeatherTile(date: '', maxTemp: 30.0, windSpeed: 30.0, minTemp: 30.0, visibility: 30.0, dailyChanceOfRain: 30, dailyChanceOfSnow: 30, avgTemp: 30.0,),
-                        ForecastDayWeatherTile(date: '', maxTemp: 30.0, windSpeed: 30.0, minTemp: 30.0, visibility: 30.0, dailyChanceOfRain: 30, dailyChanceOfSnow: 30, avgTemp: 30.0,),
-                        ForecastDayWeatherTile(date: '', maxTemp: 30.0, windSpeed: 30.0, minTemp: 30.0, visibility: 30.0, dailyChanceOfRain: 30, dailyChanceOfSnow: 30, avgTemp: 30.0,),
+                        // TODO
+                        // ForecastDayWeatherTile(),
+                        // ForecastDayWeatherTile(),
+                        // ForecastDayWeatherTile(),
                       ],
                     ),
                   ),
@@ -134,20 +152,11 @@ class _HomePageState extends State<HomePage> {
 
             WeatherTileGrid(
               delegateChildren: [
+                WeatherMainTile(title: 'Wind Details', children: []),
 
-                WeatherMainTile(
-                  title: 'Wind Details',
-                  children: [],
-                ),
-
-                WeatherMainTile(
-                  title: 'Humidity Details',
-                  children: [],
-                ),
-
+                WeatherMainTile(title: 'Humidity Details', children: []),
               ],
             ),
-
 
             SliverList(
               delegate: SliverChildListDelegate([
@@ -169,19 +178,9 @@ class _HomePageState extends State<HomePage> {
 }
 
 class ForecastDayWeatherTile extends StatelessWidget {
+  final ForecastDay forecastDay;
 
-  final String date;
-  final double maxTemp;
-  final double windSpeed;
-  final double minTemp;
-  final double visibility;
-  final int dailyChanceOfRain;
-  final int dailyChanceOfSnow;
-  final double avgTemp;
-
-  const ForecastDayWeatherTile({
-    super.key, required this.date, required this.maxTemp, required this.windSpeed, required this.minTemp, required this.visibility, required this.dailyChanceOfRain, required this.dailyChanceOfSnow, required this.avgTemp,
-  });
+  const ForecastDayWeatherTile({super.key, required this.forecastDay});
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +202,7 @@ class ForecastDayWeatherTile extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Text(date, style: kFontSizeCaption),
+                      child: Text(forecastDay.date, style: kFontSizeCaption),
                     ),
 
                     Text("Temperature", style: kFontSizeSubHeadline),
@@ -212,22 +211,22 @@ class ForecastDayWeatherTile extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: Row(
                         children: [
-                          Text("Max : ${maxTemp}°", style: kFontSizeCaption),
+                          Text("Max : ${forecastDay.maxtempC}°", style: kFontSizeCaption),
 
                           Spacer(),
 
-                          Text("Min : ${minTemp}°", style: kFontSizeCaption),
+                          Text("Min : ${forecastDay.mintempC}°", style: kFontSizeCaption),
                         ],
                       ),
                     ),
 
                     Divider(),
 
-                    Text("Wind Speed: ${windSpeed}", style: kFontSizeSubHeadline),
+                    Text("Wind Speed: ${forecastDay.maxwindKph}", style: kFontSizeSubHeadline),
 
                     Divider(),
 
-                    Text("Visibility: ${visibility}", style: kFontSizeSubHeadline),
+                    Text("Visibility: ${forecastDay.avgvisKm}", style: kFontSizeSubHeadline),
                   ],
                 ),
               ),
@@ -242,9 +241,9 @@ class ForecastDayWeatherTile extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("${dailyChanceOfRain}%", style: kFontSizeCaption.copyWith(color: Colors.blue)),
+                      Text("${forecastDay.dailyChanceOfRain}%", style: kFontSizeCaption.copyWith(color: Colors.blue)),
                       Text("|", style: kFontSizeCaption),
-                      Text("${dailyChanceOfSnow}%", style: kFontSizeCaption),
+                      Text("${forecastDay.dailyChanceOfSnow}%", style: kFontSizeCaption),
                     ],
                   ),
 
@@ -254,7 +253,7 @@ class ForecastDayWeatherTile extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: "${avgTemp}",
+                            text: "${forecastDay.avgtempC}",
                             style: kFontSizeTitle.copyWith(color: Colors.black),
                           ),
                           TextSpan(
@@ -274,6 +273,3 @@ class ForecastDayWeatherTile extends StatelessWidget {
     );
   }
 }
-
-
-
