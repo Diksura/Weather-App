@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../utility/custom_ui_core.dart';
+import '../widgets/weather_main_tile.dart';
+import '../widgets/weather_tile_grid.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -16,18 +20,6 @@ class _HomePageState extends State<HomePage> {
     String precipitation = "10%";
     bool alert = true;
 
-    final kOuterBorderRadius = BorderRadius.all(Radius.circular(18));
-    final kInnerBorderRadius = BorderRadius.all(Radius.circular(12));
-
-    final kBoxBackgroundColour = Colors.grey.withValues(alpha: 0.2);
-
-    final kFontSizeTitle = TextStyle(fontSize: 28);
-    final kFontSizeBody = TextStyle(fontSize: 17);
-    final kFontSizeSubHeadline = TextStyle(fontSize: 15);
-    final kFontSizeHeadCaption = TextStyle(fontSize: 14);
-    final kFontSizeCaption = TextStyle(fontSize: 12);
-    final kFontSizeCaption2 = TextStyle(fontSize: 9);
-
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -35,7 +27,7 @@ class _HomePageState extends State<HomePage> {
             // Hero Section
             SliverFillRemaining(
               hasScrollBody: false,
-              child: Container(
+              child: SizedBox(
                 height: screenHeight * .95,
                 child: Column(
                   children: [
@@ -130,98 +122,32 @@ class _HomePageState extends State<HomePage> {
 
                         Divider(),
 
-                        Container(
-                          decoration: BoxDecoration(color: kBoxBackgroundColour, borderRadius: kInnerBorderRadius),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Details
-                                Expanded(
-                                  flex: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(bottom: 10.0),
-                                          child: Text("10 Tuesday", style: kFontSizeCaption),
-                                        ),
-
-                                        Text("Temperature", style: kFontSizeSubHeadline),
-
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                                          child: Row(
-                                            children: [
-                                              Text("Max : 30.0°", style: kFontSizeCaption),
-
-                                              Spacer(),
-
-                                              Text("Min : 22.7°", style: kFontSizeCaption),
-                                            ],
-                                          ),
-                                        ),
-
-                                        Divider(),
-
-                                        Text("Wind Speed", style: kFontSizeSubHeadline),
-
-                                        Divider(),
-
-                                        Text("Visibility", style: kFontSizeSubHeadline),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-
-                                // Image
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Image.asset("lib/assets/weather_icons/1.png", scale: 8),
-
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text("80%", style: kFontSizeCaption.copyWith(color: Colors.blue)),
-                                          Text("|", style: kFontSizeCaption),
-                                          Text("90%", style: kFontSizeCaption),
-                                        ],
-                                      ),
-
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 8.0),
-                                        child: RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: "28.0",
-                                                style: kFontSizeTitle.copyWith(color: Colors.black),
-                                              ),
-                                              TextSpan(
-                                                text: "°C",
-                                                style: kFontSizeCaption.copyWith(color: Colors.black),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        ForecastDayWeatherTile(date: '', maxTemp: 30.0, windSpeed: 30.0, minTemp: 30.0, visibility: 30.0, dailyChanceOfRain: 30, dailyChanceOfSnow: 30, avgTemp: 30.0,),
+                        ForecastDayWeatherTile(date: '', maxTemp: 30.0, windSpeed: 30.0, minTemp: 30.0, visibility: 30.0, dailyChanceOfRain: 30, dailyChanceOfSnow: 30, avgTemp: 30.0,),
+                        ForecastDayWeatherTile(date: '', maxTemp: 30.0, windSpeed: 30.0, minTemp: 30.0, visibility: 30.0, dailyChanceOfRain: 30, dailyChanceOfSnow: 30, avgTemp: 30.0,),
                       ],
                     ),
                   ),
                 ),
               ),
             ),
+
+            WeatherTileGrid(
+              delegateChildren: [
+
+                WeatherMainTile(
+                  title: 'Wind Details',
+                  children: [],
+                ),
+
+                WeatherMainTile(
+                  title: 'Humidity Details',
+                  children: [],
+                ),
+
+              ],
+            ),
+
 
             SliverList(
               delegate: SliverChildListDelegate([
@@ -241,3 +167,113 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+class ForecastDayWeatherTile extends StatelessWidget {
+
+  final String date;
+  final double maxTemp;
+  final double windSpeed;
+  final double minTemp;
+  final double visibility;
+  final int dailyChanceOfRain;
+  final int dailyChanceOfSnow;
+  final double avgTemp;
+
+  const ForecastDayWeatherTile({
+    super.key, required this.date, required this.maxTemp, required this.windSpeed, required this.minTemp, required this.visibility, required this.dailyChanceOfRain, required this.dailyChanceOfSnow, required this.avgTemp,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(color: kBoxBackgroundColour, borderRadius: kInnerBorderRadius),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Details
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: Text(date, style: kFontSizeCaption),
+                    ),
+
+                    Text("Temperature", style: kFontSizeSubHeadline),
+
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: Row(
+                        children: [
+                          Text("Max : ${maxTemp}°", style: kFontSizeCaption),
+
+                          Spacer(),
+
+                          Text("Min : ${minTemp}°", style: kFontSizeCaption),
+                        ],
+                      ),
+                    ),
+
+                    Divider(),
+
+                    Text("Wind Speed: ${windSpeed}", style: kFontSizeSubHeadline),
+
+                    Divider(),
+
+                    Text("Visibility: ${visibility}", style: kFontSizeSubHeadline),
+                  ],
+                ),
+              ),
+            ),
+
+            // Image
+            Expanded(
+              child: Column(
+                children: [
+                  Image.asset("lib/assets/weather_icons/1.png", scale: 8),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("${dailyChanceOfRain}%", style: kFontSizeCaption.copyWith(color: Colors.blue)),
+                      Text("|", style: kFontSizeCaption),
+                      Text("${dailyChanceOfSnow}%", style: kFontSizeCaption),
+                    ],
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "${avgTemp}",
+                            style: kFontSizeTitle.copyWith(color: Colors.black),
+                          ),
+                          TextSpan(
+                            text: "°C",
+                            style: kFontSizeCaption.copyWith(color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
