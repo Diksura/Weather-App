@@ -11,25 +11,25 @@ part 'weather_forecast.g.dart';
 class WeatherForecast {
   final Location location;
 
-  // final CurrentWeather current;
-  final ForecastWeather forecast;
-  final Alerts alerts;
+  final CurrentWeather current;
+  // final ForecastWeather forecast;
+  // final Alerts alerts;
 
   const WeatherForecast({
     required this.location,
-    // required this.current,
-    required this.forecast,
-    required this.alerts,
+    required this.current,
+    // required this.forecast,
+    // required this.alerts,
   });
 
   factory WeatherForecast.fromJson(Map<String, dynamic> json) => _$WeatherForecastFromJson(json);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class ForecastWeather {
+class ForecastDayWeather {
   final List<ForecastDay> forecastday;
 
-  const ForecastWeather({required this.forecastday});
+  const ForecastDayWeather({required this.forecastday});
 
-  factory ForecastWeather.fromJson(Map<String, dynamic> json) => _$ForecastWeatherFromJson(json);
+  factory ForecastDayWeather.fromJson(Map<String, dynamic> json) => _$ForecastDayWeatherFromJson(json);
 }

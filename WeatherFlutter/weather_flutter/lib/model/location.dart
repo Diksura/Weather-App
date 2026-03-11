@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'location.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Location {
   final String name;
   final String region;
@@ -10,8 +10,8 @@ class Location {
   final double lat;
   final double lon;
   final String tzId;
-  final int localTimeEpoch;
-  final String localTime;
+  final int localtimeEpoch;
+  final String localtime;
 
   Location({
     required this.name,
@@ -19,12 +19,9 @@ class Location {
     required this.country,
     required this.lat,
     required this.lon,
-
-    @JsonKey(name: 'tz_id') required this.tzId,
-
-    @JsonKey(name: 'localtime_epoch') required this.localTimeEpoch,
-
-    @JsonKey(name: 'local_time') required this.localTime,
+    required this.tzId,
+    required this.localtimeEpoch,
+    required this.localtime,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) => _$LocationFromJson(json);
