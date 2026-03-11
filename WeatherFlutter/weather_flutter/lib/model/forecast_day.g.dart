@@ -24,9 +24,9 @@ ForecastDay _$ForecastDayFromJson(Map<String, dynamic> json) => ForecastDay(
   avgvisMiles: (json['avgvis_miles'] as num).toDouble(),
   avghumidity: (json['avghumidity'] as num).toDouble(),
   dailyWillItRain: (json['daily_will_it_rain'] as num).toInt(),
-  dailyChanceOfRain: (json['daily_chance_of_rain'] as num).toDouble(),
+  dailyChanceOfRain: (json['daily_chance_of_rain'] as num).toInt(),
   dailyWillItSnow: (json['daily_will_it_snow'] as num).toInt(),
-  dailyChanceOfSnow: (json['daily_chance_of_snow'] as num).toDouble(),
+  dailyChanceOfSnow: (json['daily_chance_of_snow'] as num).toInt(),
   condition: Condition.fromJson(json['condition'] as Map<String, dynamic>),
   uv: (json['uv'] as num).toDouble(),
 );
