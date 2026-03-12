@@ -4,6 +4,7 @@ import 'package:weather_flutter/model/current_weather.dart';
 import 'package:weather_flutter/model/forecast_day.dart';
 import 'package:weather_flutter/services/http_requests.dart';
 
+import '../model/weather.dart';
 import '../model/weather_alerts.dart';
 import '../model/weather_astro.dart';
 import '../model/weather_forecast.dart';
@@ -20,7 +21,7 @@ class HomePage extends StatefulWidget {
     required this.weatherAlerts,
   });
 
-  final CurrentWeather currentWeather;
+  final Weather currentWeather;
   final WeatherForecast forecastWeather;
   final WeatherAstro weatherAstro;
   final WeatherAlerts weatherAlerts;
