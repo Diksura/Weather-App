@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' hide Location;
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_flutter/utility/debug_helpers.dart';
 
 import '../model/location.dart';
 
@@ -28,10 +28,10 @@ Future<Position?> getUserCoordinates() async {
 
     // If cached location not available → request GPS
     return await Geolocator.getCurrentPosition(
-      locationSettings: const LocationSettings(accuracy: LocationAccuracy.medium, timeLimit: Duration(seconds: 10)),
+      locationSettings: const LocationSettings(accuracy: LocationAccuracy.medium, timeLimit: Duration(seconds: 30)),
     );
   } catch (e) {
-    debugPrint("ERROR | getUserCoordinates() --> $e");
+    errorPrint("getUserCoordinates() --> $e");
     return null;
   }
 }
@@ -74,7 +74,7 @@ Future<Location?> getUserLocationDetails(double latitude, double longitude) asyn
       localtime: DateTime.now().toIso8601String(),
     );
   } catch (e) {
-    debugPrint("ERROR | getUserLocationDetails() --> $e");
+    errorPrint("getUserLocationDetails() --> $e");
     return null;
   }
 }
