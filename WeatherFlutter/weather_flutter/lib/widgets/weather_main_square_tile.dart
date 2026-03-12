@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../utility/custom_ui_core.dart';
 
-class WeatherMainTile extends StatelessWidget {
+class WeatherMainSquareTile extends StatelessWidget {
 
   final String title;
   final List<Widget> children;
 
-  const WeatherMainTile({
+  const WeatherMainSquareTile({
     super.key,
     required this.title,
     required this.children,
