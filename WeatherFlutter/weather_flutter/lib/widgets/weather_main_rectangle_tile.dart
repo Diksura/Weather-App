@@ -4,9 +4,9 @@ import '../utility/custom_ui_core.dart';
 
 class WeatherMainRectangleTile extends StatelessWidget {
   final String title;
-  final List<Widget> children;
+  final List<Widget> extendedChildren;
 
-  const WeatherMainRectangleTile({super.key, required this.title, required this.children});
+  const WeatherMainRectangleTile({super.key, required this.title, required this.extendedChildren});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class WeatherMainRectangleTile extends StatelessWidget {
                 ///         Widget2,
                 ///         Widget3
                 ///      ]
-                ...children,
+                ...extendedChildren,
               ],
             ),
           ),
