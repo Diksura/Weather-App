@@ -27,7 +27,7 @@ Map<String, dynamic> _$WeatherForecastToJson(WeatherForecast instance) =>
 ForecastDayWeather _$ForecastDayWeatherFromJson(Map<String, dynamic> json) =>
     ForecastDayWeather(
       forecastday: (json['forecastday'] as List<dynamic>)
-          .map((e) => ForecastDay.fromJson(e as Map<String, dynamic>))
+          .map((e) => Forecast.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

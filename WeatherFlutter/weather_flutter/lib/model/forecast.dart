@@ -6,27 +6,20 @@ import 'forecast_hour.dart';
 
 part 'forecast.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class Forecast {
   final String date;
-
-  @JsonKey(name: 'date_epoch')
   final int dateEpoch;
-
-  @JsonKey(name: 'day')
-  final ForecastDay fullDay;
-
+  final ForecastDay day;
   final Astro astro;
-
-  @JsonKey(name: 'hour')
-  final List<ForecastHour> hourly;
+  final List<ForecastHour> hour;
 
   Forecast({
     required this.date,
     required this.dateEpoch,
-    required this.fullDay,
+    required this.day,
     required this.astro,
-    required this.hourly,
+    required this.hour,
   });
 
   factory Forecast.fromJson(Map<String, dynamic> json) => _$ForecastFromJson(json);

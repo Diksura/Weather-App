@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:weather_flutter/model/current_weather.dart';
 
 import 'alerts.dart';
+import 'forecast.dart';
 import 'forecast_day.dart';
 import 'location.dart';
 
@@ -27,7 +28,7 @@ class WeatherForecast {
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ForecastDayWeather {
-  final List<ForecastDay> forecastday;
+  final List<Forecast> forecastday;
 
   const ForecastDayWeather({required this.forecastday});
 
