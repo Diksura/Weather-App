@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_flutter/model/current_weather.dart';
-import 'package:weather_flutter/model/forecast_day.dart';
 import 'package:weather_flutter/model/forecast_hour.dart';
-import 'package:weather_flutter/services/http_requests.dart';
-import 'package:weather_flutter/utility/wether_image_utility.dart';
+import 'package:weather_flutter/utility/weather_image_utility.dart';
 import 'package:weather_flutter/widgets/forecast_day_weather_tile.dart';
 
 import '../model/forecast.dart';
@@ -14,6 +12,7 @@ import '../model/weather_alerts.dart';
 import '../model/weather_astro.dart';
 import '../model/weather_forecast.dart';
 import '../utility/custom_ui_core.dart';
+import '../widgets/hourly_weather_tile.dart';
 import '../widgets/weather_main_rectangle_tile.dart';
 import '../widgets/weather_main_square_tile.dart';
 import '../widgets/weather_tile_grid.dart';
@@ -37,6 +36,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  /// populating the list using upcoming hourly weather
+  List<ForecastHour> hourlyData = List.empty();
+
+  /// Count of next hours data that viewed in hourly forecast [ForecastDayWeatherTile].
+  /// This will determine how many tiles of [ForecastDayWeatherTile] will be viewed.
+  int showingForecastHoursCnt = 24;
+
+  void processHourlyData() {
+    for (Forecast day in widget.forecastWeather.forecast.forecastday) {
+      hourlyData.addAll(day.hour);
+    }
+  }
+
+  @override
+  void initState() {
+    processHourlyData();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -77,7 +96,6 @@ class _HomePageState extends State<HomePage> {
 
                         Text(location.name, style: kFontSizeTitle, textAlign: .center),
 
-                        // TODO: add data
                         Text(current.condition.text, style: kFontSizeBody, textAlign: .center),
                       ],
                     ),
@@ -108,11 +126,9 @@ class _HomePageState extends State<HomePage> {
                   height: 120,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 10, // TODO: Get this from the API
+                    itemCount: showingForecastHoursCnt,
                     itemBuilder: (context, index) {
-                      return Container();
-                      // TODO: Hourly Weather Tile
-                      // return HourlyWeatherTile(hour: );
+                      return HourlyWeatherTile(hour: hourlyData[index]);
                     },
                   ),
                 ),
@@ -122,7 +138,7 @@ class _HomePageState extends State<HomePage> {
             // Forecast Days
             WeatherMainRectangleTile(
               title: "Forecasting Days",
-              children: [
+              extendedChildren: [
                 SizedBox(
                   height: 350,
                   child: ListView.builder(
@@ -139,7 +155,10 @@ class _HomePageState extends State<HomePage> {
               delegateChildren: [
                 WeatherMainSquareTile(title: 'Wind Details', children: []),
 
-                WeatherMainSquareTile(title: 'Humidity Details', children: []),
+                WeatherMainSquareTile(title: 'Humidity Details', children: [
+
+
+                ]),
               ],
             ),
 
@@ -155,6 +174,33 @@ class _HomePageState extends State<HomePage> {
                 Container(height: 300, color: Colors.green.shade100),
               ]),
             ),
+
+            WeatherMainRectangleTile(title: "Feels Like, Wind Chills Details", extendedChildren: [],),
+
+            WeatherTileGrid(delegateChildren: [
+
+              WeatherMainSquareTile(title: 'Precipitation', children: []),
+
+              WeatherMainSquareTile(title: 'Pressure Details', children: []),
+
+              WeatherMainSquareTile(title: 'UV Details', children: []),
+
+              WeatherMainSquareTile(title: 'Visibility', children: []),
+
+            ]),
+
+            WeatherMainRectangleTile(title: "Moon Details", extendedChildren: [],),
+
+            WeatherTileGrid(delegateChildren: [
+
+              WeatherMainSquareTile(title: 'Cloud Cover', children: []),
+
+              WeatherMainSquareTile(title: 'Sun Behaviour', children: []),
+
+            ]),
+
+            WeatherMainRectangleTile(title: "Air Details", extendedChildren: [],),
+
           ],
         ),
       ),
