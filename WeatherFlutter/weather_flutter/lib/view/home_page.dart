@@ -2,14 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_flutter/model/current_weather.dart';
 import 'package:weather_flutter/model/forecast_day.dart';
+import 'package:weather_flutter/model/forecast_hour.dart';
 import 'package:weather_flutter/services/http_requests.dart';
+import 'package:weather_flutter/utility/wether_image_utility.dart';
+import 'package:weather_flutter/widgets/forecast_day_weather_tile.dart';
 
+import '../model/forecast.dart';
+import '../model/location.dart';
 import '../model/weather.dart';
 import '../model/weather_alerts.dart';
 import '../model/weather_astro.dart';
 import '../model/weather_forecast.dart';
 import '../utility/custom_ui_core.dart';
-import '../widgets/weather_main_tile.dart';
+import '../widgets/weather_main_rectangle_tile.dart';
+import '../widgets/weather_main_square_tile.dart';
 import '../widgets/weather_tile_grid.dart';
 
 class HomePage extends StatefulWidget {
@@ -35,8 +41,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
-    String precipitation = "10%";
-    bool alert = true;
+    List<Forecast> forecastDay = widget.forecastWeather.forecast.forecastday;
+
+    final Location location = widget.currentWeather.location;
+    final CurrentWeather current = widget.currentWeather.current;
 
     return Scaffold(
       body: SafeArea(
@@ -49,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                 height: screenHeight * .95,
                 child: Column(
                   children: [
-                    if (alert)
+                    if (widget.weatherAlerts.alerts.alert.isNotEmpty)
                       Container(
                         alignment: Alignment.centerRight,
                         padding: const EdgeInsets.only(top: 8, right: 18),
@@ -60,13 +68,17 @@ class _HomePageState extends State<HomePage> {
 
                     Column(
                       children: [
-                        Image.asset("lib/assets/weather_icons/1.png", scale: 1.7),
+                        Image.asset(
+                          "lib/assets/weather_icons/${getWeatherImageType(current.condition.code).asset}.png",
+                          scale: 1.7,
+                        ),
 
-                        Text("88 °C", style: TextStyle(fontSize: 102, color: Colors.black)),
+                        Text("${current.tempC.round()}°C", style: TextStyle(fontSize: 102, color: Colors.black)),
 
-                        Text("Unknown Location", style: kFontSizeTitle),
+                        Text(location.name, style: kFontSizeTitle, textAlign: .center),
 
-                        Text("Unknown Weather", style: kFontSizeBody),
+                        // TODO: add data
+                        Text(current.condition.text, style: kFontSizeBody, textAlign: .center),
                       ],
                     ),
 
@@ -98,27 +110,9 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.horizontal,
                     itemCount: 10, // TODO: Get this from the API
                     itemBuilder: (context, index) {
-                      return Container(
-                        width: 80,
-                        margin: const EdgeInsets.only(right: 12),
-                        decoration: BoxDecoration(borderRadius: kOuterBorderRadius, color: kBoxBackgroundColour),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text("5AM", style: kFontSizeCaption),
-
-                              Image.asset("lib/assets/weather_icons/1.png", scale: 12),
-
-                              if (precipitation != "0%") Text("50%", style: kFontSizeCaption2),
-
-                              Text("23°", style: kFontSizeSubHeadline),
-                            ],
-                          ),
-                        ),
-                      );
+                      return Container();
+                      // TODO: Hourly Weather Tile
+                      // return HourlyWeatherTile(hour: );
                     },
                   ),
                 ),
@@ -126,36 +120,26 @@ class _HomePageState extends State<HomePage> {
             ),
 
             // Forecast Days
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(color: kBoxBackgroundColour, borderRadius: kOuterBorderRadius),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Forecasting Days", style: kFontSizeCaption),
-
-                        Divider(),
-
-                        // TODO
-                        // ForecastDayWeatherTile(),
-                        // ForecastDayWeatherTile(),
-                        // ForecastDayWeatherTile(),
-                      ],
-                    ),
+            WeatherMainRectangleTile(
+              title: "Forecasting Days",
+              children: [
+                SizedBox(
+                  height: 350,
+                  child: ListView.builder(
+                    itemCount: forecastDay.length,
+                    itemBuilder: (context, index) {
+                      return ForecastDayWeatherTile(forecastDay: forecastDay[index].day);
+                    },
                   ),
                 ),
-              ),
+              ],
             ),
 
             WeatherTileGrid(
               delegateChildren: [
-                WeatherMainTile(title: 'Wind Details', children: []),
+                WeatherMainSquareTile(title: 'Wind Details', children: []),
 
-                WeatherMainTile(title: 'Humidity Details', children: []),
+                WeatherMainSquareTile(title: 'Humidity Details', children: []),
               ],
             ),
 
@@ -170,103 +154,6 @@ class _HomePageState extends State<HomePage> {
 
                 Container(height: 300, color: Colors.green.shade100),
               ]),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ForecastDayWeatherTile extends StatelessWidget {
-  final ForecastDay forecastDay;
-
-  const ForecastDayWeatherTile({super.key, required this.forecastDay});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      decoration: BoxDecoration(color: kBoxBackgroundColour, borderRadius: kInnerBorderRadius),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Details
-            Expanded(
-              flex: 3,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Text(forecastDay.date, style: kFontSizeCaption),
-                    ),
-
-                    Text("Temperature", style: kFontSizeSubHeadline),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Row(
-                        children: [
-                          Text("Max : ${forecastDay.maxtempC}°", style: kFontSizeCaption),
-
-                          Spacer(),
-
-                          Text("Min : ${forecastDay.mintempC}°", style: kFontSizeCaption),
-                        ],
-                      ),
-                    ),
-
-                    Divider(),
-
-                    Text("Wind Speed: ${forecastDay.maxwindKph}", style: kFontSizeSubHeadline),
-
-                    Divider(),
-
-                    Text("Visibility: ${forecastDay.avgvisKm}", style: kFontSizeSubHeadline),
-                  ],
-                ),
-              ),
-            ),
-
-            // Image
-            Expanded(
-              child: Column(
-                children: [
-                  Image.asset("lib/assets/weather_icons/1.png", scale: 8),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("${forecastDay.dailyChanceOfRain}%", style: kFontSizeCaption.copyWith(color: Colors.blue)),
-                      Text("|", style: kFontSizeCaption),
-                      Text("${forecastDay.dailyChanceOfSnow}%", style: kFontSizeCaption),
-                    ],
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: "${forecastDay.avgtempC}",
-                            style: kFontSizeTitle.copyWith(color: Colors.black),
-                          ),
-                          TextSpan(
-                            text: "°C",
-                            style: kFontSizeCaption.copyWith(color: Colors.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),
