@@ -49,4 +49,17 @@ class Utility {
       return inputDateString;
     }
   }
+
+  String formatTimeToHours(String time) {
+    try {
+      final inputFormat = DateFormat("yyyy-MM-dd HH:mm");
+      final outputFormat = DateFormat("ha");
+
+      final date = inputFormat.parse(time);
+      return outputFormat.format(date);
+    } catch (e) {
+      return "N/A";
+    }
+  }
+
 }
