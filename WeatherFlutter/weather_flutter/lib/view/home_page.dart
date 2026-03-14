@@ -1,18 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:weather_flutter/model/current_weather.dart';
 import 'package:weather_flutter/model/forecast_hour.dart';
 import 'package:weather_flutter/utility/weather_image_utility.dart';
 import 'package:weather_flutter/widgets/forecast_day_weather_tile.dart';
 
+import '../model/astro.dart';
 import '../model/forecast.dart';
 import '../model/location.dart';
 import '../model/weather.dart';
 import '../model/weather_alerts.dart';
 import '../model/weather_astro.dart';
 import '../model/weather_forecast.dart';
+import '../utility/cloud_coverage_helper.dart';
 import '../utility/custom_ui_core.dart';
+import '../utility/precipitation_helper.dart';
+import '../widgets/air_details.dart';
+import '../widgets/icon_value_description_tile.dart';
+import '../widgets/weather_left_details_rectangle_tile.dart';
 import '../widgets/hourly_weather_tile.dart';
+import '../widgets/temperature_range_bar.dart';
 import '../widgets/weather_main_rectangle_tile.dart';
 import '../widgets/weather_main_square_tile.dart';
 import '../widgets/weather_tile_grid.dart';
@@ -37,7 +45,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   /// populating the list using upcoming hourly weather
-  List<ForecastHour> hourlyData = List.empty();
+  List<ForecastHour> hourlyData = List.empty(growable: true);
 
   /// Count of next hours data that viewed in hourly forecast [ForecastDayWeatherTile].
   /// This will determine how many tiles of [ForecastDayWeatherTile] will be viewed.
@@ -64,146 +72,327 @@ class _HomePageState extends State<HomePage> {
 
     final Location location = widget.currentWeather.location;
     final CurrentWeather current = widget.currentWeather.current;
+    final Astro astro = widget.weatherAstro.astronomy.astro;
 
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            // Hero Section
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: SizedBox(
-                height: screenHeight * .95,
-                child: Column(
-                  children: [
-                    if (widget.weatherAlerts.alerts.alert.isNotEmpty)
-                      Container(
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(top: 8, right: 18),
-                        child: Icon(CupertinoIcons.exclamationmark_triangle, size: 32),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: CustomScrollView(
+            slivers: [
+              // Hero Section
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: SizedBox(
+                  height: screenHeight * .95,
+                  child: Column(
+                    children: [
+                      if (widget.weatherAlerts.alerts.alert.isNotEmpty)
+                        Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.only(top: 8, right: 18),
+                          child: Icon(CupertinoIcons.exclamationmark_triangle, size: 32),
+                        ),
+
+                      Spacer(flex: 3),
+
+                      Column(
+                        children: [
+                          Image.asset(
+                            "lib/assets/weather_icons/${getWeatherImageType(current.condition.code).asset}.png",
+                            scale: 1.7,
+                          ),
+
+                          Text("${current.tempC.round()}°C", style: TextStyle(fontSize: 102, color: Colors.black)),
+
+                          Text(location.name, style: kFontSizeTitle, textAlign: .center),
+
+                          Text(current.condition.text, style: kFontSizeBody, textAlign: .center),
+                        ],
                       ),
 
-                    Spacer(flex: 3),
+                      Spacer(flex: 3),
 
-                    Column(
-                      children: [
-                        Image.asset(
-                          "lib/assets/weather_icons/${getWeatherImageType(current.condition.code).asset}.png",
-                          scale: 1.7,
-                        ),
+                      Column(
+                        children: [
+                          Icon(CupertinoIcons.arrow_down, size: 18),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
+                            child: Text("Scroll Down for More", style: kFontSizeCaption2),
+                          ),
+                        ],
+                      ),
 
-                        Text("${current.tempC.round()}°C", style: TextStyle(fontSize: 102, color: Colors.black)),
-
-                        Text(location.name, style: kFontSizeTitle, textAlign: .center),
-
-                        Text(current.condition.text, style: kFontSizeBody, textAlign: .center),
-                      ],
-                    ),
-
-                    Spacer(flex: 3),
-
-                    Column(
-                      children: [
-                        Icon(CupertinoIcons.arrow_down, size: 18),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 12.0),
-                          child: Text("Scroll Down for More", style: kFontSizeCaption2),
-                        ),
-                      ],
-                    ),
-
-                    // Spacer(),
-                  ],
-                ),
-              ),
-            ),
-
-            // Hourly Forecast
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 120,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: showingForecastHoursCnt,
-                    itemBuilder: (context, index) {
-                      return HourlyWeatherTile(hour: hourlyData[index]);
-                    },
+                      // Spacer(),
+                    ],
                   ),
                 ),
               ),
-            ),
 
-            // Forecast Days
-            WeatherMainRectangleTile(
-              title: "Forecasting Days",
-              extendedChildren: [
-                SizedBox(
-                  height: 350,
-                  child: ListView.builder(
-                    itemCount: forecastDay.length,
-                    itemBuilder: (context, index) {
-                      return ForecastDayWeatherTile(forecastDay: forecastDay[index].day);
-                    },
+              // Hourly Forecast
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: 120,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: showingForecastHoursCnt,
+                      itemBuilder: (context, index) {
+                        return HourlyWeatherTile(hour: hourlyData[index]);
+                      },
+                    ),
                   ),
                 ),
-              ],
-            ),
+              ),
 
-            WeatherTileGrid(
-              delegateChildren: [
-                WeatherMainSquareTile(title: 'Wind Details', children: []),
+              // Forecast Days
+              WeatherMainRectangleTile(
+                title: "Forecasting Days",
+                extendedChildren: [
+                  SizedBox(
+                    height: 350,
+                    child: ListView.builder(
+                      itemCount: forecastDay.length,
+                      itemBuilder: (context, index) {
+                        return ForecastDayWeatherTile(forecastDay: forecastDay[index].day);
+                      },
+                    ),
+                  ),
+                ],
+              ),
 
-                WeatherMainSquareTile(title: 'Humidity Details', children: [
+              WeatherTileGrid(
+                delegateChildren: [
+                  WeatherMainSquareTile(title: 'Wind Details', children: []),
 
+                  WeatherMainSquareTile(
+                    title: 'Humidity Details',
+                    children: [
+                      SvgPicture.asset(
+                        "lib/assets/apple_icons/humidity.svg",
+                        height: 40,
+                        colorFilter: ColorFilter.mode(Colors.grey.withValues(alpha: 0.8), BlendMode.srcIn),
+                      ),
 
-                ]),
-              ],
-            ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: .alphabetic,
+                        children: [
+                          Text("${current.humidity}", style: kFontSizeTitle.copyWith(fontSize: 54)),
+                          Text("%", style: kFontSizeTitle),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
 
-            SliverList(
-              delegate: SliverChildListDelegate([
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  child: const Text("Upcoming hour data", style: TextStyle(fontSize: 22)),
-                ),
+              WeatherMainRectangleTile(
+                title: "Feels Like, Wind Chills Details",
+                extendedChildren: [
+                  WeatherLeftDetailsRectangleTile(
+                    current: current,
+                    icon: SvgPicture.asset("lib/assets/apple_icons/thermometer_sun.svg", height: 54),
+                    children: [
+                      WeatherLeftDetailsRectangleTextRow(
+                        contentText: "${current.feelslikeC.round()} °C",
+                        description: "Feels Like",
+                      ),
 
-                Container(height: 300, color: Colors.blue.shade100),
+                      Divider(),
 
-                Container(height: 300, color: Colors.green.shade100),
-              ]),
-            ),
+                      WeatherLeftDetailsRectangleTextRow(
+                        contentText: "${current.windchillC.round()} °C",
+                        description: 'Wind Chill',
+                      ),
 
-            WeatherMainRectangleTile(title: "Feels Like, Wind Chills Details", extendedChildren: [],),
+                      Divider(),
 
-            WeatherTileGrid(delegateChildren: [
+                      WeatherLeftDetailsRectangleTextRow(
+                        contentText: "${current.heatindexC.round()} °C",
+                        description: 'Heat Index',
+                      ),
+                    ],
+                  ),
+                ],
+              ),
 
-              WeatherMainSquareTile(title: 'Precipitation', children: []),
+              WeatherTileGrid(
+                delegateChildren: [
+                  WeatherMainSquareTile(
+                    title: 'Precipitation',
+                    children: [
+                      IconValueDescriptionTile(
+                        icon: SvgPicture.asset("lib/assets/apple_icons/cloud_sun_rain.svg", height: 28),
+                        measureType: 'mm',
+                        value: precipitationValue(current.precipMm),
+                        description: precipitationMessage(current.precipMm),
+                      ),
+                    ],
+                  ),
 
-              WeatherMainSquareTile(title: 'Pressure Details', children: []),
+                  WeatherMainSquareTile(title: 'Pressure Details', children: []),
 
-              WeatherMainSquareTile(title: 'UV Details', children: []),
+                  WeatherMainSquareTile(
+                    title: 'UV Details',
+                    children: [
+                      Row(
+                        mainAxisAlignment: .spaceBetween,
+                        children: [
+                          SvgPicture.asset("lib/assets/apple_icons/sun_min.svg", height: 48),
 
-              WeatherMainSquareTile(title: 'Visibility', children: []),
+                          Text("${current.uv.round()}", style: kFontSizeTitle.copyWith(fontSize: 52)),
+                        ],
+                      ),
 
-            ]),
+                      TemperatureRangeBar(uvValue: current.uv),
+                    ],
+                  ),
 
-            WeatherMainRectangleTile(title: "Moon Details", extendedChildren: [],),
+                  WeatherMainSquareTile(
+                    title: 'Visibility',
+                    children: [
+                      Spacer(),
+                      SvgPicture.asset("lib/assets/apple_icons/vision_pro.svg", height: 32),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12.0),
+                        child: IntrinsicHeight(
+                          child: Row(
+                            mainAxisSize: .min,
+                            children: [
+                              Column(
+                                children: [
+                                  Text("${current.visMiles.round()}", style: kFontSizeLargeTitle),
+                                  Text("km", style: kFontSizeBody),
+                                ],
+                              ),
 
-            WeatherTileGrid(delegateChildren: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
+                                child: VerticalDivider(),
+                              ),
 
-              WeatherMainSquareTile(title: 'Cloud Cover', children: []),
+                              Column(
+                                children: [
+                                  Text("${current.visKm.round()}", style: kFontSizeLargeTitle),
+                                  Text("mi", style: kFontSizeBody),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
 
-              WeatherMainSquareTile(title: 'Sun Behaviour', children: []),
+              WeatherMainRectangleTile(
+                title: "Moon Details",
+                extendedChildren: [
+                  WeatherLeftDetailsRectangleTile(
+                    current: current,
+                    icon: Image.asset("lib/assets/weather_icons/Full-Moon.png"),
+                    iconPaddingLeft: 4,
+                    containerPaddingRight: 0,
+                    flex: 2,
+                    children: [
+                      WeatherLeftDetailsRectangleTextRow(
+                        description: "Phase",
+                        contentText: astro.moonPhase,
+                        fontStyle: kFontSizeCaption,
+                      ),
 
-            ]),
+                      Divider(),
 
-            WeatherMainRectangleTile(title: "Air Details", extendedChildren: [],),
+                      WeatherLeftDetailsRectangleTextRow(
+                        description: 'Illumination',
+                        contentText: "${astro.moonIllumination}",
+                        fontStyle: kFontSizeCaption,
+                      ),
 
-          ],
+                      Divider(),
+
+                      WeatherLeftDetailsRectangleTextRow(
+                        description: 'Moon-Rise',
+                        contentText: astro.moonrise,
+                        fontStyle: kFontSizeCaption,
+                      ),
+
+                      Divider(),
+
+                      WeatherLeftDetailsRectangleTextRow(
+                        description: 'Moon-Set',
+                        contentText: astro.moonset,
+                        fontStyle: kFontSizeCaption,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              WeatherTileGrid(
+                delegateChildren: [
+                  WeatherMainSquareTile(
+                    title: 'Cloud Cover',
+                    children: [
+                      IconValueDescriptionTile(
+                        icon: Icon(CupertinoIcons.cloud_fill, size: 38, color: Colors.blue.shade200),
+                        measureType: '%',
+                        value: current.cloud.toString(),
+                        description: cloudCoverMessage(current.cloud),
+                      ),
+                    ],
+                  ),
+
+                  WeatherMainSquareTile(
+                    title: 'Sun Behaviour',
+                    children: [
+                      Spacer(flex: 2),
+
+                      IntrinsicHeight(
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                SvgPicture.asset("lib/assets/apple_icons/sunrise.svg", height: 48),
+
+                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunrise")),
+
+                                Text(astro.sunrise),
+                              ],
+                            ),
+
+                            Expanded(child: VerticalDivider()),
+
+                            Column(
+                              children: [
+                                SvgPicture.asset("lib/assets/apple_icons/sunset.svg", height: 48),
+
+                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunset")),
+
+                                Text(astro.sunset),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      Spacer(),
+                    ],
+                  ),
+                ],
+              ),
+
+              AirDetails(current: current),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

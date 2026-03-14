@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:weather_flutter/utility/weather_image_utility.dart';
+import 'package:weather_flutter/utility/utility.dart';
 
 import '../model/forecast_hour.dart';
 import '../utility/custom_ui_core.dart';
@@ -23,13 +25,16 @@ class HourlyWeatherTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(hour.time, style: kFontSizeCaption),
+            Text(Utility().formatTimeToHours(hour.time), style: kFontSizeCaption),
 
-            Image.asset("lib/assets/weather_icons/1.png", scale: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4.0),
+              child: Image.asset("lib/assets/weather_icons/${getWeatherImageType(hour.condition.code).asset}.png", scale: 12),
+            ),
 
             if (hour.precipIn > 0) Text("${hour.precipIn}", style: kFontSizeCaption2),
 
-            Text("${hour.tempC}°", style: kFontSizeSubHeadline),
+            Text("${hour.tempC.round()}°", style: kFontSizeSubHeadline),
           ],
         ),
       ),
