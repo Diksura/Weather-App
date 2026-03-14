@@ -5,7 +5,9 @@ final kInnerBorderRadius = BorderRadius.all(Radius.circular(12));
 
 final kBoxBackgroundColour = Colors.grey.withValues(alpha: 0.2);
 
+final kFontSizeLargeTitle = TextStyle(fontSize: 34);
 final kFontSizeTitle = TextStyle(fontSize: 28);
+final kFontSizeSubTitle = TextStyle(fontSize: 24);
 final kFontSizeBody = TextStyle(fontSize: 17);
 final kFontSizeSubHeadline = TextStyle(fontSize: 15);
 final kFontSizeHeadCaption = TextStyle(fontSize: 14);
