@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: .alphabetic,
                         children: [
-                          Text("${current.humidity}", style: kFontSizeTitle.copyWith(fontSize: 54)),
+                          Text("${current.humidity}", style: kFontSizeTitle.copyWith(fontSize: 50)),
                           Text("%", style: kFontSizeTitle),
                         ],
                       ),
@@ -265,8 +265,8 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Column(
                                 children: [
-                                  Text("${current.visMiles.round()}", style: kFontSizeLargeTitle),
-                                  Text("km", style: kFontSizeBody),
+                                  Text("${current.visKm.round()}", style: kFontSizeLargeTitle),
+                                  Text("km", style: kFontSizeSubHeadline),
                                 ],
                               ),
 
@@ -277,8 +277,8 @@ class _HomePageState extends State<HomePage> {
 
                               Column(
                                 children: [
-                                  Text("${current.visKm.round()}", style: kFontSizeLargeTitle),
-                                  Text("mi", style: kFontSizeBody),
+                                  Text("${current.visMiles.round()}", style: kFontSizeLargeTitle),
+                                  Text("mi", style: kFontSizeSubHeadline),
                                 ],
                               ),
                             ],
@@ -358,11 +358,11 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Column(
                               children: [
-                                SvgPicture.asset("lib/assets/apple_icons/sunrise.svg", height: 48),
+                                SvgPicture.asset("lib/assets/apple_icons/sunrise.svg", height: 36),
 
-                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunrise")),
+                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunrise", style: kFontSizeCaption,)),
 
-                                Text(astro.sunrise),
+                                Text(astro.sunrise, style: kFontSizeCaption,),
                               ],
                             ),
 
@@ -370,11 +370,11 @@ class _HomePageState extends State<HomePage> {
 
                             Column(
                               children: [
-                                SvgPicture.asset("lib/assets/apple_icons/sunset.svg", height: 48),
+                                SvgPicture.asset("lib/assets/apple_icons/sunset.svg", height: 36),
 
-                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunset")),
+                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunset", style: kFontSizeCaption,)),
 
-                                Text(astro.sunset),
+                                Text(astro.sunset, style: kFontSizeCaption,),
                               ],
                             ),
                           ],
