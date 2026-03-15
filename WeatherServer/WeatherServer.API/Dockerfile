@@ -12,7 +12,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["WeatherServer.API/WeatherServer.API.csproj", "./"]
+COPY ["WeatherServer.API/WeatherServer.API.csproj", "WeatherServer.API/"]
 RUN dotnet restore "./WeatherServer.API/WeatherServer.API.csproj"
 COPY . .
 WORKDIR "/src/WeatherServer.API"
