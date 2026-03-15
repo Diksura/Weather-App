@@ -19,7 +19,8 @@ import '../utility/cloud_coverage_helper.dart';
 import '../utility/custom_ui_core.dart';
 import '../utility/precipitation_helper.dart';
 import '../widgets/air_details.dart';
-import '../widgets/custom_wind_tile.dart';
+import '../widgets/custom_pressure_indicator.dart';
+import '../widgets/custom_wind_tile_content.dart';
 import '../widgets/icon_value_description_tile.dart';
 import '../widgets/weather_left_details_rectangle_tile.dart';
 import '../widgets/hourly_weather_tile.dart';
@@ -167,12 +168,16 @@ class _HomePageState extends State<HomePage> {
 
               WeatherTileGrid(
                 delegateChildren: [
-                  WeatherMainSquareTile(title: 'Wind Details', children: [
-                    CustomWindTile(
-                      direction: current.windDir,
-                      speed: current.windKph,
-                      windDegree: current.windDegree,
-                    ),                  ]),
+                  WeatherMainSquareTile(
+                    title: 'Wind Details',
+                    children: [
+                      CustomWindTileContent(
+                        direction: current.windDir,
+                        speed: current.windKph,
+                        windDegree: current.windDegree,
+                      ),
+                    ],
+                  ),
 
                   WeatherMainSquareTile(
                     title: 'Humidity Details',
@@ -242,7 +247,11 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
 
-                  WeatherMainSquareTile(title: 'Pressure Details', children: []),
+                  WeatherMainSquareTile(
+                    padding: EdgeInsets.all(16.0).copyWith(bottom: 0.0),
+                    title: 'Pressure Details',
+                    children: [CustomPressureIndicator(pressure: current.pressureMb)],
+                  ),
 
                   WeatherMainSquareTile(
                     title: 'UV Details',
@@ -411,5 +420,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
 
