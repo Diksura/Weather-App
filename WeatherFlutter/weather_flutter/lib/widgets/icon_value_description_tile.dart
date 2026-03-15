@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class IconValueDescriptionTile extends StatelessWidget {
   const IconValueDescriptionTile({
     super.key,
@@ -8,13 +7,16 @@ class IconValueDescriptionTile extends StatelessWidget {
     required this.measureType,
     this.measureTypePaddingRight,
     required this.value,
-    required this.description, this.descriptionTextStyle,
+    required this.description,
+    this.descriptionTextStyle,
+    this.iconPositionLeft,
   });
 
   final Widget icon;
   final String measureType;
   final String value;
   final String description;
+  final double? iconPositionLeft;
   final double? measureTypePaddingRight;
   final TextStyle? descriptionTextStyle;
 
@@ -41,7 +43,7 @@ class IconValueDescriptionTile extends StatelessWidget {
                 ],
               ),
 
-              Positioned(top: 0, right: 0, left: 80, child: icon),
+              Positioned(top: 0, right: 0, left: iconPositionLeft ?? 80, child: icon),
             ],
           ),
         ),

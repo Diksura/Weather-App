@@ -340,11 +340,12 @@ class _HomePageState extends State<HomePage> {
                     title: 'Cloud Cover',
                     children: [
                       IconValueDescriptionTile(
-                        icon: Icon(CupertinoIcons.cloud_fill, size: 38, color: Colors.blue.shade200),
+                        icon: Icon(CupertinoIcons.cloud_fill, size: 32, color: Colors.blue.shade200),
                         measureType: '%',
                         value: current.cloud.toString(),
                         description: cloudCoverMessage(current.cloud),
                         descriptionTextStyle: kFontSizeCaption2,
+                        iconPositionLeft: 60,
                       ),
                     ],
                   ),
@@ -361,9 +362,12 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 SvgPicture.asset("lib/assets/apple_icons/sunrise.svg", height: 36),
 
-                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunrise", style: kFontSizeCaption,)),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text("Sunrise", style: kFontSizeCaption),
+                                ),
 
-                                Text(astro.sunrise, style: kFontSizeCaption,),
+                                Text(astro.sunrise, style: kFontSizeCaption),
                               ],
                             ),
 
@@ -373,9 +377,12 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 SvgPicture.asset("lib/assets/apple_icons/sunset.svg", height: 36),
 
-                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunset", style: kFontSizeCaption,)),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text("Sunset", style: kFontSizeCaption),
+                                ),
 
-                                Text(astro.sunset, style: kFontSizeCaption,),
+                                Text(astro.sunset, style: kFontSizeCaption),
                               ],
                             ),
                           ],
@@ -396,4 +403,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
