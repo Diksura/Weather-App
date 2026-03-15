@@ -250,7 +250,11 @@ class _HomePageState extends State<HomePage> {
                   WeatherMainSquareTile(
                     padding: EdgeInsets.all(16.0).copyWith(bottom: 0.0),
                     title: 'Pressure Details',
-                    children: [CustomPressureIndicator(pressure: current.pressureMb)],
+                    children: [
+                      FittedBox(
+                        child: CustomPressureIndicator(pressure: current.pressureMb),
+                      ),
+                    ],
                   ),
 
                   WeatherMainSquareTile(
@@ -420,4 +424,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
