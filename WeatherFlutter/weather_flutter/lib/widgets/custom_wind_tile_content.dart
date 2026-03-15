@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 
 import '../utility/custom_ui_core.dart';
 
-class CustomWindTile extends StatelessWidget {
+class CustomWindTileContent extends StatelessWidget {
   final String direction;
   final double speed;
   final double windDegree;
 
-  const CustomWindTile({super.key, required this.direction, required this.speed, required this.windDegree});
+  const CustomWindTileContent({super.key, required this.direction, required this.speed, required this.windDegree});
 
   @override
   Widget build(BuildContext context) {
