@@ -258,7 +258,7 @@ class _HomePageState extends State<HomePage> {
                       Spacer(),
                       SvgPicture.asset("lib/assets/apple_icons/vision_pro.svg", height: 32),
                       Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
+                        padding: const EdgeInsets.only(top: 8.0),
                         child: IntrinsicHeight(
                           child: Row(
                             mainAxisSize: .min,
@@ -344,6 +344,7 @@ class _HomePageState extends State<HomePage> {
                         measureType: '%',
                         value: current.cloud.toString(),
                         description: cloudCoverMessage(current.cloud),
+                        descriptionTextStyle: kFontSizeCaption2,
                       ),
                     ],
                   ),

@@ -1,8 +1,7 @@
 
 String cloudCoverMessage(int percentage) {
   if (percentage == 0) {
-    return "Completely overcast skies. No sun expected today.";
-    // return "Clear skies ahead. Enjoy the sunshine!";
+    return "Clear skies ahead. Enjoy the sunshine!";
   } else if (percentage < 20) {
     return "Mostly clear skies with a few clouds.";
   } else if (percentage < 50) {
