@@ -14,7 +14,7 @@ class WeatherMainSquareTile extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(color: kBoxBackgroundColour, borderRadius: kOuterBorderRadius),
       child: Padding(
-        padding: padding ?? EdgeInsets.all(16.0).copyWith(bottom: 4.0),
+        padding: padding ?? EdgeInsets.all(16.0).copyWith(bottom: 8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
