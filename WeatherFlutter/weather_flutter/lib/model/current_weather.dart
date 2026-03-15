@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'air_quality.dart';
 import 'condition.dart';
 
-part 'current_weather.g.dart';
+part 'json_serialising/current_weather.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class CurrentWeather {

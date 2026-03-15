@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'astro.dart';
+part of '../astro.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

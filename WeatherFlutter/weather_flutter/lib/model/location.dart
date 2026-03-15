@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'location.g.dart';
+part 'json_serialising/location.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Location {

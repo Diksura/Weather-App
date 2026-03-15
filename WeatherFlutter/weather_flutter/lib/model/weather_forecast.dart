@@ -6,7 +6,7 @@ import 'forecast.dart';
 import 'forecast_day.dart';
 import 'location.dart';
 
-part 'weather_forecast.g.dart';
+part 'json_serialising/weather_forecast.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class WeatherForecast {

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'forecast_hour.dart';
+part of '../forecast_hour.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

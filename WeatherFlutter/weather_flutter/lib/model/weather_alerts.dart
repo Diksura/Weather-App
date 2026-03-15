@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'alerts.dart';
 import 'location.dart';
 
-part 'weather_alerts.g.dart';
+part 'json_serialising/weather_alerts.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class WeatherAlerts {

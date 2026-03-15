@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'condition.dart';
 
-part 'forecast_day.g.dart';
+part 'json_serialising/forecast_day.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ForecastDay {

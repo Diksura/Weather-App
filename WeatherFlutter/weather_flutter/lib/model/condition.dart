@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'condition.g.dart';
+part 'json_serialising/condition.g.dart';
 
 @JsonSerializable()
 class Condition {
