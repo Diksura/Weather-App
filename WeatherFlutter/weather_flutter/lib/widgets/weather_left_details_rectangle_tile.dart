@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../model/current_weather.dart';
 import '../utility/custom_ui_core.dart';

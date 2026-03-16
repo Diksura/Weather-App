@@ -3,7 +3,6 @@ import 'package:weather_flutter/model/current_weather.dart';
 
 import 'alerts.dart';
 import 'forecast.dart';
-import 'forecast_day.dart';
 import 'location.dart';
 
 part 'json_serialising/weather_forecast.g.dart';
