@@ -13,6 +13,6 @@ String cloudCoverMessage(int percentage) {
   } else if (percentage == 100) {
     return "Completely overcast skies. No sun expected today.";
   } else {
-    return "Cloud cover data is unavailable. Check local forecasts for updates.";
+    return "Cloud cover data is unavailable.";
   }
 }

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'air_quality.g.dart';
+part 'json_serialising/air_quality.g.dart';
 
 @JsonSerializable()
 class AirQuality {

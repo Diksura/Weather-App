@@ -7,7 +7,7 @@ String precipitationValue(double precipitation) {
 
 String precipitationMessage(double precipitation) {
   if (precipitation == 0) {
-    return "No precipitation expected. Enjoy a clear day!";
+    return "No precipitation expected.";
   } else if (precipitation < 2.5) {
     return "A light drizzle is possible.";
   } else if (precipitation < 10) {

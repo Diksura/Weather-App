@@ -1,8 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:weather_flutter/model/air_quality.dart';
 import 'condition.dart';
 
-part 'forecast_hour.g.dart';
+part 'json_serialising/forecast_hour.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ForecastHour {

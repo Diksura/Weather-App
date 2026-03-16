@@ -11,17 +11,17 @@ const String k_debug_cyan = '\x1B[36m';
 const String k_debug_white = '\x1B[37m';
 
 void errorPrint(String message) {
-  debugPrint("${k_debug_red}ERROR${k_debug_reset} | $message");
+  debugPrint("${k_debug_red}ERROR$k_debug_reset | $message");
 }
 
 void successPrint(String message) {
-  debugPrint("${k_debug_green}SUCCESS${k_debug_reset} | $message");
+  debugPrint("${k_debug_green}SUCCESS$k_debug_reset | $message");
 }
 
 void warningPrint(String message) {
-  debugPrint("${k_debug_yellow}WARNING${k_debug_reset} | $message");
+  debugPrint("${k_debug_yellow}WARNING$k_debug_reset | $message");
 }
 
 void checkPrint(String message) {
-  debugPrint("${k_debug_cyan}CHECK${k_debug_reset} | $message");
+  debugPrint("${k_debug_cyan}CHECK$k_debug_reset | $message");
 }

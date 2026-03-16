@@ -52,7 +52,7 @@ class AirDetails extends StatelessWidget {
 
         Padding(
           padding: const EdgeInsets.only(top: 24.0, bottom: 8.0),
-          child: Text("Air Index", style: kFontSizeBody.copyWith(fontWeight: .bold)),
+          child: Text("Air Index", style: kFontSizeSubTitle2.copyWith(fontWeight: .bold)),
         ),
 
         Column(
@@ -105,7 +105,11 @@ class AirDetails extends StatelessWidget {
 
           ],
         ),
+
+        SizedBox(height: 12,),
+
       ],
+
     );
   }
 }

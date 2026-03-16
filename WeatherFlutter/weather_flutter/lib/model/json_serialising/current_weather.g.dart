@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'current_weather.dart';
+part of '../current_weather.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

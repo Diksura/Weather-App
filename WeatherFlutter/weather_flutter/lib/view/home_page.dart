@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -17,6 +19,8 @@ import '../utility/cloud_coverage_helper.dart';
 import '../utility/custom_ui_core.dart';
 import '../utility/precipitation_helper.dart';
 import '../widgets/air_details.dart';
+import '../widgets/custom_pressure_indicator.dart';
+import '../widgets/custom_wind_tile_content.dart';
 import '../widgets/icon_value_description_tile.dart';
 import '../widgets/weather_left_details_rectangle_tile.dart';
 import '../widgets/hourly_weather_tile.dart';
@@ -164,7 +168,16 @@ class _HomePageState extends State<HomePage> {
 
               WeatherTileGrid(
                 delegateChildren: [
-                  WeatherMainSquareTile(title: 'Wind Details', children: []),
+                  WeatherMainSquareTile(
+                    title: 'Wind Details',
+                    children: [
+                      CustomWindTileContent(
+                        direction: current.windDir,
+                        speed: current.windKph,
+                        windDegree: current.windDegree,
+                      ),
+                    ],
+                  ),
 
                   WeatherMainSquareTile(
                     title: 'Humidity Details',
@@ -181,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.baseline,
                         textBaseline: .alphabetic,
                         children: [
-                          Text("${current.humidity}", style: kFontSizeTitle.copyWith(fontSize: 54)),
+                          Text("${current.humidity}", style: kFontSizeTitle.copyWith(fontSize: 50)),
                           Text("%", style: kFontSizeTitle),
                         ],
                       ),
@@ -234,7 +247,15 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
 
-                  WeatherMainSquareTile(title: 'Pressure Details', children: []),
+                  WeatherMainSquareTile(
+                    padding: EdgeInsets.all(16.0).copyWith(bottom: 0.0),
+                    title: 'Pressure Details',
+                    children: [
+                      FittedBox(
+                        child: CustomPressureIndicator(pressure: current.pressureMb),
+                      ),
+                    ],
+                  ),
 
                   WeatherMainSquareTile(
                     title: 'UV Details',
@@ -258,15 +279,15 @@ class _HomePageState extends State<HomePage> {
                       Spacer(),
                       SvgPicture.asset("lib/assets/apple_icons/vision_pro.svg", height: 32),
                       Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
+                        padding: const EdgeInsets.only(top: 8.0),
                         child: IntrinsicHeight(
                           child: Row(
                             mainAxisSize: .min,
                             children: [
                               Column(
                                 children: [
-                                  Text("${current.visMiles.round()}", style: kFontSizeLargeTitle),
-                                  Text("km", style: kFontSizeBody),
+                                  Text("${current.visKm.round()}", style: kFontSizeLargeTitle),
+                                  Text("km", style: kFontSizeSubHeadline),
                                 ],
                               ),
 
@@ -277,8 +298,8 @@ class _HomePageState extends State<HomePage> {
 
                               Column(
                                 children: [
-                                  Text("${current.visKm.round()}", style: kFontSizeLargeTitle),
-                                  Text("mi", style: kFontSizeBody),
+                                  Text("${current.visMiles.round()}", style: kFontSizeLargeTitle),
+                                  Text("mi", style: kFontSizeSubHeadline),
                                 ],
                               ),
                             ],
@@ -340,10 +361,12 @@ class _HomePageState extends State<HomePage> {
                     title: 'Cloud Cover',
                     children: [
                       IconValueDescriptionTile(
-                        icon: Icon(CupertinoIcons.cloud_fill, size: 38, color: Colors.blue.shade200),
+                        icon: Icon(CupertinoIcons.cloud_fill, size: 32, color: Colors.blue.shade200),
                         measureType: '%',
                         value: current.cloud.toString(),
                         description: cloudCoverMessage(current.cloud),
+                        descriptionTextStyle: kFontSizeCaption2,
+                        iconPositionLeft: 60,
                       ),
                     ],
                   ),
@@ -358,11 +381,14 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Column(
                               children: [
-                                SvgPicture.asset("lib/assets/apple_icons/sunrise.svg", height: 48),
+                                SvgPicture.asset("lib/assets/apple_icons/sunrise.svg", height: 36),
 
-                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunrise")),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text("Sunrise", style: kFontSizeCaption),
+                                ),
 
-                                Text(astro.sunrise),
+                                Text(astro.sunrise, style: kFontSizeCaption),
                               ],
                             ),
 
@@ -370,11 +396,14 @@ class _HomePageState extends State<HomePage> {
 
                             Column(
                               children: [
-                                SvgPicture.asset("lib/assets/apple_icons/sunset.svg", height: 48),
+                                SvgPicture.asset("lib/assets/apple_icons/sunset.svg", height: 36),
 
-                                Padding(padding: const EdgeInsets.only(top: 8.0), child: Text("Sunset")),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: Text("Sunset", style: kFontSizeCaption),
+                                ),
 
-                                Text(astro.sunset),
+                                Text(astro.sunset, style: kFontSizeCaption),
                               ],
                             ),
                           ],
@@ -395,4 +424,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-

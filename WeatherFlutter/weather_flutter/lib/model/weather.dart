@@ -3,7 +3,7 @@ import 'package:weather_flutter/model/current_weather.dart';
 
 import 'location.dart';
 
-part 'weather.g.dart';
+part 'json_serialising/weather.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Weather {

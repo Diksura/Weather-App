@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'astro.g.dart';
+part 'json_serialising/astro.g.dart';
 
 @JsonSerializable()
 class Astro {

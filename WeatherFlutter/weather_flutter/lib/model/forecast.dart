@@ -4,7 +4,7 @@ import 'astro.dart';
 import 'forecast_day.dart';
 import 'forecast_hour.dart';
 
-part 'forecast.g.dart';
+part 'json_serialising/forecast.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Forecast {
