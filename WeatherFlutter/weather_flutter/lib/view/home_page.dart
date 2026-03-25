@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(top: 8, right: 18),
-                          child: Icon(CupertinoIcons.exclamationmark_triangle, size: 32),
+                          child: Icon(CupertinoIcons.exclamationmark_triangle, size: 32, color: Colors.red,),
                         ),
 
                       Spacer(flex: 3),
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                     child: ListView.builder(
                       itemCount: forecastDay.length,
                       itemBuilder: (context, index) {
-                        return ForecastDayWeatherTile(forecastDay: forecastDay[index].day);
+                        return ForecastDayWeatherTile(forecastDay: forecastDay[index].day, date: forecastDay[index].date,);
                       },
                     ),
                   ),
