@@ -53,14 +53,19 @@ class _HomePageState extends State<HomePage> {
 
   /// Count of next hours data that viewed in hourly forecast [ForecastDayWeatherTile].
   /// This will determine how many tiles of [ForecastDayWeatherTile] will be viewed.
-  int showingForecastHoursCnt = 24;
+  int? showingForecastHoursCnt = 24;
 
   void processHourlyData() {
-    for (Forecast day in widget.forecastWeather.forecast.forecastday) {
-      hourlyData.addAll(day.hour);
-    }
-  }
+    final now = DateTime.now();
 
+    hourlyData = widget.forecastWeather.forecast.forecastday
+        .expand((day) => day.hour) // flatten all days into one list
+        .where((hour) {
+      final hourTime = DateTime.parse(hour.time);
+      return hourTime.isAfter(now);
+    })
+        .toList();
+  }
   @override
   void initState() {
     processHourlyData();
@@ -141,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                     height: 120,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: showingForecastHoursCnt,
+                      itemCount: showingForecastHoursCnt ?? hourlyData.length,
                       itemBuilder: (context, index) {
                         return HourlyWeatherTile(hour: hourlyData[index]);
                       },

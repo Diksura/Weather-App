@@ -62,4 +62,18 @@ class Utility {
     }
   }
 
+  bool isSameDateTime(String dateTimeSt, DateTime currentDate) {
+    try {
+      final inputFormat = DateFormat("yyyy-MM-dd HH:mm");
+      final dateTime = inputFormat.parse(dateTimeSt);
+
+      if (dateTime == currentDate) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      throw Exception("isSameDateTime() --> $e");
+    }
+  }
+
 }
