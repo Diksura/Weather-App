@@ -161,20 +161,12 @@ class _HomePageState extends State<HomePage> {
               // Forecast Days
               WeatherMainRectangleTile(
                 title: "Forecasting Days",
-                extendedChildren: [
-                  SizedBox(
-                    height: 350,
-                    child: ListView.builder(
-                      itemCount: forecastDay.length,
-                      itemBuilder: (context, index) {
-                        return ForecastDayWeatherTile(
-                          forecastDay: forecastDay[index].day,
-                          date: forecastDay[index].date,
-                        );
-                      },
-                    ),
-                  ),
-                ],
+                extendedChildren: forecastDay.length > 1
+                    ? forecastDay
+                          .skip(1)
+                          .map((element) => ForecastDayWeatherTile(forecastDay: element.day, date: element.date))
+                          .toList()
+                    : [],
               ),
 
               WeatherTileGrid(
