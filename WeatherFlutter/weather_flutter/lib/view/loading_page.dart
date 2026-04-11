@@ -20,6 +20,7 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
+  Location? currentLocation;
   Weather? currentWeather;
   WeatherForecast? forecastWeather;
   WeatherAstro? weatherAstro;
@@ -33,6 +34,7 @@ class _LoadingPageState extends State<LoadingPage> {
     Location? location = await getUserCoordinatesAsLocation();
 
     if (location != null) {
+      currentLocation = location;
       currentWeather = await HttpRequests().getCurrentWeather(location, "en");
       forecastWeather = await HttpRequests().getForecastWeather(location, "en");
       weatherAstro = await HttpRequests().getAstroWeather(location, "en", location.localtime);
@@ -40,8 +42,8 @@ class _LoadingPageState extends State<LoadingPage> {
 
       checkPrint("Data Fetching Completed");
 
-      if (currentWeather != null && forecastWeather != null && weatherAstro != null && weatherAlerts != null) {
-        navigateToHome(currentWeather!, forecastWeather!, weatherAstro!, weatherAlerts!);
+      if (currentLocation != null && currentWeather != null && forecastWeather != null && weatherAstro != null && weatherAlerts != null) {
+        navigateToHome(currentLocation!, currentWeather!, forecastWeather!, weatherAstro!, weatherAlerts!);
       } else if (retryCnt < 3) {
         connectionFailed = true;
         setState(() {});
@@ -67,6 +69,7 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   void navigateToHome(
+    Location location,
     Weather currentWeather,
     WeatherForecast forecastWeather,
     WeatherAstro weatherAstro,
@@ -76,6 +79,7 @@ class _LoadingPageState extends State<LoadingPage> {
       context,
       MaterialPageRoute(
         builder: (context) => HomePage(
+          location: location,
           currentWeather: currentWeather,
           forecastWeather: forecastWeather,
           weatherAstro: weatherAstro,
