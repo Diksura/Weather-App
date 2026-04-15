@@ -9,7 +9,8 @@ import SwiftUI
 
 class Constants {
     /// API Key
-    static let BASE_URL = "http://localhost:5031/api/weather"
+    static let BASE_URL = "https://weather-api-541061882281.asia-south1.run.app/api/weather"
+//    static let BASE_URL = "http://localhost:5031/api/weather"
     
     /// Settings
     @State var isCelecious: Bool = true

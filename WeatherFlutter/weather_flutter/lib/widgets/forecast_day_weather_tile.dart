@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_flutter/utility/utility.dart';
 import 'package:weather_flutter/utility/weather_image_utility.dart';
 
 import '../model/forecast_day.dart';
@@ -6,11 +7,15 @@ import '../utility/custom_ui_core.dart';
 
 class ForecastDayWeatherTile extends StatelessWidget {
   final ForecastDay forecastDay;
+  final String date;
 
-  const ForecastDayWeatherTile({super.key, required this.forecastDay});
+  const ForecastDayWeatherTile({super.key, required this.forecastDay, required this.date});
 
   @override
   Widget build(BuildContext context) {
+
+    String dateString = Utility().formatDateString(date);
+
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(color: kBoxBackgroundColour, borderRadius: kInnerBorderRadius),
@@ -29,7 +34,7 @@ class ForecastDayWeatherTile extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10.0),
-                      child: Text(forecastDay.date, style: kFontSizeCaption),
+                      child: Text(dateString, style: kFontSizeCaption),
                     ),
 
                     Text("Temperature", style: kFontSizeSubHeadline),

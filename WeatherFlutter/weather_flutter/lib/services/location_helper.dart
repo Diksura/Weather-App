@@ -39,11 +39,12 @@ Future<Position?> getUserCoordinates() async {
 /// Take position from [getUserCoordinates()] then convert to [Location]
 Future<Location?> getUserCoordinatesAsLocation() async {
   Position? position = await getUserCoordinates();
+  Location? locationName = await getUserLocationDetails(position?.latitude ?? 00, position?.longitude ?? 0);
 
   if (position == null) return null;
 
   return Location(
-    name: "Unknown Location",
+    name: locationName?.name ?? "Unknown Location",
     region: "Unknown Region",
     country: "Unknown Country",
     lat: position.latitude,

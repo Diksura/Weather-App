@@ -36,8 +36,10 @@ class HomePage extends StatefulWidget {
     required this.forecastWeather,
     required this.weatherAstro,
     required this.weatherAlerts,
+    required this.location,
   });
 
+  final Location location;
   final Weather currentWeather;
   final WeatherForecast forecastWeather;
   final WeatherAstro weatherAstro;
@@ -53,12 +55,18 @@ class _HomePageState extends State<HomePage> {
 
   /// Count of next hours data that viewed in hourly forecast [ForecastDayWeatherTile].
   /// This will determine how many tiles of [ForecastDayWeatherTile] will be viewed.
-  int showingForecastHoursCnt = 24;
+  int? showingForecastHoursCnt = 24;
 
   void processHourlyData() {
-    for (Forecast day in widget.forecastWeather.forecast.forecastday) {
-      hourlyData.addAll(day.hour);
-    }
+    final now = DateTime.now();
+
+    hourlyData = widget.forecastWeather.forecast.forecastday
+        .expand((day) => day.hour) // flatten all days into one list
+        .where((hour) {
+          final hourTime = DateTime.parse(hour.time);
+          return hourTime.isAfter(now);
+        })
+        .toList();
   }
 
   @override
@@ -95,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                         Container(
                           alignment: Alignment.centerRight,
                           padding: const EdgeInsets.only(top: 8, right: 18),
-                          child: Icon(CupertinoIcons.exclamationmark_triangle, size: 32),
+                          child: Icon(CupertinoIcons.exclamationmark_triangle, size: 32, color: Colors.red),
                         ),
 
                       Spacer(flex: 3),
@@ -109,7 +117,7 @@ class _HomePageState extends State<HomePage> {
 
                           Text("${current.tempC.round()}°C", style: TextStyle(fontSize: 102, color: Colors.black)),
 
-                          Text(location.name, style: kFontSizeTitle, textAlign: .center),
+                          Text(widget.location.name, style: kFontSizeTitle, textAlign: .center),
 
                           Text(current.condition.text, style: kFontSizeBody, textAlign: .center),
                         ],
@@ -141,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                     height: 120,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: showingForecastHoursCnt,
+                      itemCount: showingForecastHoursCnt ?? hourlyData.length,
                       itemBuilder: (context, index) {
                         return HourlyWeatherTile(hour: hourlyData[index]);
                       },
@@ -153,17 +161,12 @@ class _HomePageState extends State<HomePage> {
               // Forecast Days
               WeatherMainRectangleTile(
                 title: "Forecasting Days",
-                extendedChildren: [
-                  SizedBox(
-                    height: 350,
-                    child: ListView.builder(
-                      itemCount: forecastDay.length,
-                      itemBuilder: (context, index) {
-                        return ForecastDayWeatherTile(forecastDay: forecastDay[index].day);
-                      },
-                    ),
-                  ),
-                ],
+                extendedChildren: forecastDay.length > 1
+                    ? forecastDay
+                          .skip(1)
+                          .map((element) => ForecastDayWeatherTile(forecastDay: element.day, date: element.date))
+                          .toList()
+                    : [],
               ),
 
               WeatherTileGrid(
@@ -250,11 +253,7 @@ class _HomePageState extends State<HomePage> {
                   WeatherMainSquareTile(
                     padding: EdgeInsets.all(16.0).copyWith(bottom: 0.0),
                     title: 'Pressure Details',
-                    children: [
-                      FittedBox(
-                        child: CustomPressureIndicator(pressure: current.pressureMb),
-                      ),
-                    ],
+                    children: [FittedBox(child: CustomPressureIndicator(pressure: current.pressureMb))],
                   ),
 
                   WeatherMainSquareTile(

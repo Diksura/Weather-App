@@ -1,4 +1,4 @@
-package com.pasandiksura.weather_flutter
+package dev.pasandiksura.weather
 
 import io.flutter.embedding.android.FlutterActivity
 
